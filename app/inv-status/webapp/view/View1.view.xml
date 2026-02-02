@@ -1,0 +1,505 @@
+<mvc:View
+    controllerName="invstatus.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:t="sap.ui.table"
+    xmlns:sf="sap.ui.comp.smartfilterbar"
+    xmlns:st="sap.ui.comp.smarttable"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    displayBlock="true"
+>
+    <App id="app">
+        <f:DynamicPage
+            id="dynamicPage"
+            showFooter="true"
+        >
+            <f:header>
+                <f:DynamicPageHeader
+                    id="_IDGenDynamicPageHeader1"
+                    class="noPadding"
+                >
+                    <FlexBox
+                        id="_IDGenFlexBox6"
+                        width="100%"
+                        direction="Row"
+                        wrap="Wrap"
+                        justifyContent="SpaceBetween"
+                        class="headerPadding sapUiMediumMarginBottom borderBottom"
+                    >
+                        <HeaderContainer
+                            id="container1"
+                            scrollStep="200"
+                            height="100px"
+                        >
+                            <FlexBox
+                                id="_IDGenFlexBox7"
+                                alignItems="Center"
+                                height="100px"
+                            >
+                                <FlexBox
+                                    id="_IDGenFlexBox8"
+                                    alignItems="Center"
+                                    height="75px"
+                                    class="imgBG"
+                                >
+                                    <Image
+                                        id="logoImage"
+                                        src="/img/logoipsum-325.svg"
+                                        width="125px"
+                                        decorative="false"
+                                        press="onLogoPressed"
+                                        tooltip="SAP Logo"
+                                    >
+                                        <layoutData>
+                                            <OverflowToolbarLayoutData
+                                                id="_IDGenOverflowToolbarLayoutData1"
+                                                priority="NeverOverflow"
+                                            />
+                                        </layoutData>
+                                    </Image>
+                                </FlexBox>
+                            </FlexBox>
+                        </HeaderContainer>
+
+                        <!-- <HeaderContainer id="container2" scrollStep="200">
+
+<GenericTile id="_IDGenGenericTile1" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="{i18n>lastRefresh}" subheader="3/22/2024 6:30:57AM" frameType="OneByHalf">
+
+<TileContent id="_IDGenTileContent1" class="refreshTitle" footer="Footer Text">
+
+<Text id="_IDGenText1" class="refreshText" text=""/>
+
+</TileContent>
+
+</GenericTile>
+
+</HeaderContainer> -->
+                    </FlexBox>
+
+                    <sf:SmartFilterBar
+                        id="bar0"
+                        entitySet="INVENTORYSTATUS"
+                        useDateRangeType="true"
+                        persistencyKey="SmartFilterBar_INVENTORYSTATUS"
+                        smartVariant="pageVariant"
+                        liveMode="true"
+                        search="onSearch"
+                    />
+                    <Panel id="_IDGenPanel"
+                        headerText="{i18n>panelHeader}"
+                        expandable="true"
+                        expanded="true"
+                        class="customPanelBackground sapUiSmallMarginTop"
+                    >
+                        <f:GridList
+                            id="totalsGridList"
+                            growing="false"
+                            items="{totals>/}"
+                            xmlns:f="sap.f"
+                        >
+                            <f:items>
+                                <f:GridListItem id="_IDGenGridListItem1">
+                                    <VBox id="_IDGenVBox" class="sapUiSmallMargin sapUiSizeCompact sapUiNoContentPadding">
+                                        <core:Icon id="_IDGenIcon"
+                                            src="{totals>icon}"
+                                            size="2rem"
+                                            color="{totals>color}"
+                                            class="sapUiTinyMarginBottom"
+                                        />
+                                        <Text id="_IDGenText"
+                                            text="{totals>label}"
+                                            class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+                                            wrapping="true"
+                                        />
+                                        <ObjectNumber id="_IDGenObjectNumber"
+                                            number="{totals>value}"
+                                            emphasized="true"
+                                        />
+                                    </VBox>
+                                </f:GridListItem>
+                            </f:items>
+                        </f:GridList>
+                    </Panel>
+                    <!-- <Panel expandable="true" expanded="true" headerText="Sales By Customer By Product Summary">
+                        <HeaderContainer id="container4" scrollStep="200" orientation="Horizontal" gridLayout="true" class="mck_HeaderContainer">
+                            <FlexBox id="_IDGenFlexBox1" direction="Column" class="mck_Tile">
+                                <Title id="_IDGenTitle1" class="mck_TileContentTitle" text="Sales"/>
+                                <Text id="_IDGenNumericContent1" class="mck_TileContent" text="$181M"/>
+                            </FlexBox>
+
+                            <FlexBox id="_IDGenFlexBox2" direction="Column" class="mck_Tile">
+                                <Title id="_IDGenTitle2" class="mck_TileContentTitle" text="Invoice"/>
+                                <Text id="_IDGenNumericContent2" class="mck_TileContent" text="19K"/>
+                            </FlexBox>
+                            <FlexBox id="_IDGenFlexBox3" direction="Column" class="mck_Tile">
+                                <Title id="_IDGenTitle3" class="mck_TileContentTitle" text="Lines"/>
+                                <Text id="_IDGenNumericContent3" class="mck_TileContent" text="69K"/>
+                            </FlexBox>
+                            <FlexBox id="_IDGenFlexBox4" direction="Column" class="mck_Tile">
+                                <Title id="_IDGenTitle4" class="mck_TileContentTitle" text="Units"/>
+                                <Text id="_IDGenNumericContent4" class="mck_TileContent" text="6M"/>
+                            </FlexBox>
+                        </HeaderContainer>
+                    </Panel> -->
+                </f:DynamicPageHeader>
+            </f:header>
+
+            <f:content>
+                <st:SmartTable
+                    xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+                    width="100%"
+                    direction="Column"
+                    fitContainer="true"
+                    tableType="ResponsiveTable"
+                    header="{i18n>tableTitle}"
+                    enableAutoBinding="true"
+                    id="table0"
+                    smartFilterId="bar0"
+                    cd:w5g.dt.context="/INVENTORYSTATUS"
+                    entitySet="INVENTORYSTATUS"
+                    placeToolbarInTable="true"
+                    useExportToExcel="true"
+                    beforeExport="onBeforeExport"
+                    useVariantManagement="true"
+                    useTablePersonalisation="true"
+                    customData:p13nDialogSettings='{filter:{visible:false}}'
+                    showRowCount="true"
+                    persistencyKey="SmartTable_INVSTATUS"
+                    demandPopin="true"
+                    enableAutoColumnWidth="true"
+                    class="sapUiResponsiveContentPadding"
+                >
+                    <t:Table
+                        id="table"
+                        selectionMode="None"
+                    >
+                        <t:columns>
+                            <t:Column
+                                id="_IDGenColumn"
+                                width='5rem'
+                                hAlign="End"
+                                sortProperty="SKU_MATNR"
+                            >
+                                <t:customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value='\{"columnKey": "SKU_MATNR", "leadingProperty": "SKU_MATNR", "columnIndex": 0}'
+                                    />
+                                </t:customData>
+
+                                <Text
+                                    id="_IDGenText6"
+                                    text="{i18n>INVENTORYSTATUS.SKU_MATNR}"
+                                />
+
+                                <t:template>
+                                    <Text
+                                        core:require="{ Formatter: 'invstatus/model/formatter'}"
+                                        id="_IDGenText9"
+                                        text="{path: 'SKU_MATNR', formatter:'Formatter.removeLeadingZeros'}"
+                                    />
+                                </t:template>
+                            </t:Column>
+
+                            <t:Column
+                                id="_IDGenColumn6"
+                                width='7.813rem'
+                                hAlign="End"
+                                sortProperty="PRODUCT_CODE"
+                            >
+                                <t:customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value='\{"columnKey": "PRODUCT_CODE", "leadingProperty": "PRODUCT_CODE", "columnIndex": 1}'
+                                    />
+                                </t:customData>
+
+                                <Text
+                                    id="_IDGenText2"
+                                    text="{i18n>INVENTORYSTATUS.PRODUCT_CODE}"
+                                />
+
+                                <t:template>
+                                    <Text
+                                        id="_IDGenText4"
+                                        text="{path: 'PRODUCT_CODE'}"
+                                    />
+                                </t:template>
+                            </t:Column>
+
+                            <t:Column
+                                id="_IDGenColumn62"
+                                width='5rem'
+                                hAlign="End"
+                                sortProperty="SIZE">
+                                <t:customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value='\{"columnKey": "SIZE", "leadingProperty": "SIZE", "columnIndex": 3}'
+                                    />
+                                </t:customData>
+                                <Text id="_IDGenText22" text="{i18n>INVENTORYSTATUS.SIZE}"/>
+                                <t:template>
+                                    <Text id="_IDGenText42" text="{path: 'SIZE'}"/>
+                                </t:template>
+                            </t:Column>
+                            <!-- <t:Column
+                                id="_IDGenColumn621"
+                                width='7rem'
+                                hAlign="End"
+                                sortProperty="OPEN_STOCK">
+                                <t:customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value='\{"columnKey": "OPEN_STOCK", "leadingProperty": "OPEN_STOCK", "columnIndex": 6}'
+                                    />
+                                </t:customData>
+                                <Text id="_IDGenText221" text="{i18n>INVENTORYSTATUS.OPEN_STOCK}"/>
+                                <t:template>
+                                    <Text 
+                                        core:require="{ Formatter: 'invstatus/model/formatter'}"
+                                        id="_IDGenText421" 
+                                        text="{
+                                         parts: [
+                                            { path: 'OPEN_STOCK' },
+                                            { path: 'UNIT' }
+                                        ],
+                                        formatter:'Formatter.formatStockWithUnit'}"/>
+                                </t:template>
+                            </t:Column> -->
+
+                            <t:Column
+                                id="_IDGenColumn63"
+                                width='5.25rem'
+                                hAlign="End"
+                                sortProperty="VKBUR"
+                            >
+                                <t:customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value='\{"columnKey": "VKBUR", "leadingProperty": "VKBUR", "columnIndex": 19}'
+                                    />
+                                </t:customData>
+
+                                <Text
+                                    id="_IDGenText23"
+                                    text="{i18n>INVENTORYSTATUS.VKBUR}"
+                                />
+
+                                <t:template>
+                                    <Text
+                                        id="_IDGenText43"
+                                        text="{path: 'VKBUR'}"
+                                    />
+                                </t:template>
+                            </t:Column>
+                        </t:columns>
+                    </t:Table>
+                </st:SmartTable>
+            </f:content>
+
+            <!-- <f:footer>
+                 <OverflowToolbar
+                    id="_IDGenOverflowToolbar1"
+                    height="auto"
+                    class="footer"
+                >
+                    
+
+                    <FlexBox
+                        id="_IDGenFlexBox32"
+                        width="100%"
+                        justifyContent="SpaceBetween"
+                        wrap="Wrap"
+                    >
+                        <FlexBox id="_IDGenFlexBox10">
+                            <ObjectIdentifier
+                                id="_IDGenObjectIdentifier1"
+                                title="{i18n>totals}"
+                                class="footerTitle"
+                            />
+                        </FlexBox>
+
+                        <FlexBox
+                            id="_IDGenFlexBox11"
+                            wrap="Wrap"
+                        >
+                            <HBox
+                                id="_IDGenHBox22"
+                                class="sapUiSmallMarginEnd"
+                            >
+                                <Label
+                                    id="_IDGenLabel1"
+                                    text="{i18n>footerLabel1}:"
+                                    class="cssLabelTotal"
+                                />
+
+                                <Text
+                                    id="footerText1"
+                                    class="footerText"
+                                    text=""
+                                />
+                            </HBox>
+
+                            <HBox
+                                id="_IDGenHBox2"
+                                class="sapUiSmallMarginEnd"
+                            >
+                                <Label
+                                    id="_IDGenLabel2"
+                                    text="{i18n>footerLabel2}:"
+                                    class="cssLabelTotal"
+                                />
+
+                                <Text
+                                    id="footerText2"
+                                    class="footerText"
+                                    text=""
+                                />
+                            </HBox>
+
+                            <HBox
+                                id="_IDGenHBox359"
+                                class="sapUiSmallMarginEnd"
+                            >
+                                <Label
+                                    id="_IDGenLabel359"
+                                    text="{i18n>footerLabel9}:"
+                                    class="cssLabelTotal"
+                                />
+
+                                <Text
+                                    id="footerText9"
+                                    class="footerText"
+                                    text=""
+                                />
+                            </HBox>
+
+                            <HBox
+                                id="_IDGenHBox31"
+                                class="sapUiSmallMarginEnd"
+                            >
+                                <Label
+                                    id="_IDGenLabel31"
+                                    text="{i18n>footerLabel3}:"
+                                    class="cssLabelTotal"
+                                />
+
+                                <Text
+                                    id="footerText3"
+                                    class="footerText"
+                                    text=""
+                                />
+                            </HBox>
+
+                            <HBox
+                                id="_IDGenHBox32"
+                                class="sapUiSmallMarginEnd"
+                            >
+                                <Label
+                                    id="_IDGenLabel32"
+                                    text="{i18n>footerLabel4}:"
+                                    class="cssLabelTotal"
+                                />
+
+                                <Text
+                                    id="footerText4"
+                                    class="footerText"
+                                    text=""
+                                />
+                            </HBox>
+
+                            <HBox
+                                id="_IDGenHBox325"
+                                class="sapUiSmallMarginEnd"
+                            >
+                                <Label
+                                    id="_IDGenLabel325"
+                                    text="{i18n>footerLabel5}:"
+                                    class="cssLabelTotal"
+                                />
+
+                                <Text
+                                    id="footerText5"
+                                    class="footerText"
+                                    text=""
+                                />
+                            </HBox>
+
+                            <HBox
+                                id="_IDGenHBox3"
+                                class="sapUiSmallMarginEnd"
+                            >
+                                <Label
+                                    id="_IDGenLabel34"
+                                    text="{i18n>footerLabel6}:"
+                                    class="cssLabelTotal"
+                                />
+
+                                <Text
+                                    id="footerText6"
+                                    class="footerText"
+                                    text=""
+                                />
+                            </HBox>
+
+                            <HBox
+                                id="_IDGenHBox35"
+                                class="sapUiSmallMarginEnd"
+                            >
+                                <Label
+                                    id="_IDGenLabel35"
+                                    text="{i18n>footerLabel7}:"
+                                    class="cssLabelTotal"
+                                />
+
+                                <Text
+                                    id="footerText7"
+                                    class="footerText"
+                                    text=""
+                                />
+                            </HBox>
+
+                            <HBox
+                                id="_IDGenHBox358"
+                                class="sapUiSmallMarginEnd"
+                            >
+                                <Label
+                                    id="_IDGenLabel358"
+                                    text="{i18n>footerLabel8}:"
+                                    class="cssLabelTotal"
+                                />
+
+                                <Text
+                                    id="footerText8"
+                                    class="footerText"
+                                    text=""
+                                />
+                            </HBox>
+
+                            <HBox
+                                id="_IDGenHBox3510"
+                                class="sapUiSmallMarginEnd"
+                            >
+                                <Label
+                                    id="_IDGenLabel3510"
+                                    text="{i18n>footerLabel10}:"
+                                    class="cssLabelTotal"
+                                />
+
+                                <Text
+                                    id="footerText10"
+                                    class="footerText"
+                                    text=""
+                                />
+                            </HBox>
+                        </FlexBox>
+                    </FlexBox>
+                </OverflowToolbar>
+            </f:footer> -->
+        </f:DynamicPage>
+    </App>
+</mvc:View>

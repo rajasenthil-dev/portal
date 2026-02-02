@@ -1,0 +1,163 @@
+<mvc:View controllerName="customermaster.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:t="sap.ui.table" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:sf="sap.ui.comp.smartfilterbar" xmlns:st="sap.ui.comp.smarttable" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" displayBlock="true">
+    <App id="app">
+        <f:DynamicPage id="dynamicPage" showFooter="true">
+            <f:header>
+                <f:DynamicPageHeader id="_IDGenDynamicPageHeader1" class="noPadding">
+                    <FlexBox id="_IDGenFlexBox6" width="100%" direction="Row" wrap="Wrap" justifyContent="SpaceBetween" class="headerPadding sapUiMediumMarginBottom borderBottom">
+                        <HeaderContainer id="container1" scrollStep="200" height="100px">
+                            <FlexBox id="_IDGenFlexBox7" alignItems="Center" height="100px">
+                                <FlexBox id="_IDGenFlexBox8" alignItems="Center" height="75px" class="imgBG">
+                                    <Image id="logoImage" src="/img/logoipsum-325.svg" width="125px" decorative="false" press="onLogoPressed" tooltip="Logo" >
+                                        <layoutData>
+                                            <OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow"/>
+                                        </layoutData>
+                                    </Image>
+                                </FlexBox>
+                            </FlexBox>  
+                        </HeaderContainer>
+                        <!-- <HeaderContainer id="container2" scrollStep="200">
+                            <GenericTile id="_IDGenGenericTile1" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="{i18n>lastRefresh}" subheader="3/22/2024 6:30:57AM" frameType="OneByHalf">
+                                <TileContent id="_IDGenTileContent1" class="refreshTitle" footer="Footer Text">
+                                    <Text id="_IDGenText1" class="refreshText" text="3/22/2024 6:30:57AM"/>
+                                </TileContent>
+                            </GenericTile>
+                        </HeaderContainer> -->
+                    </FlexBox>
+                    <sf:SmartFilterBar 
+                        id="bar0" 
+                        entitySet="CUSTOMERMASTER" 
+                        enableBasicSearch="true" 
+                        useDateRangeType="true" 
+                        persistencyKey="SmartFilterBar_CUSTOMERMASTER" 
+                        smartVariant="pageVariant" 
+                        liveMode="true" 
+                        search="onSearch">
+                        <sf:controlConfiguration>
+                            <sf:ControlConfiguration id="customCurrentFilter"
+                                key="CAL_CUST_STATUS"
+                                visibleInAdvancedArea="true"
+                            >
+                                <sf:customControl>
+                                    <ComboBox id="currentFilterBox" selectedKey="{filters>/currentStatus}">
+                                        <items>
+                                            <core:Item id="_IDGenItem2" key="" text="{i18n>CUSTOMERMASTER.ALL}"/>
+                                            <core:Item id="_IDGenItem" key="A" text="{i18n>CUSTOMERMASTER.ACTIVE}"/>
+                                            <core:Item id="_IDGenItem1" key="I" text="{i18n>CUSTOMERMASTER.INACTIVE}"/>
+                                        </items>
+                                    </ComboBox>
+                                </sf:customControl>
+                            </sf:ControlConfiguration>
+                        </sf:controlConfiguration>
+                    </sf:SmartFilterBar>
+                </f:DynamicPageHeader>
+            </f:header>
+            <f:content>
+                <st:SmartTable 
+                    xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
+                    width="100%" 
+                    direction="Column" 
+                    fitContainer="true" 
+                    tableType="Table" 
+                    header="{i18n>tableTitle}" 
+                    enableAutoBinding="true" 
+                    id="table0" 
+                    smartFilterId="bar0" 
+                    cd:w5g.dt.context="/CUSTOMERMASTER" 
+                    entitySet="CUSTOMERMASTER" 
+                    placeToolbarInTable="true" 
+                    useExportToExcel="true" 
+                    beforeExport="onBeforeExport" 
+                    useVariantManagement="true" 
+                    useTablePersonalisation="true" 
+                    customData:p13nDialogSettings='{filter:{visible:false}}'
+                    showRowCount="true" 
+                    persistencyKey="SmartTable_CUSTOMERMASTER" 
+                    demandPopin="true" 
+                    enableAutoColumnWidth="true" 
+                    class="sapUiResponsiveContentPadding sapUiLargeMarginBottom"
+                >
+                    <t:Table id="_IDGenTable"  
+                        selectionMode="None"
+                        alternateRowColors="true" 
+                        >
+                        <t:rowSettingsTemplate>
+                            <t:RowSettings id="_IDGenRowSettings" highlight="{path:'CAL_CUST_STATUS', formatter:'._formatRowHighlight'}" highlightText="{CAL_CUST_STATUS}"/>
+                        </t:rowSettingsTemplate>
+                        <t:columns>
+                            <t:Column id="_IDGenColumn1" width='7.813rem' hAlign="End" sortProperty="KUNN2_BILLTO">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "KUNN2_BILLTO", "leadingProperty": "KUNN2_BILLTO", "columnIndex": 0}'/>
+                                </t:customData>
+                                    <Text id="_IDGenText" text="{i18n>CUSTOMERMASTER.KUNN2_BILLTO}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText2" text="{KUNN2_BILLTO}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn2" width='7.813rem' hAlign="End" sortProperty="KUNN2_SHIPTO">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "KUNN2_SHIPTO", "leadingProperty": "KUNN2_SHIPTO", "columnIndex": 2}'/>
+                                </t:customData>
+                                    <Text id="_IDGenText3" text="{i18n>CUSTOMERMASTER.KUNN2_SHIPTO}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText4" text="{KUNN2_SHIPTO}"/>
+                                </t:template>
+                            </t:Column>
+        
+                            <t:Column id="_IDGenColumn5" width='5rem' hAlign="End" sortProperty="CAL_TERM">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CAL_TERM", "leadingProperty": "CAL_TERM", "columnIndex": 6}'/>
+                                </t:customData>
+                                    <Text id="_IDGenText8" text="{i18n>CUSTOMERMASTER.CAL_TERM}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText9" text="{CAL_TERM}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn6" width='6rem' hAlign="End" sortProperty="VKORG">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "VKORG", "leadingProperty": "VKORG", "columnIndex": 8}'/>
+                                </t:customData>
+                                    <Text id="_IDGenText10" text="{i18n>CUSTOMERMASTER.VKORG}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText11" text="{VKORG}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn3" width='7.813rem' hAlign="Center" sortProperty="CAL_CUS_STATUS">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CAL_CUST_STATUS", "leadingProperty": "CAL_CUST_STATUS", "columnIndex": 9}'/>
+                                </t:customData>
+                                <Text id="_IDGenText6" text="{i18n>CUSTOMERMASTER.CAL_CUST_STATUS}"></Text>
+                                <t:template>
+                                    <ObjectStatus id="_IDGenObjectStatus"
+                                        text="{path: 'CAL_CUST_STATUS', formatter: '._formatStatusText'}"
+                                        inverted="true"
+                                        icon="{path: 'CAL_CUST_STATUS', formatter: '._formatStatusIcon'}"
+                                        state="{path: 'CAL_CUST_STATUS', formatter: '._formatStatusState'}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn4" width='7.813rem' hAlign="End" sortProperty="ERDAT_BILLTO">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "ERDAT_BILLTO", "leadingProperty": "ERDAT_BILLTO", "columnIndex": 10}'/>
+                                </t:customData>
+                                    <Text id="_IDGenText5" text="{i18n>CUSTOMERMASTER.ERDAT_BILLTO}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText7" text="{path: 'ERDAT_BILLTO', type: 'sap.ui.model.odata.type.Date'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn7" width='7.813rem' hAlign="End" sortProperty="ERDAT_SHIPTO">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "ERDAT_SHIPTO", "leadingProperty": "ERDAT_SHIPTO", "columnIndex": 11}'/>
+                                </t:customData>
+                                    <Text id="_IDGenText12" text="{i18n>CUSTOMERMASTER.ERDAT_SHIPTO}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText13" text="{path: 'ERDAT_SHIPTO', type: 'sap.ui.model.odata.type.Date'}"/>
+                                </t:template>
+                            </t:Column>
+                        </t:columns> 
+                    </t:Table>
+                </st:SmartTable>
+            </f:content>
+            
+        </f:DynamicPage>
+    </App>
+</mvc:View>

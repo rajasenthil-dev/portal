@@ -1,0 +1,150 @@
+{
+  "name": "mck-portal",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@cap-js-community/odata-v2-adapter": "^1.13.5",
+    "@cap-js/hana": "^1",
+    "@sap/approuter": "^18.0.0",
+    "@sap/xssec": "^4",
+    "axios": "^1.7.9",
+    "cds-plugin-ui5": "^0.13.0",
+    "cors": "^2.8.5",
+    "cuid": "^3.0.0",
+    "express": "^4",
+    "jsonwebtoken": "^9.0.2",
+    "luxon": "^3.7.2",
+    "multer": "^1.4.5-lts.1",
+    "passport": "^0.7.0"
+  },
+  "devDependencies": {
+    "@cap-js/cds-types": "^0.6",
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^8.7.1",
+    "@sap/ux-specification": "1.136.9",
+    "@sap/ux-ui5-tooling": "^1.19.5",
+    "@ui5/cli": "^4.0.36",
+    "jest": "^29.7.0",
+    "mbt": "^1.2.29",
+    "rimraf": "^5.0.5",
+    "ui5-middleware-approuter": "^3.8.0"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "test": "jest",
+    "clean": "rimraf .portal_mta_build_tmp resources mta_archives Makefile_*.mta gen || true",
+    "build": "rm -rf resources mta_archives && mbt build --mtar archive",
+    "build:cf": "rimraf mta_archives resources && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/mck-portal_1.0.3.mtar --retries 1",
+    "watch": "cds watch --profile hybrid",
+    "watch-poc-app": "cds watch --open poc-app/webapp/index.html?sap-ui-xx-viewCache=false",
+    "undeploy": "cf undeploy mck-portal --delete-services --delete-service-keys --delete-service-brokers",
+    "watch-project426": "cds watch --open project426/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-itemmas": "cds watch --open itemmas/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-dude": "cds watch --open dude/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-shiphis": "cds watch --open shiphis/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-pricelist": "cds watch --open pricelist/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-cashjour": "cds watch --open cashjour/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-inv-status": "cds watch --open inv-status/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-inv-audit-trail": "cds watch --open inv-audit-trail/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-openorders": "cds watch --open openorders/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-returns": "cds watch --open returns/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-customermaster": "cds watch --open customermaster/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-inv-bylot": "cds watch --open inv-bylot/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-invsnapshot": "cds watch --open invsnapshot/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-invval": "cds watch --open invval/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-invoicehis": "cds watch --open invoicehis/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-openar": "cds watch --open openar/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-salesbycus": "cds watch --open salesbycus/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-bckorders": "cds watch --open bckorders/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-project12345": "cds watch --open project12345/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-test1245": "cds watch --open test1245/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-backorders1": "cds watch --open backorders1/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-admindash": "cds watch --open admindash/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-pivottable": "cds watch --open pivottable/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-salesbycuswopid": "cds watch --open salesbycuswopid/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-shipstatus": "cds watch --open shipstatus/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-shipstatus1": "cds watch --open shipstatus1/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-mckaccesshubuser": "cds watch --open mckaccesshubuser/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-salesserialnumber": "cds watch --open salesserialnumber/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-accessmanager1": "cds watch --open accessmanager1/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-invmb51": "cds watch --open invmb51/index.html?sap-ui-xx-viewCache=false --livereload false"
+  },
+  "cds": {
+    "service": {
+      "path": "srv"
+    },
+    "localization": {
+      "folders": [
+        "app",
+        "db",
+        "webapp"
+      ],
+      "supportedLocales": [
+        "en",
+        "fr"
+      ],
+      "fallbackLocale": "en"
+    },
+    "hana": {
+      "deploy-format": "hdbtable",
+      "skip-generation": {
+        "hdbview": true
+      }
+    },
+    "requires": {
+      "auth": {
+        "kind": "xsuaa"
+      },
+      "logger": {
+        "level": "debug"
+      },
+      "xsuaa_api": {
+        "kind": "rest",
+        "credentials": {
+          "url": "https://discovery-sunrise.authentication.us20.hana.ondemand.com",
+          "forwardAuthToken": true
+        }
+      },
+      "approuter": {
+        "kind": "cloudfoundry"
+      },
+      "db": {
+        "kind": "sql",
+        "log_sql": true
+      },
+      "html5-repo": true
+    }
+  },
+  "sapux": [
+    "app/admindash",
+    "app/accessmanager1",
+    "app/bckorders",
+    "app/cashjour",
+    "app/customermaster",
+    "app/inv-audit-trail",
+    "app/inv-status",
+    "app/invbylot",
+    "app/invoicehis",
+    "app/invsnapshot",
+    "app/invval",
+    "app/itemmas",
+    "app/mckaccesshubuser",
+    "app/openar",
+    "app/openorders",
+    "app/pivottable",
+    "app/pricelist",
+    "app/returns",
+    "app/salesbycus",
+    "app/salesbycuswopid",
+    "app/salesserialnumber",
+    "app/shiphis",
+    "app/shipstatus"
+  ],
+  "workspaces": [
+    "app/*"
+  ]
+}

@@ -1,0 +1,111 @@
+/* Enter your custom styles here */
+.mck_HeaderContainer {
+    border-top: 1px #d9d9d9 solid;
+    border-bottom: 1px #d9d9d9 solid;
+    display: flex!important;
+    align-items: center!important;
+}
+.headerPadding {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: .5rem;
+    padding-bottom: .75rem !important;
+}
+
+.mck_Tile {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.mck_TileContent>.sapMNCInner{
+    top:0!important;
+}
+.mck_TileContent {
+    justify-content: start!important;
+    font-size: 1.25em;
+    margin-bottom: .5rem;
+}
+.mck_TileContentTitle {
+    margin-top:.5rem;
+    color:#143359!important;
+}
+
+.cssLabelTotal{
+    font-weight: bold;
+}
+
+.customText{
+    font-weight: bold;
+}
+.tileLayout {
+    background:#fff!important;
+    border: 1px solid #fff!important;
+    color:#143359!important;
+}
+.tileLayout .sapMGTHdrTxt>.sapMText {
+    color:#143359!important;
+}
+.tileLayout.sapMGT {
+    border-radius: 10px!important;
+}
+.refreshText {
+    color:#1d2d3e!important;
+    font-weight: 700;
+}
+.borderBottom {
+    background-color: #143359;
+    border-radius: 10px;
+}
+.pageContent>.sapMFlexItem.sapUiResponsiveContentPadding {
+    padding:0!important;
+}
+.imgBG {
+    background: #fff;
+    padding-top:.25rem;
+    padding-bottom:.25rem;
+    padding-left:1rem;
+    padding-right:1rem;
+    border-radius: 10px;
+}
+
+.sapFDynamicPageFooter .sapFDynamicPageActualFooterControl.sapMIBar.footer {
+    background:#143359;
+    color:#fff;
+}
+.footer .sapMBar {
+    background: transparent!important;
+    box-shadow: none;
+    color:#fff;
+}
+.footerPadding {
+    padding-bottom: 3rem;
+}
+.footerTitle .sapMObjectIdentifierTitle .sapMText {
+    color: #fff!important;
+}
+
+.footerText.sapMText{
+    color: #ff5722!important;
+}
+.cssLabelTotal.sapMLabel{
+    color: #fff!important;
+    margin-right:5px;
+}
+/* .txt-lg .sapMObjStatusInverted .sapMObjStatusIcon {
+    height: 2rem!important;
+}
+.txt-lg .sapMObjStatus .sapMObjStatusIcon {
+    width: 2rem!important
+}
+.txt-lg .sapMObjStatusInverted .sapMObjStatusIcon>.sapUiIcon{
+    font-size: 1.25rem!important;
+}
+.legend {
+    margin-top:.73rem;
+    margin-bottom:.73rem;
+}
+.text-lg {
+    font-size: 1rem;
+} */
+.text-bold {
+    font-weight:700;
+}

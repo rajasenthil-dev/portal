@@ -1,0 +1,256 @@
+<mvc:View controllerName="invsnapshot.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+xmlns="sap.m"
+xmlns:f="sap.f"
+xmlns:my="invsnapshot.control" 
+xmlns:core="sap.ui.core" xmlns:t="sap.ui.table" xmlns:l="sap.ui.layout" xmlns:sf="sap.ui.comp.smartfilterbar" xmlns:st="sap.ui.comp.smarttable" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" displayBlock="true">
+    <App id="app">
+        <f:DynamicPage id="dynamicPage" showFooter="true">
+            <f:header>
+                <f:DynamicPageHeader id="_IDGenDynamicPageHeader1" class="noPadding">
+                    <FlexBox id="_IDGenFlexBox6" width="100%" direction="Row" wrap="Wrap" justifyContent="SpaceBetween" class="headerPadding sapUiMediumMarginBottom borderBottom">
+                        <HeaderContainer id="container1" scrollStep="200" height="100px">
+                            <FlexBox id="_IDGenFlexBox7" alignItems="Center" height="100px">
+                                <FlexBox id="_IDGenFlexBox8" alignItems="Center" height="75px" class="imgBG">
+                                    <Image id="logoImage" src="/img/logoipsum-325.svg" width="125px" decorative="false" press="onLogoPressed" tooltip="SAP Logo" >
+                                        <layoutData>
+                                            <OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow"/>
+                                        </layoutData>
+                                    </Image>
+                                </FlexBox>
+                            </FlexBox>
+                        </HeaderContainer>
+                        <!-- <HeaderContainer id="container2" scrollStep="200">
+                            <GenericTile id="_IDGenGenericTile1" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="{i18n>lastRefresh}" subheader="3/22/2024 6:30:57AM" frameType="OneByHalf">
+                                <TileContent id="_IDGenTileContent1" class="refreshTitle" footer="Footer Text">
+                                    <Text id="_IDGenText1" class="refreshText" text="3/22/2024 6:30:57AM"/>
+                                </TileContent>
+                            </GenericTile>
+                        </HeaderContainer> -->
+                    </FlexBox>
+                    <sf:SmartFilterBar id="bar0" entitySet="INVENTORYSNAPSHOT" persistencyKey="SmartFilterBar_INVETORYSNAPSHOT" smartVariant="pageVariant" liveMode="true" search="onSearch">
+                        <sf:controlConfiguration>
+                            <sf:ControlConfiguration id="_IDGenControlConfiguration4"
+                                key="REPORT_DATE"
+                                visibleInAdvancedArea="true"
+                                conditionType="{
+                                    module: 'sap.ui.comp.config.condition.DateRangeType'
+                                }"
+                            />
+                        </sf:controlConfiguration>
+                        <sf:controlConfiguration>
+                            <sf:ControlConfiguration id="customCurrentFilter"
+                                key="CURRENT"
+                                visibleInAdvancedArea="true"
+                            >
+                                <sf:customControl>
+                                    <ComboBox id="currentFilterBox" selectedKey="{filters>/currentStatus}">
+                                        <items>
+                                            <core:Item id="_IDGenItem2" key="" text="{i18n>INVENTORYSNAPSHOT.ALLTEXT}"/>
+                                            <core:Item id="_IDGenItem" key="YES" text="{i18n>INVENTORYSNAPSHOT.CURRENTTEXT}"/>
+                                            <core:Item id="_IDGenItem1" key="NO" text="{i18n>INVENTORYSNAPSHOT.LEGACYTEXT}"/>
+                                        </items>
+                                    </ComboBox>
+                                </sf:customControl>
+                            </sf:ControlConfiguration>
+                        </sf:controlConfiguration>
+                    </sf:SmartFilterBar>
+                </f:DynamicPageHeader>
+            </f:header>
+            <f:content>
+
+                <st:SmartTable
+                    id="table0"
+                    width="100%"
+                    tableType="Table"
+                    header="{i18n>tableTitle}"
+                    enableAutoBinding="true"
+                    smartFilterId="bar0"
+                    entitySet="INVENTORYSNAPSHOT"
+                    useExportToExcel="true"
+                    beforeExport="onBeforeExport"
+                    useVariantManagement="true"
+                    useTablePersonalisation="true"
+                    customData:p13nDialogSettings='{filter:{visible:false}}'
+                    showRowCount="true"
+                    persistencyKey="SmartTable_INVETORYSNAPSHOT"
+                    enableAutoColumnWidth="true"
+                    class="sapUiResponsiveContentPadding"
+                >
+                    <t:Table
+                        id="table"
+                        selectionMode="None"
+                        alternateRowColors="true"
+                        >
+                        <t:rowSettingsTemplate>
+                            <t:RowSettings id="_IDGenRowSettings" highlight="{path:'DAYS_UNTIL_EXPIRY', formatter:'._formatRowHighlight'}" highlightText="{DAYS_UNTIL_EXPIRY}"/>
+                        </t:rowSettingsTemplate>
+                        <t:columns>
+                            <t:Column id="_IDGenColumn11" width='7rem' hAlign="Center" sortProperty="CURRENT">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CURRENT", "leadingProperty": "CURRENT", "columnIndex": 3}'/>
+                                </t:customData>
+                                <Text id="_IDGenText31" text="{i18n>INVENTORYSNAPSHOT.CURRENT}"></Text>
+                                <t:template>
+                                    <ObjectStatus id="_IDGenObjectStatus"
+                                    core:require="{
+                                            Formatter: 'invsnapshot/model/formatter'
+                                        }"
+                                    icon="{path: 'CURRENT', formatter:'Formatter.yesNoIcon'}"
+                                    inverted="true"
+                                    state="{path: 'CURRENT', formatter: 'Formatter.yesNoIconColor'}"
+                                    text="{= ${CURRENT} === 'YES' ? ${i18n>INVENTORYSNAPSHOT.CURRENTTEXT} : ${i18n>INVENTORYSNAPSHOT.LEGACYTEXT}}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn" width="7rem" hAlign="End" sortProperty="MATNR">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "MATNR", "leadingProperty": "MATNR", "columnIndex": 0}'/>
+                                    </t:customData>
+                                <Text id="_IDGenText6" text="{i18n>INVENTORYSNAPSHOT.MATNR}"></Text>
+                                <t:template>
+                                <Text id="_IDGenText9" text="{path: 'MATNR', formatter: '._removeLeadingZeros'}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn2" width="7rem" hAlign="End" sortProperty="MFRNPN">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "MFRPN", "leadingProperty": "MFRPN", "columnIndex": 1}'/>
+                                    </t:customData>
+                                <Text id="_IDGenText3" text="{i18n>INVENTORYSNAPSHOT.MFRPN}"></Text>
+                                <t:template>
+                                <Text id="_IDGenText4" text="{path: 'MFRPN'}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn5" width="7rem" hAlign="End" sortProperty="SIZE">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "SIZE", "leadingProperty": "SIZE", "columnIndex": 4}'/>
+                                    </t:customData>
+                                <Text id="_IDGenText7" text="{i18n>INVENTORYSNAPSHOT.SIZE}"></Text>
+                                <t:template>
+                                <Text id="_IDGenText8" text="{path: 'SIZE'}" />
+                                </t:template>
+                            </t:Column>
+                            <!-- <t:Column id="_IDGenColumn1" width="10rem">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "LGNUM", "leadingProperty": "LGNUM", "columnIndex": 7}'/>
+                                </t:customData>
+                                <Text id="_IDGenText3" text="Warehouse Number / Warehouse Complex"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText2" text="{path: 'LGNUM'}" />
+                                </t:template>
+                            </t:Column> -->
+                            <t:Column id="_IDGenColumn4" width="10rem" hAlign="End" sortProperty="VFDAT">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "VFDAT", "leadingProperty": "VFDAT", "columnIndex": 7}'/>
+                                </t:customData>
+                                <Text id="_IDGenText5" text="{i18n>INVENTORYSNAPSHOT.VFDAT}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText" text="{path: 'VFDAT', type: 'sap.ui.model.odata.type.Date'}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn3" width='12rem' hAlign="Center" sortProperty="DAYS_UNTIL_EXPIRY">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "DAYS_UNTIL_EXPIRY", "leadingProperty": "DAYS_UNTIL_EXPIRY", "columnIndex": 8}'/>
+                                </t:customData>
+                                <Text id="_IDGenText2" text="{i18n>INVENTORYSNAPSHOT.DAYS_UNTIL_EXPIRY}"></Text>
+                                <t:template>
+                                    <FlexBox id="_IDGenHBox" height="2.5rem"  width="100%" justifyContent="Center">
+                                        <my:SegmentedProgressBar
+                                            id="_IDGenSegmentedProgressBar"
+                                            value="{DAYS_UNTIL_EXPIRY}"
+                                            width="100%" >
+                                            <my:layoutData>
+                                                <FlexItemData id="_IDGenFlexItemData" growFactor="1" />
+                                            </my:layoutData>
+                                        </my:SegmentedProgressBar>
+                                    </FlexBox>
+                                </t:template>
+                            </t:Column>
+                             <t:Column id="_IDGenColumn41" width="10rem" hAlign="End" sortProperty="REPORT_DATE">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "REPORT_DATE", "leadingProperty": "REPORT_DATE", "columnIndex": 6}'/>
+                                </t:customData>
+                                <Text id="_IDGenText51" text="{i18n>INVENTORYSNAPSHOT.REPORT_DATE}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText111" text="{path: 'REPORT_DATE', type: 'sap.ui.model.odata.type.Date'}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn6" width="15rem" hAlign="End" sortProperty="LGNUM">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "LGNUM", "leadingProperty": "LGNUM", "columnIndex": 9}'/>
+                                    </t:customData>
+                                <Text id="_IDGenText10" text="{i18n>INVENTORYSNAPSHOT.LGNUM}"></Text>
+                                <t:template>
+                                <Text id="_IDGenText11" text="{path: 'LGNUM'}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn7" width="7rem" hAlign="End" sortProperty="EAN11">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "EAN11", "leadingProperty": "EAN11", "columnIndex": 13}'/>
+                                    </t:customData>
+                                <Text id="_IDGenText12" text="{i18n>INVENTORYSNAPSHOT.EAN11}"></Text>
+                                <t:template>
+                                <Text id="_IDGenText13" text="{path: 'EAN11'}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn8" width="7rem" hAlign="End" sortProperty="DIN">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "DIN", "leadingProperty": "DIN", "columnIndex": 14}'/>
+                                    </t:customData>
+                                <Text id="_IDGenText14" text="{i18n>INVENTORYSNAPSHOT.DIN}"></Text>
+                                <t:template>
+                                <Text id="_IDGenText15" text="{path: 'DIN'}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn1" width="7rem" hAlign="End" sortProperty="WERKS">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "WERKS", "leadingProperty": "WERKS", "columnIndex": 17}'/>
+                                    </t:customData>
+                                <Text id="_IDGenText21" text="{i18n>INVENTORYSNAPSHOT.PLANT}"></Text>
+                                <t:template>
+                                <Text id="_IDGenText22" text="{path: 'WERKS'}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn9" width="7rem" hAlign="End" sortProperty="VKORG">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "VKORG", "leadingProperty": "VKORG", "columnIndex": 19}'/>
+                                    </t:customData>
+                                <Text id="_IDGenText16" text="{i18n>INVENTORYSNAPSHOT.VKORG}"></Text>
+                                <t:template>
+                                <Text id="_IDGenText17" text="{path: 'VKORG'}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn10" width="7rem" hAlign="End" sortProperty="MFRNR" visible="false">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "MFRNR", "leadingProperty": "MFRNR", "columnIndex": 20}'/>
+                                    </t:customData>
+                                <Text id="_IDGenText18" text="{i18n>INVENTORYSNAPSHOT.MFRNR}"></Text>
+                                <t:template>
+                                <Text id="_IDGenText19" text="{path: 'MFRNR'}" />
+                                </t:template>
+                            </t:Column>
+                        </t:columns>
+                    </t:Table>
+                </st:SmartTable>
+            </f:content>
+            <f:footer >
+                <OverflowToolbar id="_IDGenOverflowToolbar1" class="footer">
+                        <!-- Added by Bryan Cash in order to make the footer fully responsive for mobile devices -->
+                        <FlexBox id="_IDGenFlexBox9" width="100%" justifyContent="SpaceBetween" wrap="Wrap">
+                            <FlexBox id="_IDGenFlexBox10">
+                                <ObjectIdentifier id="_IDGenObjectIdentifier1"
+                                    title="{i18n>totals}"
+                                    class="footerTitle"/>
+                            </FlexBox>
+                            <FlexBox id="_IDGenFlexBox11" >
+                                <HBox id="_IDGenHBox1" class="sapUiSmallMarginEnd">
+                                    <Label id="_IDGenLabel1" text="{i18n>footerLabel1}:" class="cssLabelTotal"/>
+                                    <Text id="footerText1" class="footerText" text =""/>
+                                </HBox>
+                            </FlexBox>
+                        </FlexBox>
+                </OverflowToolbar>
+            </f:footer>
+
+        </f:DynamicPage>
+    </App>
+</mvc:View>

@@ -1,0 +1,178 @@
+{
+	"_version": "1.81.0",
+	"sap.app": {
+		"id": "invmb51",
+		"type": "application",
+		"i18n": {
+			"bundleUrl": "i18n/i18n.properties",
+			"supportedLocales": [
+				"",
+				"en"
+			]
+		},
+		"applicationVersion": {
+			"version": "0.0.1"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"resources": "resources.json",
+		"sourceTemplate": {
+			"id": "@sap/generator-fiori:basic",
+			"version": "1.20.1",
+			"toolsId": "c6b2dc2a-4429-413d-a9a2-c4c0fd6fbb24"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/odata/v2/inventory/",
+				"type": "OData",
+				"settings": {
+					"annotations": [],
+					"odataVersion": "2.0"
+				}
+			},
+			"logoService": {
+				"uri": "/odata/v4/media/",
+				"type": "OData",
+				"settings": {
+					"annotations": [],
+					"odataVersion": "4.0"
+				}
+			},
+			"UserApi": {
+				"uri": "/user-api/attributes",
+				"type": "JSON",
+				"settings": {
+					"useBatch": false,
+					"json": true
+				}
+			}
+		},
+		"crossNavigation": {
+			"inbounds": {
+				"invmb51-display": {
+					"semanticObject": "invmb51",
+					"action": "display",
+					"title": "{{invmb51-display.flpTitle}}",
+					"subTitle": "{{flpSubTitle}}",
+					"icon": "{{flpIcon}}",
+					"signature": {
+						"parameters": {},
+						"additionalParameters": "allowed"
+					}
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"flexEnabled": true,
+		"dependencies": {
+			"minUI5Version": "1.144.0",
+			"libs": {
+				"sap.m": {},
+				"sap.ui.core": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "invmb51.i18n.i18n",
+					"supportedLocales": [
+						"en",
+						"fr"
+					],
+					"fallbackLocale": "en"
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true,
+				"settings": {
+					"operationMode": "Server",
+					"autoExpandSelect": true,
+					"earlyRequests": true
+				}
+			},
+			"logo": {
+				"type": "sap.ui.model.odata.v4.ODataModel",
+				"dataSource": "logoService",
+				"preload": true,
+				"settings": {
+					"operationMode": "Server",
+					"autoExpandSelect": true,
+					"earlyRequests": true
+				}
+			},
+			"userModel": {
+				"dataSource": "UserApi",
+				"settings": {}
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"controlAggregation": "pages",
+				"controlId": "app",
+				"transition": "slide",
+				"type": "View",
+				"viewType": "XML",
+				"path": "invmb51.view",
+				"async": true,
+				"viewPath": "invmb51.view"
+			},
+			"routes": [
+				{
+					"name": "RouteMain",
+					"pattern": ":?query:",
+					"target": [
+						"TargetMain"
+					]
+				}
+			],
+			"targets": {
+				"TargetMain": {
+					"id": "Main",
+					"name": "Main"
+				}
+			}
+		},
+		"rootView": {
+			"viewName": "invmb51.view.App",
+			"type": "XML",
+			"id": "App",
+			"async": true
+		},
+		"flexBundle": false
+	},
+	"sap.cloud": {
+		"public": true,
+		"service": "mck.portal"
+	}
+}

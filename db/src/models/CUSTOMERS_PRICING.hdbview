@@ -1,0 +1,17 @@
+VIEW "CUSTOMERS_PRICING"
+AS SELECT 
+    VKORG,
+    KBETR,
+    KSCHL,
+    VTEXT,
+    MATNR,
+    MAKTX,
+    MFRNR,
+    KONWA,
+    REGIO,
+    MFRNR_NAME,
+    DATAB,
+    KDGRP,
+    KUNNR,
+    COCO_NUM     
+FROM "SYNPRICINGDOC"

@@ -1,0 +1,125 @@
+<mvc:View
+    controllerName="pricelist.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:t="sap.ui.table"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:sf="sap.ui.comp.smartfilterbar"
+    xmlns:st="sap.ui.comp.smarttable"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    displayBlock="true"
+    core:require="{ Formatter: 'pricelist/model/formatter' }" >
+    <App id="app">
+        <f:DynamicPage id="dynamicPage" showFooter="true">
+            <f:header>
+                <f:DynamicPageHeader id="_IDGenDynamicPageHeader1" class="noPadding">
+                    <FlexBox id="_IDGenFlexBox6" width="100%" direction="Row" wrap="Wrap" justifyContent="SpaceBetween" class="headerPadding sapUiMediumMarginBottom borderBottom">
+                        <HeaderContainer id="container1" scrollStep="200" height="100px">
+                            <FlexBox id="_IDGenFlexBox7" alignItems="Center" height="100px">
+                                <FlexBox id="_IDGenFlexBox8" alignItems="Center" height="75px" class="imgBG">
+                                    <Image id="logoImage" src="/img/logoipsum-325.svg" width="125px" decorative="false" press="onLogoPressed" tooltip="{i18n>tooltipLogo}">
+                                        <layoutData>
+                                            <OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow"/>
+                                        </layoutData>
+                                    </Image>
+                                </FlexBox>
+                            </FlexBox>
+                        </HeaderContainer>
+                        <!-- <HeaderContainer id="container2" scrollStep="200">
+                            <GenericTile id="_IDGenGenericTile1" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="{i18n>lastRefresh}" subheader="3/22/2024 6:30:57AM" frameType="OneByHalf">
+                                <TileContent id="_IDGenTileContent1" class="refreshTitle" footer="{i18n>tileFooterText}">
+                                    <Text id="_IDGenText1" class="refreshText" text="3/22/2024 6:30:57AM"/>
+                                </TileContent>
+                            </GenericTile>
+                        </HeaderContainer> -->
+                    </FlexBox>
+                    <sf:SmartFilterBar
+                        id="bar0"
+                        entitySet="PRICING"
+                        enableBasicSearch="true"
+                        useDateRangeType="true"
+                        persistencyKey="SmartFilterBar_PRICING"
+                        smartVariant="pageVariant"
+                        liveMode="true"
+                        search="onSearch"
+                    >
+                        <sf:controlConfiguration>
+                            </sf:controlConfiguration>
+                    </sf:SmartFilterBar>
+                </f:DynamicPageHeader>
+            </f:header>
+            <f:content>
+                <st:SmartTable
+                    xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+                    width="100%"
+                    direction="Column"
+                    fitContainer="true"
+                    tableType="Table"
+                    header="{i18n>tableTitle}" enableAutoBinding="true"
+                    id="table0"
+                    smartFilterId="bar0"
+                    cd:w5g.dt.context="/PRICING"
+                    entitySet="PRICING"
+                    placeToolbarInTable="true"
+                    useExportToExcel="true"
+                    beforeExport="onBeforeExport"
+                    useVariantManagement="true"
+                    useTablePersonalisation="true"
+                    customData:p13nDialogSettings='{filter:{visible:false}}'
+                    showRowCount="true"
+                    persistencyKey="SmartTableAnalytical_PRICING"
+                    enableAutoColumnWidth="true" class="sapUiResponsiveContentPadding"
+                >
+                    <t:Table id="table" selectionMode="None" alternateRowColors="true"> 
+                        <t:columns>
+                            <t:Column id="_IDGenColumn1" width="auto" hAlign="End" sortProperty="MATNR">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "MATNR", "leadingProperty": "MATNR", "columnIndex": 0}'/>
+                                </t:customData>
+                                <Text id="_IDGenText7" text="{i18n>PRICING.MATNR}"/>
+                                <t:template>
+                                    <Text
+                                        id="_IDGenText10"
+                                        text="{path: 'MATNR', formatter: 'Formatter.removeLeadingZeros.bind($controller)'}" />
+                                </t:template>
+                            </t:Column>
+
+                            <t:Column id="_IDGenColumn" width="auto" hAlign="End" sortProperty="KBETR">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "KBETR", "columnIndex": 4, "leadingProperty": "KBETR"}'/> 
+                                </t:customData>
+                                <Text id="_IDGenText6" text="{i18n>PRICING.KBETR}"/>
+                                <t:template>
+                                    <Text id="_IDGenText9"
+                                          text="${path: 'KBETR'}" />
+                                    </t:template>
+                            </t:Column>
+
+                            <t:Column id="_IDGenColumn3" width="auto" hAlign="End" sortProperty="VKORG"> 
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "VKORG", "leadingProperty": "VKORG", "columnIndex": 6}'/>
+                                </t:customData>
+                                <Text id="_IDGenText" text="{i18n>PRICING.VKORG}"/>
+                                <t:template>
+                                    <Text id="_IDGenText2" text="{path: 'VKORG'}" />
+                                </t:template>
+                            </t:Column>
+
+                             <t:Column id="_IDGenColumn4" width="auto" hAlign="End" sortProperty="MFRNR" visible="false"> 
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "MFRNR", "leadingProperty": "MFRNR", "columnIndex": 7}'/> </t:customData>
+                                <Text id="_IDGenText3" text="{i18n>PRICING.MFRNR}"/>
+                                <t:template>
+                                    <Text id="_IDGenText4" text="{path: 'MFRNR'}" />
+                                </t:template>
+                            </t:Column>
+
+                        </t:columns>
+                    </t:Table>
+                </st:SmartTable>
+            </f:content>
+        </f:DynamicPage>
+    </App>
+</mvc:View>

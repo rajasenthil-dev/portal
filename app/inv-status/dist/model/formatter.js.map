@@ -1,0 +1,1 @@
+{"version":3,"file":"formatter.js","names":["sap","ui","define","DateFormat","NumberFormat","removeLeadingZeros","value","test","String","Number"],"sources":["formatter-dbg.js"],"mappings":"AAAAA,IAAIC,GAAGC,OAAO,CACV,gCACA,mCACD,CAACC,EAAYC,KACZ,aAEA,MAAO,CACHC,mBAAoB,SAASC,GACzB,UAAWA,IAAU,UAAY,QAAQC,KAAKD,GAAQ,CAClD,OAAOE,OAAOC,OAAOH,GACzB,CACA,OAAOA,CACX","ignoreList":[]}

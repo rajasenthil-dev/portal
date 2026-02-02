@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/format/DateFormat","sap/ui/core/format/NumberFormat"],(r,e)=>{"use strict";return{removeLeadingZeros:function(r){if(typeof r==="string"&&/^\d+$/.test(r)){return String(Number(r))}return r}}});
+//# sourceMappingURL=formatter.js.map

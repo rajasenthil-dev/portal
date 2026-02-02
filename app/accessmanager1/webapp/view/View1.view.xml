@@ -1,0 +1,181 @@
+<mvc:View controllerName="accessmanager1.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core"
+  xmlns:t="sap.ui.table"
+  xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+  xmlns:smartTable="sap.ui.comp.smarttable"
+  displayBlock="true">
+      <f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false">
+        <!-- DynamicPage Title -->
+        <f:title>
+          <f:DynamicPageTitle id="_IDGenDynamicPageTitle1">
+            <f:heading>
+              <Title id="_IDGenTitle" text="Users"/>
+            </f:heading>
+          </f:DynamicPageTitle>
+        </f:title>
+
+        <!-- DynamicPage Content -->
+        <f:content>
+          <VBox id="_IDGenVBox" fitContainer="true">
+            <OverflowToolbar id="_IDGenOverflowToolbar" class="sapFDynamicPageAlignContent">
+              <ToolbarSpacer id="_IDGenToolbarSpacer"/>
+              <SearchField id="_IDGenSearchField" search=".onSearch" width="17.5rem"/>
+              <OverflowToolbarButton id="_IDGenOverflowToolbarButton" icon="sap-icon://add" text="Add" type="Transparent" press=".onAdd"/>
+              <OverflowToolbarButton id="_IDGenOverflowToolbarButton1" icon="sap-icon://sort" text="Sort" type="Transparent" press=".onSort"/>
+            </OverflowToolbar>
+            <Table
+              id="productsTable"
+              inset="false"
+              items="{
+                path: 'edit>/',
+                sorter: {
+                  path: 'firstName'
+                }
+              }"
+              class="sapFDynamicPageAlignContent"
+              width="auto">
+              <columns>
+                <Column id="_IDGenColumn" width="12em">
+                  <Text id="_IDGenText" text="UserInfo"/>
+                </Column>
+                <Column id="_IDGenColumn1"	hAlign="End">
+                  <Text id="_IDGenText1" text="Group Name"/>
+                </Column>
+              </columns>
+              <items>
+                <ColumnListItem id="_IDGenColumnListItem" type="Navigation" press=".onListItemPress">
+                  <cells>
+                    <ObjectIdentifier id="_IDGenObjectIdentifier" title="{edit>firstName} {edit>lastName}" text="{edit>mfgName}"/>
+                    <ObjectIdentifier id="_IDGenObjectIdentifier1" title="{edit>groupNames}"></ObjectIdentifier>
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </VBox>
+        </f:content>
+
+        <!-- DynamicPage Footer -->
+        <f:footer>
+          <OverflowToolbar id="_IDGenOverflowToolbar1">
+            <ToolbarSpacer id="_IDGenToolbarSpacer1"/>
+            <Button id="_IDGenButton" type="Accept" text="Accept"/>
+            <Button id="_IDGenButton1" type="Reject" text="Reject"/>
+          </OverflowToolbar>
+        </f:footer>
+      </f:DynamicPage>
+      <!-- <Page id="mainPage" title="Okta Users" class="sapUiNoContentPadding">
+        <HBox id="_IDGenHBox1" class="centeredTableBox" justifyContent="Center" width="100%">
+            <VBox id="_IDGenVBox" width="100%" class="responsiveTableWrapper tablePadding">
+              <Toolbar id="_IDGenToolbar">
+                <Title id="_IDGenTitle" text="Okta Users" />
+                <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                <Button id="_IDGenButton" text="Refresh" press=".onRefresh" icon="sap-icon://refresh" />
+              </Toolbar>
+              <Table id="userTable"
+                    inset="false"
+                    mode="SingleSelectMaster"
+                    class="sapUiNoMargin"
+                    items="{
+                        path: '/OKTAUsers',
+                        sorter: { path: 'firstName', descending: false }
+                    }"
+                    growing="true"
+                    growingThreshold="10"
+                    width="100%"
+                    headerText="Users (fetched from Okta)">
+                <headerToolbar>
+                  <Toolbar id="_IDGenToolbar1">
+                    <Title id="_IDGenTitle1" text="Users" />
+                    <ToolbarSpacer id="_IDGenToolbarSpacer3"/>
+                    <SearchField id="search" width="30%" liveChange="onSearch" />
+                    <Button
+                      id="settingsButton"
+                      icon="sap-icon://action-settings"
+                      tooltip="Sort / Filter / Group"
+                      press=".onOpenViewSettings" />
+                  </Toolbar>
+                </headerToolbar>
+                
+
+                <columns>
+                  <Column id="statusColumn" width="10rem">
+                    <Text id="statusText" text="Active/Inactive" />
+                  </Column>
+                  <Column id="_IDGenColumn21">
+                    <Text id="_IDGenText21" text="User Id" />
+                  </Column>
+                  <Column id="_IDGenColumn">
+                    <Text id="_IDGenText" text="User Info" />
+                  </Column>
+                  <Column id="_IDGenColumn1">
+                    <Text id="_IDGenText1" text="Manufacturer Info" />
+                  </Column>
+                  <Column id="_IDGenColumn3">
+                    <Text id="_IDGenText3" text="Sales Org" />
+                  </Column>
+                  <Column id="_IDGenColumn4">
+                    <Text id="_IDGenText4" text="Sales Office" />
+                  </Column>
+                  <Column id="_IDGenColumn5">
+                    <Text id="_IDGenText5" text="Profit Center" />
+                  </Column>
+                  <Column id="_IDGenColumn6">
+                    <Text id="_IDGenText6" text="Group Info" />
+                  </Column>
+                  <Column id="_IDGenColumn8">
+                    <Text id="_IDGenText9" text="Action" />
+                  </Column>
+                </columns>
+
+                <items>
+                  <ColumnListItem id="_IDGenColumnListItem" type="Active" press=".onSelectUser">
+                    <cells>
+                      <ObjectStatus id="userStatus"
+                        class="statusText"
+                        icon="{= ${status} === 'ACTIVE' ? 'sap-icon://employee-approvals' : 'sap-icon://employee-rejections' }"
+                        text="{status}"
+                        state="{= ${status} === 'ACTIVE' ? 'Success' : 'Error' }" />
+                        <Text id="_IDGenObjectIdentifier22"
+                        text="{id}"/>
+                      <ObjectIdentifier id="_IDGenObjectIdentifier" title="{= ${firstName} + ' ' + ${lastName} }" text="{email}"/>
+                      <ObjectIdentifier id="_IDGenObjectIdentifier1"
+                        title="{mfgName}"
+                        text="{manufacturerNumber}"/>
+                      <Text id="_IDGenObjectIdentifier2"
+                        text="{salesOrg}"/>
+                      <Text id="_IDGenText10" text="{salesOffice}" />
+                      <Text id="_IDGenText11" text="{profitCentre}" />
+                      <ObjectIdentifier id="_IDGenText121" 
+                        title="{groupNames}" text="{groupIds}" />
+                      <HBox id="_IDGenHBox">
+                        <Button id="_IDGenButton2" class="sapUiTinyMarginEnd" type="Emphasized" text="Edit" icon="sap-icon://edit" press=".onOpenDetail" tooltip="Edit User"/>
+
+                        <Button id="_IDGenButton3"
+                          type="Accept"
+                          text="Activate"
+                          icon="sap-icon://employee-approvals"
+                          press=".onActivateUser"
+                          tooltip="Activate User"
+                          visible="{= ${path: 'status', targetType: 'any'} !== 'ACTIVE' }" />
+                        
+                        <Button id="_IDGenButton4"
+                          type="Reject"
+                          text="Deactivate"
+                          icon="sap-icon://employee-rejections"
+                          press=".onDeactivateUser"
+                          tooltip="Deactivate User"
+                          visible="{= ${path: 'status', targetType: 'any'} === 'ACTIVE' }" />
+                        
+                      </HBox>
+                    </cells>
+                  </ColumnListItem>
+                </items>
+              </Table>
+          </VBox>
+        </HBox>
+      </Page> -->
+</mvc:View>

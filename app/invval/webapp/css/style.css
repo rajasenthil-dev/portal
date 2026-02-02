@@ -1,0 +1,87 @@
+/* Enter your custom styles here */
+.mck_HeaderContainer {
+    border-top: 1px #d9d9d9 solid;
+    border-bottom: 1px #d9d9d9 solid;
+}
+.headerPadding {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: .5rem;
+    padding-bottom: .75rem !important;
+}
+
+.mck_Tile {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.mck_TileContent>.sapMNCInner{
+    top:0!important;
+}
+.mck_TileContent {
+    justify-content: start!important;
+    font-size: 1.25em;
+    margin-bottom: .5rem;
+}
+.mck_TileContentTitle {
+    margin-top:.5rem;
+    color:#143359!important;
+}
+
+.cssLabelTotal{
+    font-weight: bold;
+}
+
+.customText{
+    font-weight: bold;
+}
+.tileLayout {
+    background:#fff!important;
+    border: 1px solid #fff!important;
+    color:#143359!important;
+}
+.tileLayout .sapMGTHdrTxt>.sapMText {
+    color:#143359!important;
+}
+.tileLayout.sapMGT {
+    border-radius: 10px!important;
+}
+.refreshText {
+    color:#1d2d3e!important;
+    font-weight: 700;
+}
+.borderBottom {
+    background-color: #143359;
+    border-radius: 10px;
+}
+
+.imgBG {
+    background: #fff;
+    padding-top:.25rem;
+    padding-bottom:.25rem;
+    padding-left:1rem;
+    padding-right:1rem;
+    border-radius: 10px;
+}
+
+.sapFDynamicPageFooter .sapFDynamicPageActualFooterControl.sapMIBar.footer {
+    background:#143359;
+    color:#fff;
+    min-height: 2.5rem!important;
+}
+.footer .sapMBar {
+    background: transparent!important;
+    box-shadow: none;
+    color:#fff;
+}
+
+.footerTitle .sapMObjectIdentifierTitle .sapMText {
+    color: #fff!important;
+}
+
+.footerText.sapMText{
+    color: #ff5722!important;
+}
+.cssLabelTotal.sapMLabel{
+    color: #fff!important;
+    margin-right:5px;
+}

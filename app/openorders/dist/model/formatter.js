@@ -1,0 +1,2 @@
+sap.ui.define([],()=>{"use strict";return{_formatDate:function(e){if(!e)return"";let t;if(typeof e==="string"){if(e.length===8){const i=e.slice(0,4)+"-"+e.slice(4,6)+"-"+e.slice(6,8);t=new Date(i+"T00:00:00Z")}else{return""}}else if(e instanceof Date){t=new Date(e.getTime())}else{return""}if(isNaN(t.getTime())){return""}t.setMinutes(t.getMinutes()+t.getTimezoneOffset());const i=sap.ui.core.format.DateFormat.getDateInstance({style:"medium"});return i.format(t)}}});
+//# sourceMappingURL=formatter.js.map

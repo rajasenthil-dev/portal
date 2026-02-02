@@ -1,0 +1,139 @@
+
+{
+    "xsappname": "mck-portal",
+    "tenant-mode": "dedicated",
+    "description": "Security profile of called application",
+    "scopes": [
+        {
+            "name": "uaa.user",
+            "description": "UAA"
+        },
+        {
+            "name": "$XSAPPNAME.Viewer",
+            "description": "Viewer",
+            "grant-as-authority-to-apps": ["mck-portal"]
+        },
+        {
+            "name": "$XSAPPNAME.Internal",
+            "description": "Internal User",
+            "grant-as-authority-to-apps": ["mck-portal"]
+        },
+        {
+            "name": "$XSAPPNAME.Admin",
+            "description": "Admin User",
+            "grant-as-authority-to-apps": ["mck-portal"]
+        }
+    ],
+    "attributes": [
+        {
+            "name": "ManufacturerNumber",
+            "description": "ManufacturerNumber",
+            "valueType": "string",
+            "valueRequired": false
+        },
+        {
+            "name": "SalesOrg",
+            "description": "SalesOrg",
+            "valueType": "string",
+            "valueRequired": false
+        },
+        {
+            "name": "SalesOffice",
+            "description": "SalesOffice",
+            "valueType": "string",
+            "valueRequired": false
+        },
+        {
+            "name": "ProfitCentre",
+            "description": "ProfitCentre",
+            "valueType": "string",
+            "valueRequired": false
+        },
+        {
+            "name": "MFGName",
+            "description": "MFGName",
+            "valueType": "string",
+            "valueRequired": false
+        }
+    ],
+    "role-templates": [
+        {
+            "name": "Token_Exchange",
+            "description": "UAA",
+            "scope-references": [
+              "uaa.user"
+            ]
+        },
+        {
+            "name": "Viewer",
+            "description": "generated",
+            "scope-references": [
+                "uaa.user",
+                "$XSAPPNAME.Viewer"
+            ],
+            "attribute-references": [
+                "ManufacturerNumber",
+                "SalesOrg",
+                "SalesOffice",
+                "ProfitCentre",
+                "MFGName"
+            ]
+        },
+        {
+            "name": "Internal",
+            "description": "generated",
+            "scope-references": [
+                "uaa.user",
+                "$XSAPPNAME.Internal"
+            ]
+        },
+        {
+            "name": "Admin",
+            "description": "generated",
+            "scope-references": [
+                "uaa.user",
+                "$XSAPPNAME.Admin"
+            ]
+        },
+        {
+            "name": "userattributes",
+            "description": "generated",
+            "default-role-name": "Attributes of a User",
+            "scope-references": [
+                "uaa.user"
+            ],
+            "attribute-references": [
+                "ManufacturerNumber",
+                "SalesOrg",
+                "SalesOffice",
+                "ProfitCentre",
+                "MFGName"   
+            ]
+        }
+    ],
+    
+    "oauth2-configuration": {
+        "grant-types": [
+            "client_credentials",
+            "authorization_code",
+            "refresh_token",
+            "urn:ietf:params:oauth:grant-type:jwt-bearer",
+            "user_token"
+        ],
+        "credential-types": [
+            "binding-secret",
+            "x509"
+        ],
+        "system-attributes": [
+            "groups"
+        ],
+        "allowedproviders": [],
+        "redirect-uris": [
+            "https://**cfapps.us20.hana.ondemand.com/**",
+            "https://sapbtp-login.dev.mckesson.ca/oauth2/aushayeaerbghFdnw1d7/v1/logout",
+            "https://sapbtp-login.mckesson.ca/oauth2/default/v1/logout",
+            "https://*.applicationstudio.cloud.sap/**",
+            "https://port5000-workspaces-ws-7hzlf.us20.applicationstudio.cloud.sap/"
+        ]
+    }
+}

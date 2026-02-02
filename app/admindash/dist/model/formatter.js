@@ -1,0 +1,2 @@
+sap.ui.define([],()=>{"use strict";return{formatUrl:function(e,t){if(!e)return"";const r=t!==false;var a=sap.ui.require.toUrl("admindash").split("/resources")[0];if(a==="."){a=""}console.log("✅ Dynamic Base Path:",a);var i=a+"/odata/v4/media/MediaFile";return`${i}(ID='${e}',IsActiveEntity=${r})/content`},formatModifiedAt:function(e,t){const r=sap.ui.core.format.DateFormat.getDateTimeInstance({style:"medium"});if(e){return r.format(new Date(e))}if(t){return"Created: "+r.format(new Date(t))}return"Not yet saved"}}});
+//# sourceMappingURL=formatter.js.map

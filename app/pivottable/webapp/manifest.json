@@ -1,0 +1,190 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "pivottable",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.17.5",
+      "toolsId": "79ef6d3b-bebe-489c-95f6-cd1e576474ea"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v2/sales/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "2.0"
+        }
+      },
+      "logoService": {
+        "uri": "/odata/v4/media/",
+        "type":"OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      },
+      "UserApi": {
+        "uri": "/user-api/attributes",
+        "type": "JSON",
+        "settings": {
+          "useBatch": false,
+          "json": true
+        }
+
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "pivottable-display": {
+          "semanticObject": "pivottable",
+          "action": "display",
+          "title": "{{pivottable-display.flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.135.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {},
+        "sap.ui.layout": {},
+        "sap.f": {},
+        "sap.ui.table": {},
+        "sap.ui.comp": {},
+        "sap.ui.mdc": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "pivottable.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true,
+          "groupId": "$direct"
+        }
+      },
+      "logo": {
+        "type": "sap.ui.model.odata.v4.ODataModel",
+        "dataSource": "logoService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "userModel": {
+        "dataSource": "UserApi",
+        "settings": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "pivottable.view",
+        "async": true
+      },
+      "routes": [
+        {
+          "name": "RouteView1",
+          "pattern": "",
+          "target": [
+            "TargetView1"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetView1": {
+          "id": "View1",
+          "name": "View1"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "pivottable.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    },
+    "framework": {
+      "name": "SAPUI5",
+      "version": "1.120.13",
+      "libraries": [
+        {
+          "name": "sap.m"
+        },
+        {
+          "name": "sap.ui.core"
+        },
+        {
+          "name": "sap.ui.mdc"
+        },
+        {
+          "name": "themelib_sap_horizon"
+        }
+      ]
+    }
+  },
+  
+  "sap.cloud": {
+    "public": true,
+    "service": "mck.portal"
+  }
+}

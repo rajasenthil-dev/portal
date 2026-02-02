@@ -1,0 +1,51 @@
+/* Enter your custom styles here */
+/* Style the dialog container */
+.dialogContent {
+    padding: 20px;
+}
+
+/* Input fields inside the dialog */
+.dialogInput {
+    margin-bottom: 16px!important; /* Adds space between inputs */
+    
+    border-radius: 4px; /* Rounded corners */
+}
+
+/* FileUploader styling */
+.dialogFileUploader {
+    margin-bottom: 16px!important;
+}
+
+/* Buttons inside dialog */
+/* .sapMDialog .sapMDialogFooter {
+    padding: 16px; /* Add spacing inside footer */
+/* } */
+
+/* Optional: Customize button width */
+/* .sapMButton {
+    min-width: 120px;
+}
+
+/* Optional: Change the background color of the Save button */
+/* .sapMEmphasized {
+    background-color: #007aff;
+    color: white;
+}
+
+.sapMButton[aria-disabled="true"] {
+    background-color: #d3d3d3;
+    color: #808080;
+}  */
+
+.centeredTableBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.responsiveTableWrapper {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    width: 100%;
+    box-sizing: border-box;
+}

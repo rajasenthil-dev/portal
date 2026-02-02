@@ -1,0 +1,380 @@
+<mvc:View controllerName="salesserialnumber.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:t="sap.ui.table"
+    xmlns:sf="sap.ui.comp.smartfilterbar"
+    xmlns:st="sap.ui.comp.smarttable"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    displayBlock="true"
+    core:require="{CurrencyType: 'sap/ui/model/type/Currency'}"
+    >
+        <f:DynamicPage id="dynamicPage" showFooter="true">
+            <f:header>
+                <f:DynamicPageHeader id="_IDGenDynamicPageHeader1" class="noPadding">
+                    <FlexBox id="_IDGenFlexBox6" width="100%" direction="Row" wrap="Wrap" justifyContent="SpaceBetween" class="headerPadding sapUiMediumMarginBottom borderBottom">
+                        <HeaderContainer id="container1" scrollStep="200" height="100px">
+                            <FlexBox id="_IDGenFlexBox7" alignItems="Center" height="100px">
+                                <FlexBox id="_IDGenFlexBox8" alignItems="Center" height="75px" class="imgBG">
+                                    <Image id="logoImage" src="/img/logoipsum-325.svg" width="125px" decorative="false" press="onLogoPressed" tooltip="SAP Logo" >
+                                        <layoutData>
+                                            <OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow"/>
+                                        </layoutData>
+                                    </Image>
+                                </FlexBox>
+                            </FlexBox>
+                        </HeaderContainer>
+                        <!-- <HeaderContainer id="container2" scrollStep="200">
+                            <GenericTile id="_IDGenGenericTile1" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="{i18n>lastRefresh}" subheader="3/22/2024 6:30:57AM" frameType="OneByHalf">
+                                <TileContent id="_IDGenTileContent1" class="refreshTitle" footer="Footer Text">
+                                    <Text id="_IDGenText1" class="refreshText" text="3/22/2024 6:30:57AM"/>
+                                </TileContent>
+                            </GenericTile>
+                        </HeaderContainer> -->
+                    </FlexBox>
+                    <sf:SmartFilterBar
+                        id="bar0"
+                        entitySet="SALESSERIALNUMBER"
+                        useDateRangeType="true"
+                        persistencyKey="SmartFilterBar_SALESSERIALNUMBER"
+                        smartVariant="pageVariant"
+                        liveMode="true"
+                        search="onSearch">
+                        <sf:controlConfiguration> 
+                            <sf:ControlConfiguration id="_IDGenControlConfiguration1"
+                                key="INVOICE_DATE_FKDAT"
+                                visibleInAdvancedArea="true"
+                                conditionType="{
+                                    module: 'sap.ui.comp.config.condition.DateRangeType'
+                                }"
+                            />
+                            <sf:ControlConfiguration id="_IDGenControlConfiguration2"
+                                key="EXP_DATE"
+                                visibleInAdvancedArea="true"
+                                conditionType="{
+                                    module: 'sap.ui.comp.config.condition.DateRangeType'
+                                }"
+                            />
+                            
+                            <sf:ControlConfiguration id="_IDGenControlConfiguration4"
+                                key="DELIVERY_DATE"
+                                visibleInAdvancedArea="true"
+                                conditionType="{
+                                    module: 'sap.ui.comp.config.condition.DateRangeType'
+                                }"
+                            />
+                        </sf:controlConfiguration>
+                        <sf:controlConfiguration>
+                            <sf:ControlConfiguration id="customCurrentFilter"
+                                key="CURRENT"
+                                visibleInAdvancedArea="true"
+                            >
+                                <sf:customControl>
+                                    <ComboBox id="currentFilterBox" selectedKey="{filters>/currentStatus}">
+                                        <items>
+                                            <core:Item id="_IDGenItem2" key="" text="{i18n>SALESBYCURRENT.ALLTEXT}"/>
+                                            <core:Item id="_IDGenItem" key="YES" text="{i18n>SALESBYCURRENT.CURRENTTEXT}"/>
+                                            <core:Item id="_IDGenItem1" key="NO" text="{i18n>SALESBYCURRENT.LEGACYTEXT}"/>
+                                        </items>
+                                    </ComboBox>
+                                </sf:customControl>
+                            </sf:ControlConfiguration>
+                        </sf:controlConfiguration>
+                    </sf:SmartFilterBar>
+                    <Panel id="_IDGenPanel" expandable="true" expanded="true" headerText="{i18n>panelHeader}">
+
+                        <HeaderContainer id="container4" scrollStep="200" orientation="Horizontal" gridLayout="true" class="mck_HeaderContainer">
+
+                            <FlexBox id="_IDGenFlexBox1" direction="Column" class="mck_Tile">
+                                <Title id="_IDGenTitle1" class="mck_TileContentTitle" text="{i18n>tileTitle1}"/>
+                                <Text id="_IDGenNumericContent1" class="mck_TileContent" text=""/>
+                            </FlexBox>
+                            <FlexBox id="_IDGenFlexBox2" direction="Column" class="mck_Tile">
+                                <Title id="_IDGenTitle2" class="mck_TileContentTitle" text="{i18n>tileTitle2}"/>
+                                <Text id="_IDGenNumericContent2" class="mck_TileContent" text=""/>
+                            </FlexBox>
+                            <FlexBox id="_IDGenFlexBox3" direction="Column" class="mck_Tile">
+                                <Title id="_IDGenTitle3" class="mck_TileContentTitle" text="{i18n>tileTitle3}"/>
+                                <Text id="_IDGenNumericContent3" class="mck_TileContent" text=""/>
+                            </FlexBox>
+                            <FlexBox id="_IDGenFlexBox4" direction="Column" class="mck_Tile">
+                                <Title id="_IDGenTitle4" class="mck_TileContentTitle" text="{i18n>tileTitle4}"/>
+                                <Text id="_IDGenNumericContent4" class="mck_TileContent" text=""/>
+                            </FlexBox>
+                            
+                        </HeaderContainer>
+                    </Panel>
+                </f:DynamicPageHeader>
+            </f:header>
+
+            <f:content>
+                <st:SmartTable
+                    xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
+                    width="100%" 
+                    direction="Column" 
+                    fitContainer="true" 
+                    tableType="Table" 
+                    header="{i18n>tableTitle}" 
+                    enableAutoBinding="true" 
+                    id="table0" 
+                    smartFilterId="bar0"
+                    cd:w5g.dt.context="/SALESSERIALNUMBER" 
+                    entitySet="SALESSERIALNUMBER" 
+                    placeToolbarInTable="true" 
+                    useExportToExcel="true" 
+                    beforeExport="onBeforeExport" 
+                    useVariantManagement="true" 
+                    useTablePersonalisation="true" 
+                    customData:p13nDialogSettings='{filter:{visible:false}}'
+                    showRowCount="true" 
+                    persistencyKey="SmartTableAnalytical_SERIALNUM"
+                    enableAutoColumnWidth="true" 
+                    class="sapUiResponsiveContentPadding"
+                >
+                    <t:Table
+                        selectionMode="None"
+                        id="table"
+                        class="footerPadding"
+                        alternateRowColors="true"
+                        core:require="{
+                            TypeForODataV2DateOnly: 'sap/ui/model/odata/type/DateTime',
+                            TypeForODataV2Time: 'sap/ui/model/odata/type/Date',
+                            TypeForODataTimestamp: 'sap/ui/model/odata/type/DateTimeOffset'
+                        }">
+                        <t:columns>
+                            <t:Column id="_IDGenColumn11" width='7rem' hAlign="Center" sortProperty="CURRENT">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CURRENT", "leadingProperty": "CURRENT", "columnIndex": 0}'/>
+                                </t:customData>
+                                <Text id="_IDGenText31" text="{i18n>SALESSERIALNUMBER.CURRENT}"></Text>
+                                <t:template>
+                                    <ObjectStatus id="_IDGenObjectStatus"
+                                    core:require="{
+                                            Formatter: 'salesserialnumber/model/formatter'
+                                        }"
+                                        icon="{path: 'CURRENT', formatter:'Formatter.yesNoIcon'}"
+                                        inverted="true"
+                                        state="{path: 'CURRENT', formatter: 'Formatter.yesNoIconColor'}"
+                                        tooltip="{= ${CURRENT} === 'YES' ? 'Captured from the new system post-migration and is up-to-date.' : 'Pulled from the previous system before the upgrade/migration'}"
+                                        text="{= ${CURRENT} === 'YES' ? 'Current' : 'Legacy'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn10" width='7.813rem' hAlign="End" sortProperty="INVOICE_CREDIT_NO">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "INVOICE_CREDIT_NO", "leadingProperty": "INVOICE_CREDIT_NO", "columnIndex": 1}'/>
+                                </t:customData>
+                                <Text id="_IDGenText30" text="{i18n>SALESSERIALNUMBER.INVOICE_CREDIT_NO}"></Text>
+                                <t:template>
+                                    <Link id="inviocecredir" text="{INVOICE_CREDIT_NO}" press=".onInvoiceClick"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn2" width='7.813rem' hAlign="End" sortProperty="INVOICE_DATE_FKDAT">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "INVOICE_DATE_FKDAT", "leadingProperty": "INVOICE_DATE_FKDAT", "columnIndex": 2}'/>
+                                </t:customData>
+                                <Text id="_IDGenText5" text="{i18n>SALESSERIALNUMBER.INVOICE_DATE_FKDAT}"></Text>
+                                <t:template>
+                                    <Text id="invoiceDate1" text="{path: 'INVOICE_DATE_FKDAT', type: 'sap.ui.model.odata.type.Date'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn23" width='7.813rem' hAlign="End" sortProperty="SKU">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "SKU", "leadingProperty": "SKU", "columnIndex": 3}'/>
+                                </t:customData>
+                                <Text id="_IDGenText52" text="{i18n>SALESSERIALNUMBER.SKU}"></Text>
+                                <t:template>
+                                    <Text id="sku111" 
+                                        core:require="{
+                                            Formatter: 'salesserialnumber/model/formatter'
+                                        }"
+                                        text="{path: 'SKU', formatter: 'Formatter.removeLeadingZeros'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn231" width='7.813rem' hAlign="End" sortProperty="PURCHASE_ORDER_BSTKD">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "PURCHASE_ORDER_BSTKD", "leadingProperty": "PURCHASE_ORDER_BSTKD", "columnIndex": 4}'/>
+                                </t:customData>
+                                <Text id="_IDGenText521" text="{i18n>SALESSERIALNUMBER.PURCHASE_ORDER_BSTKD}"></Text>
+                                <t:template>
+                                    <Text id="sku1111" text="{path: 'PURCHASE_ORDER_BSTKD'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn16" width='7.813rem' hAlign="End" sortProperty="UNIT_PRICE">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "UNIT_PRICE", "leadingProperty": "UNIT_PRICE", "columnIndex": 8}'/>
+                                </t:customData>
+                                <Text id="_IDGenText24" text="{i18n>SALESSERIALNUMBER.UNIT_PRICE}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText25"
+                                        core:require="{
+                                            Formatter: 'salesserialnumber/model/formatter'
+                                        }" 
+                                        text="{
+                                            parts: [{path:'UNIT_PRICE'}],
+                                            formatter: 'Formatter._formatCurrency'
+                                        }"
+                                    />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn1" width='7.813rem' hAlign="End" sortProperty="AMOUNT">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "AMOUNT", "leadingProperty": "AMOUNT", "columnIndex": 9}'/>
+                                </t:customData>
+                                <Text id="_IDGenText4" text="{i18n>SALESSERIALNUMBER.AMOUNT}"></Text>
+                                <t:template> 
+                                    <Text id="invoiceAmount" 
+                                        core:require="{
+                                            Formatter: 'salesserialnumber/model/formatter'
+                                        }"
+                                        text="{
+                                            parts: [
+                                                { path: 'AMOUNT' }
+                                            ],
+                                            formatter:'Formatter._formatCurrency'
+                                        }"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn20" width='7.813rem' hAlign="End" sortProperty="EXP_DATE">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "EXP_DATE", "leadingProperty": "EXP_DATE", "columnIndex": 10}'/>
+                                </t:customData>
+                                <Text id="_IDGenText50" text="{i18n>SALESSERIALNUMBER.EXP_DATE}"></Text>
+                                <t:template>
+                                    <Text id="expiryDate1" text="{path: 'EXP_DATE', type: 'sap.ui.model.odata.type.Date'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn4" width='7.813rem' hAlign="End" sortProperty="BILL_TO_NO">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "BILL_TO_NO", "leadingProperty": "BILL_TO_NO", "columnIndex": 14}'/>
+                                </t:customData>
+                                <Text id="_IDGenText" text="{i18n>SALESSERIALNUMBER.BILL_TO_NO}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText2" 
+                                        text="{path: 'BILL_TO_NO'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn3" width='7.813rem' hAlign="End" sortProperty="SHIP_TO_NO">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "SHIP_TO_NO", "leadingProperty": "SHIP_TO_NO", "columnIndex": 16}'/>
+                                </t:customData>
+                                <Text id="_IDGenText7" text="{i18n>SALESSERIALNUMBER.SHIP_TO_NO}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText8" 
+                                        text="{path: 'SHIP_TO_NO'}"/>
+                                </t:template>
+                            </t:Column>
+                           <t:Column id="_IDGenColumn6" width='7.813rem' hAlign="End" sortProperty="SALES_ORG">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "SALES_ORG", "leadingProperty": "SALES_ORG", "columnIndex": 23}'/>
+                                </t:customData>
+                                <Text id="_IDGenText6" text="{i18n>SALESSERIALNUMBER.SALES_ORG}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText9" 
+                                        text="{path: 'SALES_ORG'}"/>
+                                </t:template>
+                            </t:Column>
+                            <!-- <t:Column id="_IDGenColumn8" width='7.813rem' hAlign="End" sortProperty="WERKS">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "WERKS", "leadingProperty": "WERKS", "columnIndex": 30}'/>
+                                </t:customData>
+                                <Text id="_IDGenText12" text="{i18n>SALESBYCURRENT.WERKS}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText13" 
+                                        text="{path: 'WERKS'}"/>
+                                </t:template>
+                            </t:Column>-->
+                            
+                            <t:Column id="_IDGenColumn218" width='7.813rem' hAlign="End" sortProperty="DELIVERY_DATE">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "DELIVERY_DATE", "leadingProperty": "DELIVERY_DATE", "columnIndex": 11}'/>
+                                </t:customData>
+                                <Text id="_IDGenText518" text="{i18n>SALESSERIALNUMBER.DELIVERY_DATE}"></Text>
+                                <t:template>
+                                    <Text id="DeliveryDate18" text="{
+                                        path: 'DELIVERY_DATE', 
+                                        type: 'sap.ui.model.odata.type.Date'
+                                    }"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn9" width='7.813rem' hAlign="End" sortProperty="VGBEL">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "VGBEL", "leadingProperty": "VGBEL", "columnIndex": 24}'/>
+                                </t:customData>
+                                <Text id="_IDGenText14" text="{i18n>SALESSERIALNUMBER.VGBEL}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText15" 
+                                        text="{path: 'VGBEL'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn5" width='7.813rem' hAlign="End" sortProperty="SERIAL_NUMBER">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "SERIAL_NUMBER", "leadingProperty": "SERIAL_NUMBER", "columnIndex": 25}'/>
+                                </t:customData>
+                                <Text id="_IDGenText17" text="{i18n>SALESSERIALNUMBER.SERIAL_NUMBER}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText18" 
+                                        text="{path: 'SERIAL_NUMBER'}"/>
+                                </t:template>
+                            </t:Column>
+                            <!--<t:Column id="_IDGenColumn13" width='7.813rem' hAlign="End" sortProperty="CO_VKORG">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CO_VKORG", "leadingProperty": "CO_VKORG", "columnIndex": 37}'/>
+                                </t:customData>
+                                <Text id="_IDGenText16" text="{i18n>SALESBYCURRENT.CO_VKORG}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText19" 
+                                        text="{path: 'CO_VKORG'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn14" width='7.813rem' hAlign="End" sortProperty="VKBUR">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "VKBUR", "leadingProperty": "VKBUR", "columnIndex": 38}'/>
+                                </t:customData>
+                                <Text id="_IDGenText20" text="{i18n>SALESBYCURRENT.VKBUR}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText21" 
+                                        text="{path: 'VKBUR'}"/>
+                                </t:template>
+                            </t:Column>-->
+                            <t:Column id="_IDGenColumn15" width='7.813rem' hAlign="End" sortProperty="MFRNR" visible="false">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "MFRNR", "leadingProperty": "MFRNR", "columnIndex": 39}'/>
+                                </t:customData>
+                                <Text id="_IDGenText22" text="{i18n>SALESSERIALNUMBER.MFRNR}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText23" 
+                                        text="{path: 'MFRNR'}"/>
+                                </t:template>
+                            </t:Column> 
+                            
+                        </t:columns>
+                    </t:Table>
+                </st:SmartTable>
+            </f:content>
+            <f:footer>
+                <OverflowToolbar id="_IDGenOverflowToolbar1" class="footer">
+                    
+                    <FlexBox id="_IDGenFlexBox9" width="100%" justifyContent="SpaceBetween" wrap="Wrap">
+                        <FlexBox id="_IDGenFlexBox10">
+                            <ObjectIdentifier id="_IDGenObjectIdentifier1"
+                                title="{i18n>totals}"
+                                class="footerTitle"/>
+                        </FlexBox>
+                        <FlexBox id="_IDGenFlexBox11" >
+                            <HBox id="_IDGenHBox1" class="sapUiSmallMarginEnd">
+                                <Label id="_IDGenLabel1" text="{i18n>footerLabel1}:" class="cssLabelTotal"/>
+                                <Text id="FooterText1" class="footerText" text =""/>
+                            </HBox>
+                            <HBox id="_IDGenHBox2" class="sapUiSmallMarginEnd">
+                                <Label id="_IDGenLabel2" text="{i18n>footerLabel2}:" class="cssLabelTotal"/>
+                                <Text id="FooterText2" class="footerText" text =""/>
+                            </HBox>
+                        </FlexBox>
+                    </FlexBox>
+                </OverflowToolbar>
+            </f:footer>
+
+        </f:DynamicPage>
+</mvc:View>

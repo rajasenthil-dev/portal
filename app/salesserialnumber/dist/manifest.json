@@ -1,0 +1,177 @@
+{
+	"_version": "1.76.0",
+	"sap.app": {
+		"id": "salesserialnumber",
+		"type": "application",
+		"i18n": {
+			"bundleUrl": "i18n/i18n.properties",
+			"supportedLocales": [
+				"",
+				"en",
+				"fr"
+			]
+		},
+		"applicationVersion": {
+			"version": "0.0.1"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"resources": "resources.json",
+		"sourceTemplate": {
+			"id": "@sap/generator-fiori:basic",
+			"version": "1.19.1",
+			"toolsId": "f7f91d72-3978-40ee-8949-d0d59d4be60d"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/odata/v2/sales/",
+				"type": "OData",
+				"settings": {
+					"annotations": [],
+					"odataVersion": "2.0"
+				}
+			},
+			"logoService": {
+				"uri": "/odata/v4/media/",
+				"type": "OData",
+				"settings": {
+					"annotations": [],
+					"odataVersion": "4.0"
+				}
+			},
+			"UserApi": {
+				"uri": "/user-api/attributes",
+				"type": "JSON",
+				"settings": {
+					"useBatch": false,
+					"json": true
+				}
+			}
+		},
+		"crossNavigation": {
+			"inbounds": {
+				"serialnumber-display": {
+					"semanticObject": "serialnumber",
+					"action": "display",
+					"title": "{{serialnumber-display.flpTitle}}",
+					"signature": {
+						"parameters": {},
+						"additionalParameters": "allowed"
+					}
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"flexEnabled": true,
+		"dependencies": {
+			"minUI5Version": "1.141.1",
+			"libs": {
+				"sap.m": {},
+				"sap.ui.core": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "salesserialnumber.i18n.i18n",
+					"supportedLocales": [
+						"en",
+						"fr"
+					],
+					"fallbackLocale": "en"
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true,
+				"settings": {
+					"operationMode": "Server",
+					"autoExpandSelect": true,
+					"earlyRequests": true
+				}
+			},
+			"logo": {
+				"type": "sap.ui.model.odata.v4.ODataModel",
+				"dataSource": "logoService",
+				"preload": true,
+				"settings": {
+					"operationMode": "Server",
+					"autoExpandSelect": true,
+					"earlyRequests": true
+				}
+			},
+			"userModel": {
+				"dataSource": "UserApi",
+				"settings": {}
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"controlAggregation": "pages",
+				"controlId": "app",
+				"transition": "slide",
+				"type": "View",
+				"viewType": "XML",
+				"path": "salesserialnumber.view",
+				"async": true,
+				"viewPath": "salesserialnumber.view"
+			},
+			"routes": [
+				{
+					"name": "RouteView1",
+					"pattern": ":?query:",
+					"target": [
+						"TargetView1"
+					]
+				}
+			],
+			"targets": {
+				"TargetView1": {
+					"id": "View1",
+					"name": "View1"
+				}
+			}
+		},
+		"rootView": {
+			"viewName": "salesserialnumber.view.App",
+			"type": "XML",
+			"id": "App",
+			"async": true
+		},
+		"flexBundle": false
+	},
+	"sap.cloud": {
+		"public": true,
+		"service": "mck.portal"
+	}
+}

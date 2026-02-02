@@ -1,0 +1,210 @@
+/* Enter your custom styles here */
+.infoBlock {
+    background-color: #f3f9fd;
+    padding: 1rem;
+    border-left: 3px solid #007cc0;
+    border-radius: 0.25rem;
+  }
+
+  .formCard {
+    min-height: 350px;
+    background-color: #ffffff;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .margin-right {
+    margin-right: 8px;
+  }
+  .margin-left {
+    margin-left: 8px;
+  }
+  .instructionsCard {
+    min-height: 350px;
+    background-color: #143359;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .instructionsCard .sapMFT {
+    font-size: 1rem;       /* bigger, friendlier */
+    line-height: 1.5;        /* nice spacing */
+    font-weight: 500;        /* medium weight for clarity */
+    color: #E0E0E0;          /* keeps white text on dark blue */
+  }
+  .formCard .sapMText {
+    font-size: 1rem;       /* bigger, friendlier */
+    line-height: 1.5;        /* nice spacing */
+    font-weight: 500;        /* medium weight for clarity */
+    
+  }
+  .formCard .sapMLnk {
+    font-size: 1rem;       /* bigger, friendlier */
+    line-height: 1.5;        /* nice spacing */
+    font-weight: 500;        /* medium weight for clarity */
+    
+  }
+  .formCard .sapMTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+  .instructionsCard .sapMTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #E0E0E0;  /* brand orange title */
+  }
+  .instructionsCard .sapMText {
+    font-size: 1rem;       /* bigger, friendlier */
+    line-height: 1.5;        /* nice spacing */
+    font-weight: 500;        /* medium weight for clarity */
+    color: #E0E0E0;;          /* keeps white text on dark blue */
+    
+  }
+  /* add spacing between the form and instructions card */
+.cardSpacing {
+  margin-right: 16px;
+}
+
+.headerIcon {
+  margin-right: 20px;
+}
+.infoIcon {
+  margin-right: 10px;
+}
+.sapMText.bulletlist {
+  display: list-item;
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-left: 20px;
+}
+.sapMText.bold{
+  font-weight: 700!important;
+}
+.myIconCircleLime {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;  /* perfect circle */
+  background-color: #A8E10C;
+}
+.myIconCircle {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;  /* perfect circle */
+  background-color: rgba(255,255,255,0.15);
+}
+.myIconCircleSolid {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;  /* perfect circle */
+  background-color: #4C4F40;
+}
+/* Gold for security-related icons (shield, etc.) */
+.icon-gold {
+  color: #FFD700 !important;
+}
+
+/* Sky Blue for info, welcome messages */
+.icon-sky {
+  color: #00BFFF !important;
+}
+
+/* Light Lime for success icons */
+.icon-lime {
+  color: #A8E10C !important;
+}
+
+/* Bright Orange for warnings / highlights */
+.icon-orange {
+  color: #F29130 !important;
+}
+
+/* Turquoise for collaboration / general friendly */
+.icon-turquoise {
+  color: #40E0D0 !important;
+}
+
+/* Light pink for errors or attention */
+.icon-pink {
+  color: #FF69B4 !important;
+}
+
+/* Fallback white for general use */
+.icon-white {
+  color: #FFFFFF !important;
+}
+
+.iconCircle, .infoCircle {
+  background-color: #174EA0; /* or #00BFFF for lighter tone */
+  border-radius: 50%;
+}
+
+.tipText {
+  margin-top: 1rem;
+  background-color: #e8f4fd;
+  color:#2E3C43;
+  padding: 0.75rem;
+  border-left: 4px solid #00BFFF;
+  border-radius: 0.5rem;
+}
+.emphasize {
+  font-style: italic;
+  font-weight: 300;
+}
+/* Base styling for helper text */
+.helperMessage {
+    font-size: 0.75rem!important; 
+    font-weight: 700!important;             /* smaller, subtle text */
+    color: #174EA0!important;                  /* SAPUI5 neutral grey text */
+    margin-top: -10px !important;
+    margin-bottom: 1rem;      /* tighten spacing under the input */
+    line-height: 1.2;                /* reduce vertical spacing */
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    display: none;
+}
+
+/* Animated state */
+.helperMessage--visible {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    animation: slideFadeIn 0.25s ease-out;
+}
+
+
+
+
+/* Optional: slight delay for smoothness */
+.helperMessage--visible {
+    animation: slideFadeIn 0.25s ease-out;
+}
+
+@keyframes slideFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.helperMessage--hide {
+    animation: slideFadeOut 0.25s ease-out forwards;
+}
+
+@keyframes slideFadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+.helperMessage--error {
+    color: #bb0000 !important;
+}

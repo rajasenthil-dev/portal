@@ -1,0 +1,401 @@
+<mvc:View controllerName="openar.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m" xmlns:f="sap.f"
+    xmlns:tnt="sap.tnt" xmlns:core="sap.ui.core" 
+    xmlns:c="sap.suite.ui.microchart"
+    xmlns:t="sap.ui.table"
+    xmlns:sf="sap.ui.comp.smartfilterbar" 
+    xmlns:mc="sap.suite.ui.microchart"
+    xmlns:st="sap.ui.comp.smarttable"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
+    displayBlock="true"
+    xmlns:viz="sap.viz.ui5.controls" xmlns:layout="sap.ui.layout"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data" height="100%"
+    xmlns:vizFeeds="sap.viz.ui5.controls.common.feeds" xmlns:vizData="sap.viz.ui5.data">
+    <App id="app">
+        <f:DynamicPage id="dynamicPage" showFooter="true">
+            <f:header>
+                <f:DynamicPageHeader id="_IDGenDynamicPageHeader1" class="noPadding">
+                    <FlexBox id="_IDGenFlexBox6" width="100%" direction="Row" wrap="Wrap" justifyContent="SpaceBetween" class="headerPadding sapUiMediumMarginBottom borderBottom">
+                        <HeaderContainer id="container1" scrollStep="200" height="100px">
+                            <FlexBox id="_IDGenFlexBox7" alignItems="Center" height="100px">
+                                <FlexBox id="_IDGenFlexBox8" alignItems="Center" height="75px" class="imgBG">
+                                    <Image id="logoImage" src="/img/logoipsum-325.svg" width="125px" decorative="false" press="onLogoPressed" tooltip="SAP Logo" >
+                                        <layoutData>
+                                            <OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow"/>
+                                        </layoutData>
+                                    </Image>
+                                </FlexBox>
+                            </FlexBox>  
+                        </HeaderContainer>
+                        <!-- <HeaderContainer id="container2" scrollStep="200">
+                            <GenericTile id="_IDGenGenericTile1" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="{i18n>lastRefresh}" subheader="3/22/2024 6:30:57AM" frameType="OneByHalf">
+                                <TileContent id="_IDGenTileContent1" class="refreshTitle" footer="Footer Text">
+                                    <Text id="_IDGenText1" class="refreshText" text="3/22/2024 6:30:57AM"/>
+                                </TileContent>
+                            </GenericTile>
+                        </HeaderContainer> -->
+                    </FlexBox>
+                    
+                    <sf:SmartFilterBar id="bar0" 
+                        entitySet="OPENAR" 
+                        useDateRangeType="true" 
+                        persistencyKey="SmartFilterBar_OPENAR" 
+                        smartVariant="pageVariant" 
+                        liveMode="true" 
+                        search="onSearch">
+                        <sf:controlConfiguration>
+                            <sf:ControlConfiguration id="_IDGenControlConfiguration1"
+                                key="FKDAT"
+                                visibleInAdvancedArea="true"
+                                conditionType="{
+                                    module: 'sap.ui.comp.config.condition.DateRangeType'
+                                }"
+                            />
+                        </sf:controlConfiguration>
+                    </sf:SmartFilterBar>
+                    <!--Added By Bryan Cash Removed sapMediumMarginBottom from Header Container, Added Panel with expanded=true and expandable=true and header text with app title + summary
+                    Changed NumericContent Component to a Text Component to better handle custom CSS added to CSS file -->
+                    <Panel id="_IDGenPanel1" expandable="true" expanded="true" headerText="{i18n>panelHeader}">
+                        <HeaderContainer id="container4" scrollStep="200" orientation="Horizontal" gridLayout="true" class="mck_HeaderContainer">
+                            <FlexBox id="_IDGenFlexBox1" direction="Column" class="mck_Tile">
+                                <Title id="_IDGenTitle1" class="mck_TileContentTitle" text="{i18n>tileTitle1}"/>
+                                <Text id="_IDGenNumericContent1" class="mck_TileContent" text=""/>
+                                <Title id="_IDGenTitle2" class="mck_TileContentTitle" text="{i18n>tileTitle2}"/>
+                                <HBox id="_IDGenHBox1">
+                                    <Text id="_IDGenNumericContent2" class="mck_TileContent" text=""/>
+                                    <ObjectStatus id="status" class="mck_TileContent status-color" state="Success" text="69"></ObjectStatus>
+                                </HBox>
+                                
+                            </FlexBox>
+                            <FlexBox id="_IDGenFlexBox9" direction="Column" class="mck_Tile">
+                                <Title id="_IDGenTitle3" class="mck_TileContentTitle" text="{i18n>tileTitle3}"/>
+                                <Text id="_IDGenNumericContent4" class="mck_TileContent" text=""/>
+                                <Title id="_IDGenTitle4" class="mck_TileContentTitle" text="{i18n>tileTitle4}"/>
+                                <Text id="_IDGenNumericContent5" class="mck_TileContent" text="2088"/>
+                            </FlexBox>
+                            <!-- <FlexBox id="_IDGenFlexBox12" width="30rem" height="12.5rem" direction="Column" class="mck_Tile">
+                                <items>
+                                    <c:InteractiveDonutChart id="_IDGenInteractiveDonutChart1" selectionChanged="onSelectionChanged" displayedSegments="5">
+                                        <c:segments>
+                                            <c:InteractiveDonutChartSegment id="_IDGenInteractiveDonutChartSegment" label="Current" value="" color="Good"/>
+                                            <c:InteractiveDonutChartSegment id="_IDGenInteractiveDonutChartSegment1" label="1 to 30" value="" color="Neutral"/>
+                                            <c:InteractiveDonutChartSegment id="_IDGenInteractiveDonutChartSegment2" label="31 to 60" value="" color="Neutral"/>
+                                            <c:InteractiveDonutChartSegment id="_IDGenInteractiveDonutChartSegment3" label="61 to 90" value="" color="Critical"/>
+                                            <c:InteractiveDonutChartSegment id="_IDGenInteractiveDonutChartSegment4" label="Over 90" value="" color="Error"/>
+                                        </c:segments>
+                                    </c:InteractiveDonutChart>
+                                </items>
+                            </FlexBox>
+                            <FlexBox id="_IDGenFlexBox2" width="30rem" height="6rem" direction="Column" class="mck_Tile">
+                                <items>
+                                    	<GenericTile id="_IDGenGenericTile3" press="press" header="Total Income Change"
+                                            subheader="By year" frameType="TwoByOne" state="Loaded">
+                                            <tileContent>
+                                                <TileContent id="_IDGenTileContent" unit="EUR" footer="Current vs previous"
+                                                    frameType="TwoByOne">
+                                                    <content>
+                                                        <mc:StackedBarMicroChart id="_IDGenStackedBarMicroChart1" size="L" width="100%" bars="{microchart>/agingBuckets}">
+                                                            <mc:StackedBarMicroChartBar id="_IDGenStackedBarMicroChartBar1" value="{microchart>amount}" valueColor="{microchart>color}" />
+                                                        </mc:StackedBarMicroChart>
+                                                    </content>
+                                                </TileContent>
+                                            </tileContent>
+                                        </GenericTile>
+                                </items>
+                            </FlexBox> -->
+                            <FlexBox id="pieChartContainer"
+                                      width="500px"      
+                                      height="200px"     
+                                      class="mck_Tile"   
+                                      renderType="Bare" 
+                                      alignItems="Start"
+                                      justifyContent="Start">
+                                <layoutData>
+                                     </layoutData>
+                                <items>
+                                    <viz:VizFrame
+                                        id="idPieChart"                  
+                                        uiConfig="{applicationSet:'fiori'}"
+                                        vizType="pie"
+                                        width="100%"
+                                        height="200px"  
+                                        vizProperties="{
+                                            plotArea: {
+                                                dataLabel: {
+                                                    visible: true,
+                                                    type: 'percentage',  
+                                                    style: { color: '#333333' }
+                                                },
+                                                colorPalette: ['#5A8E22', '#4397D2', '#702C6A', '#F29130', '#BD191C'] 
+                                            },
+                                            title: {
+                                                visible: false,
+                                                text: 'Aging Distribution' 
+                                            },
+                                            legend: {
+                                                visible: true
+                                            },
+                                            legendGroup: {
+                                                layout: {
+                                                    position: 'right'
+                                                }
+                                            }
+                                        }">
+                                        <viz:dataset>
+                                            <viz.data:FlattenedDataset id="_IDGenFlattenedDataset" data="{pieChartModel>/agingData}">
+                                                <viz.data:dimensions>
+                                                    <viz.data:DimensionDefinition id="_IDGenDimensionDefinition" name="Bucket" value="{pieChartModel>BucketName}" />
+                                                </viz.data:dimensions>
+                                                <viz.data:measures>
+                                                    <viz.data:MeasureDefinition id="_IDGenMeasureDefinition" name="Amount" value="{pieChartModel>Amount}" />
+                                                </viz.data:measures>
+                                            </viz.data:FlattenedDataset>
+                                        </viz:dataset>
+                                        <viz:feeds>
+                                            <viz.feeds:FeedItem id="_IDGenFeedItem1" uid="size" type="Measure" values="Amount" />
+                                            <viz.feeds:FeedItem id="_IDGenFeedItem2" uid="color" type="Dimension" values="Bucket" />
+                                        </viz:feeds>
+                                    </viz:VizFrame>
+                                </items>
+                            </FlexBox>
+                            
+                        </HeaderContainer>
+                    </Panel>
+                    
+                </f:DynamicPageHeader>
+            </f:header>
+            <f:content>
+                
+                <st:SmartTable 
+                    xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
+                    width="100%" 
+                    direction="Column" 
+                    fitContainer="true" 
+                    tableType="ResponsiveTable" 
+                    header="{i18n>tableTitle}" 
+                    enableAutoBinding="true" 
+                    id="table0" 
+                    smartFilterId="bar0" 
+                    initiallyVisibleFields="" 
+                    cd:w5g.dt.context="/OPENAR" 
+                    entitySet="OPENAR" 
+                    placeToolbarInTable="true" 
+                    useExportToExcel="true" 
+                    beforeExport="onBeforeExport" 
+                    useVariantManagement="true" 
+                    useTablePersonalisation="true" 
+                    customData:p13nDialogSettings='{filter:{visible:false}}'
+                    showRowCount="true" 
+                    persistencyKey="SmartTable_OPENAR" 
+                    demandPopin="true" 
+                    enableAutoColumnWidth="true" 
+                    class="sapUiResponsiveContentPadding"
+                >
+                    <t:Table id="table" alternateRowColors="true" selectionMode="None">
+                        <t:columns>
+                            <t:Column id="_IDGenColumn2" width='7.813rem' hAlign="End" sortProperty="KUNNR">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "KUNNR", "leadingProperty": "KUNNR", "columnIndex": 0}'/>
+                                </t:customData>
+                                <Text id="_IDGenText21" text="{i18n>OPENAR.KUNNR}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText22" text="{KUNNR}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn11" width='7.813rem' hAlign="End" sortProperty="BILL_TO">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "BILL_TO", "leadingProperty": "BILL_TO", "columnIndex": 1}'/>
+                                </t:customData>
+                                <Text id="_IDGenText11" text="{i18n>OPENAR.BILL_TO}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText12" text="{BILL_TO}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn20" width='7.813rem' hAlign="End" sortProperty="BELNR">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "BELNR", "leadingProperty": "BELNR", "columnIndex": 2}'/>
+                                </t:customData>
+                                <Text id="_IDGenText30" text="{i18n>OPENAR.BELNR}"></Text>
+                                <t:template>
+                                    <Link id="invoice" text="{BELNR}" press=".onInvoiceClick"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn" width='7.813rem' hAlign="End" sortProperty="FKDAT">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "FKDAT", "leadingProperty": "FKDAT", "columnIndex": 5}'/>
+                                </t:customData>
+                                <Text id="_IDGenText3" text="{i18n>OPENAR.FKDAT}"></Text>
+                                <t:template>
+                                    <Text id="invoiceDate" text="{path: 'FKDAT', type: 'sap.ui.model.odata.type.Date'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn1" width='7.813rem' hAlign="End" sortProperty="NETDT">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "NETDT", "leadingProperty": "NETDT", "columnIndex": 6}'/>
+                                </t:customData>
+                                <Text id="_IDGenText" text="{i18n>OPENAR.NETDT}"></Text>
+                                <t:template>
+                                    <Text id="dueDate" text="{path: 'NETDT', type: 'sap.ui.model.odata.type.Date'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn12" width='7.813rem' hAlign="End" sortProperty="STORE_SHIP_TO">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "STORE_SHIP_TO", "leadingProperty": "STORE_SHIP_TO", "columnIndex": 8}'/>
+                                </t:customData>
+                                <Text id="_IDGenText13" text="{i18n>OPENAR.STORE_SHIP_TO}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText14" text="{STORE_SHIP_TO}" />
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn3"  width='7.813rem' hAlign="End" sortProperty="CAL_CURRENT">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CAL_CURRENT", "leadingProperty": "CAL_CURRENT", "columnIndex": 9}'/>
+                                </t:customData>
+                                <Text id="_IDGenText2" text="{i18n>OPENAR.CAL_CURRENT}"></Text>
+                                <t:template>
+                                    <Text id="current" text="{path: 'CAL_CURRENT', formatter: '._formatCurrency'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn4"  width='7.813rem' hAlign="End" sortProperty="CAL_1_30">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CAL_1_30", "leadingProperty": "CAL_1_30", "columnIndex": 11}'/>
+                                </t:customData>
+                                <Text id="_IDGenText4" text="{i18n>OPENAR.CAL_1_30}"></Text>
+                                <t:template>
+                                    <Text id="1to30" text="{path: 'CAL_1_30', formatter: '._formatCurrency'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn5" width='7.813rem' hAlign="End" sortProperty="CAL_31_60">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CAL_31_60", "leadingProperty": "CAL_31_60", "columnIndex": 12}'/>
+                                </t:customData>
+                                <Text id="_IDGenText5" text="{i18n>OPENAR.CAL_31_60}"></Text>
+                                <t:template>
+                                    <Text id="31to60" text="{path: 'CAL_31_60', formatter: '._formatCurrency'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn6"  width='7.813rem' hAlign="End" sortProperty="CAL_61_90">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CAL_61_90", "leadingProperty": "CAL_61_90", "columnIndex": 13}'/>
+                                </t:customData>
+                                <Text id="_IDGenText6" text="{i18n>OPENAR.CAL_61_90}"></Text>
+                                <t:template>
+                                    <Text id="61to90" text="{path: 'CAL_61_90', formatter: '._formatCurrency'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn7"  width='7.813rem' hAlign="End" sortProperty="CAL_OVER_()">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CAL_OVER_90", "leadingProperty": "CAL_OVER_90", "columnIndex": 14}'/>
+                                </t:customData>
+                                <Text id="_IDGenText7" text="{i18n>OPENAR.CAL_OVER_90}"></Text>
+                                <t:template>
+                                    <Text id="over90" text="{path: 'CAL_OVER_90', formatter: '._formatCurrency'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn15"  width='7.813rem' hAlign="End" sortProperty="WRBTR_OPEN">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "WRBTR_OPEN", "leadingProperty": "WRBTR_OPEN", "columnIndex": 15}'/>
+                                </t:customData>
+                                <Text id="_IDGenText1" text="{i18n>OPENAR.WRBTR_OPEN}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText19" text="{path: 'WRBTR_OPEN', formatter: '._formatCurrency'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn8"  width='7.813rem' hAlign="End" sortProperty="NETWR_VBRK">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "NETWR_VBRK", "leadingProperty": "NETWR_VBRK", "columnIndex": 16}'/>
+                                </t:customData>
+                                <Text id="_IDGenText8" text="{i18n>OPENAR.NETWR_VBRK}"></Text>
+                                <t:template>
+                                    <Text id="invoiceAmount" text="{path: 'NETWR_VBRK', formatter: '._formatCurrency'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn9"  width='7.813rem' hAlign="End" sortProperty="TSL_CLEARED">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "TSL_CLEARED", "leadingProperty": "TSL_CLEARED", "columnIndex": 17}'/>
+                                </t:customData>
+                                <Text id="_IDGenText9" text="{i18n>OPENAR.TSL_CLEARED}"></Text>
+                                <t:template>
+                                    <Text id="amountPaid" text="{path: 'TSL_CLEARED', formatter: '._formatCurrency'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn10"  width='7.813rem' hAlign="End" sortProperty="VKORG">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "VKORG", "leadingProperty": "VKORG", "columnIndex": 20}'/>
+                                </t:customData>
+                                <Text id="_IDGenText10" text="{i18n>OPENAR.VKORG}"></Text>
+                                <t:template>
+                                    <Text id="creditAmount" text="{path: 'VKORG'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn14"  width='7.813rem' hAlign="End" sortProperty="ZUONR">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "ZUONR", "leadingProperty": "ZUONR", "columnIndex": 21}'/>
+                                </t:customData>
+                                <Text id="_IDGenText15" text="{i18n>OPENAR.ZUONR}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText16" text="{path: 'ZUONR'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn16"  width='7.813rem' hAlign="End" sortProperty="XBLNR">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "XBLNR", "leadingProperty": "XBLNR", "columnIndex": 22}'/>
+                                </t:customData>
+                                <Text id="_IDGenText17" text="{i18n>OPENAR.XBLNR}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText18" text="{path: 'XBLNR'}"/>
+                                </t:template>
+                            </t:Column>
+                            
+                        </t:columns> 
+                    </t:Table>
+                </st:SmartTable>
+            </f:content>
+            <f:footer>
+                <OverflowToolbar id="_IDGenOverflowToolbar1" height="auto" class="footer">
+                    <!-- Added by Bryan Cash in order to make the footer fully responsive for mobile devices -->                    
+                    <FlexBox id="_IDGenFlexBox32" width="100%" justifyContent="SpaceBetween" wrap="Wrap">
+                        <FlexBox id="_IDGenFlexBox10">
+                            <ObjectIdentifier id="_IDGenObjectIdentifier1"
+                                title="{i18n>totals}"
+                                class="footerTitle"/>
+                        </FlexBox>
+                        <FlexBox id="_IDGenFlexBox11" wrap="Wrap">
+                            <HBox id="_IDGenHBox22" class="sapUiSmallMarginEnd">
+                                <Label id="_IDGenLabel1" text="{i18n>footerLabel1}:" class="cssLabelTotal"/>
+                                <Text id="footerText1" class="footerText" text =""/>
+                            </HBox>
+                            <HBox id="_IDGenHBox2" class="sapUiSmallMarginEnd">
+                                <Label id="_IDGenLabel2" text="{i18n>footerLabel2}:" class="cssLabelTotal"/>
+                                <Text id="footerText2" class="footerText" text =""/>
+                            </HBox>
+                            <HBox id="_IDGenHBox31" class="sapUiSmallMarginEnd">
+                                <Label id="_IDGenLabel31" text="{i18n>footerLabel3}:" class="cssLabelTotal"/>
+                                <Text id="footerText3" class="footerText" text =""/>
+                            </HBox>
+                            <HBox id="_IDGenHBox32" class="sapUiSmallMarginEnd">
+                                <Label id="_IDGenLabel32" text="{i18n>footerLabel4}:" class="cssLabelTotal"/>
+                                <Text id="footerText4" class="footerText" text =""/>
+                            </HBox>	
+                            <HBox id="_IDGenHBox33" class="sapUiSmallMarginEnd">
+                                <Label id="_IDGenLabel33" text="{i18n>footerLabel5}:" class="cssLabelTotal"/>
+                                <Text id="footerText5" class="footerText" text =""/>
+                            </HBox>	
+                            <HBox id="_IDGenHBox3" class="sapUiSmallMarginEnd">
+                                <Label id="_IDGenLabel34" text="{i18n>footerLabel6}:" class="cssLabelTotal"/>
+                                <Text id="footerText6" class="footerText" text =""/>
+                            </HBox>	
+                            <HBox id="_IDGenHBox35" class="sapUiSmallMarginEnd">
+                                <Label id="_IDGenLabel35" text="{i18n>footerLabel7}:" class="cssLabelTotal"/>
+                                <Text id="footerText7" class="footerText" text =""/>
+                            </HBox>	
+                        </FlexBox>
+                    </FlexBox>
+                </OverflowToolbar>
+            </f:footer>
+        
+        </f:DynamicPage>
+    </App>
+</mvc:View>

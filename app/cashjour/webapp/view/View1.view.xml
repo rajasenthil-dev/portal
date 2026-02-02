@@ -1,0 +1,318 @@
+<mvc:View 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m" xmlns:f="sap.f" 
+    xmlns:core="sap.ui.core" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:t="sap.ui.table" 
+    xmlns:sf="sap.ui.comp.smartfilterbar"
+    xmlns:st="sap.ui.comp.smarttable" 
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
+    controllerName="cashjour.controller.View1" 
+    displayBlock="true">
+    <App id="app">
+        <f:DynamicPage id="dynamicPage" showFooter="true">
+            <f:header>
+                <f:DynamicPageHeader id="_IDGenDynamicPageHeader1" class="noPadding">
+                    <FlexBox id="_IDGenFlexBox6" width="100%" direction="Row" wrap="Wrap" justifyContent="SpaceBetween" class="headerPadding sapUiMediumMarginBottom borderBottom">
+                        <HeaderContainer id="container1" scrollStep="200" height="100px">
+                            <FlexBox id="_IDGenFlexBox7" alignItems="Center" height="100px">
+                                <FlexBox id="_IDGenFlexBox8" alignItems="Center" height="75px" class="imgBG">
+                                    <Image id="logoImage" src="/img/logoipsum-325.svg" width="125px" decorative="false" press="onLogoPressed" tooltip="SAP Logo">
+                                        <layoutData>
+                                            <OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow"/>
+                                        </layoutData>
+                                    </Image>
+                                </FlexBox>
+                            </FlexBox>  
+                        </HeaderContainer>
+                        <!-- <HeaderContainer id="container2" scrollStep="200">
+                            <GenericTile id="_IDGenGenericTile1" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="{i18n>lastRefresh}" subheader="3/22/2024 6:30:57AM" frameType="OneByHalf">
+                                <TileContent id="_IDGenTileContent1" class="refreshTitle" footer="Footer Text">
+                                    <Text id="_IDGenText1" class="refreshText" text="3/22/2024 6:30:57AM"/>
+                                </TileContent>
+                            </GenericTile>
+                        </HeaderContainer> -->
+                    </FlexBox>
+                    <sf:SmartFilterBar id="bar0" entitySet="CASHJOURNAL" useDateRangeType="true" persistencyKey="SmartFilterBar_CASHJOURNAL" smartVariant="pageVariant" liveMode="true" search="onSearch">
+                        <sf:controlConfiguration>
+                        
+                            <sf:ControlConfiguration id="_IDGenControlConfiguration1" key="CAL_INV_DATE" visibleInAdvancedArea="true"
+                                conditionType="{
+                                    module: 'sap.ui.comp.config.condition.DateRangeType'
+                                }"/>
+                        </sf:controlConfiguration>
+                        <sf:controlConfiguration>
+                        
+                            <sf:ControlConfiguration id="_IDGenControlConfiguration3" key="BLDAT_DEP" visibleInAdvancedArea="true" conditionType="{module: 'sap.ui.comp.config.condition.DateRangeType'}"/>
+                        </sf:controlConfiguration>
+                        <sf:controlConfiguration>
+                        
+                            <sf:ControlConfiguration id="_IDGenControlConfiguration2" key="CAL_DUE_DATE" visibleInAdvancedArea="true" conditionType="{module: 'sap.ui.comp.config.condition.DateRangeType'}"/>
+                        </sf:controlConfiguration>
+                        <sf:controlConfiguration>
+                        
+                            <sf:ControlConfiguration id="_IDGenControlConfiguration4" key="CAL_DEP_DATE" visibleInAdvancedArea="true"
+                                conditionType="{
+                                    module: 'sap.ui.comp.config.condition.DateRangeType'
+                                }"/>
+                        </sf:controlConfiguration>
+                        <!-- <sf:controlConfiguration>
+                            <sf:ControlConfiguration id="customCurrentFilter"
+                                key="CURRENT"
+                                visibleInAdvancedArea="true"
+                            >
+                                <sf:customControl>
+                                    <ComboBox id="currentFilterBox" selectedKey="{filters>/currentStatus}">
+                                        <items>
+                                            <core:Item id="_IDGenItem2" key="" text="{i18n>CASHJOURNAL.ALLTEXT}"/>
+                                            <core:Item id="_IDGenItem" key="YES" text="{i18n>CASHJOURNAL.CURRENTTEXT}"/>
+                                            <core:Item id="_IDGenItem1" key="NO" text="{i18n>CASHJOURNAL.LEGACYTEXT}"/>
+                                        </items>
+                                    </ComboBox>
+                                </sf:customControl>
+                            </sf:ControlConfiguration>
+                        </sf:controlConfiguration> -->
+                    </sf:SmartFilterBar>
+                    <!-- <Panel id="_IDGenPanel" class="sapUiMediumMarginTop" expandable="true" expanded="true" headerText="{i18n>panelHeader}">
+                        <HeaderContainer id="container4" scrollStep="200" orientation="Horizontal" gridLayout="true" class="mck_HeaderContainer">
+                            <FlexBox id="_IDGenFlexBox1" direction="Column" class="mck_Tile">
+                                <Title id="_IDGenTitle1" class="mck_TileContentTitle" text="{i18n>collectionActivityTileTitle}"/>
+                                <Text id="_IDGenNumericContent1" class="mck_TileContent" text="7419"/>
+                            </FlexBox>
+                        </HeaderContainer>
+                    </Panel> -->
+                </f:DynamicPageHeader>
+            </f:header>
+            <f:content>
+                
+                <st:SmartTable 
+                    xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
+                    width="100%" 
+                    direction="Column" 
+                    fitContainer="true" 
+                    tableType="Table" 
+                    header="{i18n>tableTitle}" 
+                    enableAutoBinding="true" 
+                    id="table0" 
+                    smartFilterId="bar0" 
+                    cd:w5g.dt.context="/CASHJOURNAL" 
+                    entitySet="CASHJOURNAL" 
+                    placeToolbarInTable="true" 
+                    useExportToExcel="true" 
+                    beforeExport="onBeforeExport" 
+                    useVariantManagement="true" 
+                    useTablePersonalisation="true" 
+                    customData:p13nDialogSettings='{filter:{visible:false}}'
+                    showRowCount="true" 
+                    persistencyKey="SmartTable_CASHJOURNAL" 
+                    demandPopin="true" 
+                    enableAutoColumnWidth="true" 
+                    class="sapUiResponsiveContentPadding sapUiLargeMarginBottom">
+                    <t:Table id="table" selectionMode="None" alternateRowColors="true">
+                        <t:columns>
+                            <!-- <t:Column id="_IDGenColumn11" width='7.813rem' hAlign="Center" sortProperty="CURRENT">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CURRENT", "leadingProperty": "CURRENT", "columnIndex": 0}'/>
+                                </t:customData>
+                                <Text id="_IDGenText31" text="{i18n>CASHJOURNAL.CURRENT}"></Text>
+                                <t:template>
+                                    <ObjectStatus id="_IDGenObjectStatus"
+                                    core:require="{
+                                            Formatter: 'cashjour/model/formatter'
+                                        }"
+                                        inverted="true"
+                                        icon="{path: 'CURRENT', formatter:'Formatter.yesNoIcon'}"
+                                        tooltip="{= ${CURRENT} === 'YES' ? ${i18n>CASHJOURNAL.CURRENTTOOLTIP} : ${i18n>CASHJOURNAL.LEGACYTOOLTIP}}"
+                                        state="{path: 'CURRENT', formatter: 'Formatter.yesNoIconColor'}"
+                                        text="{= ${CURRENT} === 'YES' ? ${i18n>CASHJOURNAL.CURRENTTEXT} : ${i18n>CASHJOURNAL.LEGACYTEXT}}"/>
+                                </t:template>
+                            </t:Column> -->
+                            <t:Column id="_IDGenColumn102" width="7.813rem" hAlign="End" sortProperty="SHIP_TO">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "SHIP_TO", "leadingProperty": "SHIP_TO", "columnIndex": 1}'/>
+                                </t:customData>
+                                <Text id="_IDGenText302" text="{i18n>CASHJOURNAL.SHIP_TO}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="shipto" text="{SHIP_TO}"/>
+                                </t:template>
+                            </t:Column>
+                             <t:Column id="_IDGenColumn101" width="7.813rem" hAlign="End" sortProperty="BILL_TO">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "BILL_TO", "leadingProperty": "BILL_TO", "columnIndex": 1}'/>
+                                </t:customData>
+                                <Text id="_IDGenText301" text="{i18n>CASHJOURNAL.BILL_TO}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="billto" text="{BILL_TO}"/>
+                                </t:template>
+                            </t:Column>
+                            
+                            <!-- <t:Column id="_IDGenColumn1" width="7.813rem" hAlign="End" sortProperty="NETWR">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "NETWR", "leadingProperty": "NETWR", "columnIndex": 6}'/>
+                                </t:customData>
+                                <Text id="_IDGenText4" text="{i18n>CASHJOURNAL.NETWR}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="invoiceAmount" text="{path: 'NETWR', formatter: '._formatCurrency'}"/>
+                                </t:template>
+                            </t:Column> -->
+                            <t:Column id="_IDGenColumn2" width="7.813rem" hAlign="End" sortProperty="CAL_CASH_RECEIVED">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CAL_CASH_RECEIVED", "leadingProperty": "CAL_CASH_RECEIVED", "columnIndex": 7}'/>
+                                </t:customData>
+                                <Text id="_IDGenText5" text="{i18n>CASHJOURNAL.CAL_CASH_RECEIVED}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="cashReceived" text="{path: 'CAL_CASH_RECEIVED', formatter: '._formatCurrency'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn3" width="7.813rem" hAlign="End" sortProperty="CAL_INV_DATE">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CAL_INV_DATE", "leadingProperty": "CAL_INV_DATE", "columnIndex": 11}'/>
+                                </t:customData>
+                                <Text id="_IDGenText6" text="{i18n>CASHJOURNAL.BUDAT}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="invoiceDate" text="{path: 'CAL_INV_DATE', type: 'sap.ui.model.odata.type.Date'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn33" width="7.813rem" hAlign="End" sortProperty="CAL_DUE_DATE">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CAL_DUE_DATE", "leadingProperty": "CAL_DUE_DATE", "columnIndex": 12}'/>
+                                </t:customData>
+                                <Text id="_IDGenText62" text="{i18n>CASHJOURNAL.NETDT}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="depositDate" text="{path: 'CAL_DUE_DATE', type: 'sap.ui.model.odata.type.Date'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn31" width="7.813rem" hAlign="End" sortProperty="CAL_DEP_DATE">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "CAL_DEP_DATE", "leadingProperty": "CAL_DEP_DATE", "columnIndex": 13}'/>
+                                </t:customData>
+                                <Text id="_IDGenText61" text="{i18n>CASHJOURNAL.DEPOSIT_DATE}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="documentDate" text="{path: 'CAL_DEP_DATE', type: 'sap.ui.model.odata.type.Date'}"/>
+                                </t:template>
+                            </t:Column>
+                            <!-- <t:Column id="_IDGenColumn371" width="7.813rem" hAlign="End" sortProperty="BLDAT">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "BLDAT", "leadingProperty": "BLDAT", "columnIndex": 14}'/>
+                                </t:customData>
+                                <Text id="_IDGenText671" text="{i18n>CASHJOURNAL.BLDAT}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="documentDate1" text="{path: 'BLDAT', type: 'sap.ui.model.odata.type.Date'}"/>
+                                </t:template>
+                            </t:Column> -->
+                            <t:Column id="_IDGenColumn4" width="7.813rem" hAlign="End" sortProperty="BURKS">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "BUKRS", "leadingProperty": "BUKRS", "columnIndex": 15}'/>
+                                </t:customData>
+                                <Text id="_IDGenText13" text="{i18n>CASHJOURNAL.BUKRS}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="_IDGenText14" text="{path: 'BUKRS'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn8" width="7.813rem" hAlign="End" sortProperty="BELNR">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "BELNR", "leadingProperty": "BELNR", "columnIndex": 16}'/>
+                                </t:customData>
+                                <Text id="_IDGenText15" text="{i18n>CASHJOURNAL.BELNR}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="_IDGenText16" text="{path: 'BELNR'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn9" width="7.813rem" hAlign="End" sortProperty="GJAHR">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "GJAHR", "leadingProperty": "GJAHR", "columnIndex": 17}'/>
+                                </t:customData>
+                                <Text id="_IDGenText17" text="{i18n>CASHJOURNAL.GJAHR}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="_IDGenText18" text="{path: 'GJAHR'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn7" width="7.813rem" hAlign="End" sortProperty="BSTKD">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "BSTKD", "leadingProperty": "BSTKD", "columnIndex": 19}'/>
+                                </t:customData>
+                                <Text id="_IDGenText10" text="{i18n>CASHJOURNAL.BSTKD}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="_IDGenText11" text="{path: 'BSTKD'}"/>
+                                </t:template>
+                            </t:Column>
+                            
+                            <t:Column id="_IDGenColumn6" width="7.813rem" hAlign="End" sortProperty="VKORG">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "VKORG", "leadingProperty": "VKORG", "columnIndex": 23}'/>
+                                </t:customData>
+                                <Text id="_IDGenText8" text="{i18n>CASHJOURNAL.VKORG}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="_IDGenText9" text="{path: 'VKORG'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn5" width="7.813rem" hAlign="End" sortProperty="PRCTR">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "PRCTR", "leadingProperty": "PRCTR", "columnIndex": 24}'/>
+                                </t:customData>
+                                <Text id="_IDGenText2" text="{i18n>CASHJOURNAL.PRCTR}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="_IDGenText7" text="{path: 'PRCTR'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn32" width="7.813rem" hAlign="End" sortProperty="MFRNR" visible="false">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "MFRNR", "leadingProperty": "MFRNR", "columnIndex": 25}'/>
+                                </t:customData>
+                                <Text id="_IDGenText63" text="{i18n>CASHJOURNAL.MFRNR}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="_IDGenText" text="{path: 'MFRNR'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn1" width="7.813rem" hAlign="End" sortProperty="ZUONR" visible="false">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "ZUONR", "leadingProperty": "ZUONR", "columnIndex": 25}'/>
+                                </t:customData>
+                                <Text id="_IDGenText1" text="{i18n>CASHJOURNAL.ZUONR}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="_IDGenText3" text="{path: 'ZUONR'}"/>
+                                </t:template>
+                            </t:Column>
+                            <t:Column id="_IDGenColumn11" width="7.813rem" hAlign="End" sortProperty="KUNNR" visible="false">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "KUNNR", "leadingProperty": "KUNNR", "columnIndex": 25}'/>
+                                </t:customData>
+                                <Text id="_IDGenText4" text="{i18n>CASHJOURNAL.KUNNR}" textAlign="End"/>
+                                <t:template>
+                                    <Text id="_IDGenText12" text="{path: 'KUNNR'}"/>
+                                </t:template>
+                            </t:Column>
+                            
+                        </t:columns>
+                        
+                    </t:Table>
+                </st:SmartTable>
+            </f:content>
+            <f:footer>
+                <OverflowToolbar id="_IDGenOverflowToolbar1" class="footer">
+                        <!-- Added by Bryan Cash in order to make the footer fully responsive for mobile devices -->                    
+                        <FlexBox id="_IDGenFlexBox9" width="100%" justifyContent="SpaceBetween" wrap="Wrap">
+                            <FlexBox id="_IDGenFlexBox10">
+                                <ObjectIdentifier id="_IDGenObjectIdentifier1" title="{i18n>totals}" class="footerTitle"/>
+                            </FlexBox>
+                            <FlexBox id="_IDGenFlexBox11">
+                                <HBox id="_IDGenHBox1" class="sapUiSmallMarginEnd">
+                                    <Label id="_IDGenLabel1" text="{i18n>footerLabel1}:" class="cssLabelTotal"/>
+                                    <Text id="TotUnitsPriceText" class="footerText" text=""/>
+                                </HBox>
+                                <HBox id="_IDGenHBox2" class="sapUiSmallMarginEnd">
+                                    <Label id="_IDGenLabel2" text="{i18n>footerLabel2}:" class="cssLabelTotal"/>
+                                    <Text id="TotUnitsInStockText" class="footerText" text=""/>
+                                </HBox>
+                                <HBox id="_IDGenHBox3" class="sapUiSmallMarginEnd">
+                                    <Label id="_IDGenLabel3" text="{i18n>footerLabel3}:" class="cssLabelTotal"/>
+                                    <Text id="TotUnitsOnOrderText" class="footerText" text=""/>
+                                </HBox>	
+                            </FlexBox>
+                        </FlexBox>
+                </OverflowToolbar>
+            </f:footer>
+        
+        </f:DynamicPage>
+    </App>
+</mvc:View>

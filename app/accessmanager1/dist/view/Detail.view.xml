@@ -1,0 +1,184 @@
+<mvc:View
+	controllerName="accessmanager1.controller.Detail"
+	xmlns="sap.uxap"
+	xmlns:m="sap.m"
+	xmlns:f="sap.f"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core">
+	<ObjectPageLayout
+		id="ObjectPageLayout"
+		showTitleInHeaderContent="true"
+		alwaysShowContentHeader="false"
+		preserveHeaderStateOnScroll="false"
+		headerContentPinnable="true"
+		isChildPage="true"
+		upperCaseAnchorBar="false">
+		<headerTitle>
+			<ObjectPageDynamicHeaderTitle id="_IDGenObjectPageDynamicHeaderTitle">
+				<actions>
+					<m:ToggleButton
+						id="editButton"
+						text="Edit"
+						type="Emphasized"
+						press=".onEditToggleButtonPress"/>
+					<m:Button 
+						id="activateButton"
+						text="Activate"
+						icon="sap-icon://employee-approvals"
+						type="Accept"
+						visible="{= ${edit>status} === 'DEPROVISIONED'}"
+						press=".onActivateUser"/>
+					<m:Button id="sendEmailButton"
+						text="Send Activation Email"
+						icon="sap-icon://email"
+						press=".onSendActivationEmail"
+						visible="{= ${edit>status} === 'PROVISIONED' }"
+					/>
+					<m:Button 
+						id="deactivateButton"
+						text="Deactivate"
+						icon="sap-icon://employee-rejections"
+						type="Reject"
+						visible="{= ${edit>status} === 'ACTIVE' || ${edit>status} === 'PROVISIONED' }"
+						press=".onDeactivateUser"/>
+				</actions>
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+
+		<headerContent>
+			<m:FlexBox id="_IDGenFlexBox"
+				alignItems="Center"
+				justifyContent="Start"
+				class="sapUiMediumMarginBegin sapUiSmallMarginTop">
+
+				<m:Avatar
+				id="userAvatar"
+				src="sap-icon://employee"
+				displaySize="L"
+				displayShape="Circle"
+				backgroundColor="Accent5"
+				class="sapUiTinyMarginEnd"/>
+
+				<m:VBox id="_IDGenVBox1" justifyContent="Center">
+				<m:Title id="_IDGenTitle1"
+					text="{edit>firstName} {edit>lastName}"
+					level="H4"
+					class="sapUiTinyMarginBottom"/>
+					
+				<m:ObjectStatus id="_IDGenObjectStatus"
+					text="{edit>email}"
+					state="Information"
+					class="sapUiSmallMarginTop"/>
+
+				<m:ObjectStatus id="_IDGenObjectStatus1"
+					text="{edit>status}"
+					state="{= ${edit>status} === 'ACTIVE' ? 'Success' : 'Error' }"
+					class="sapUiSmallMarginTop"/>
+				</m:VBox>
+
+			</m:FlexBox>
+		</headerContent>
+
+		<sections>
+			<ObjectPageSection id="_IDGenObjectPageSection" title="User Details">
+				<subSections>
+					<ObjectPageSubSection id="_IDGenObjectPageSubSection">
+						<blocks>
+							<form:SimpleForm id="_IDGenSimpleForm"
+								maxContainerCols="2"
+								editable="{viewState>isEdit}"
+								layout="ResponsiveGridLayout"
+								labelSpanL="12"
+								labelSpanM="12"
+								emptySpanL="0"
+								emptySpanM="0"
+								columnsL="1"
+								columnsM="1">
+								<form:content>
+									<m:Label id="_IDGenLabel1" text="First Name"/>
+									<m:Input id="_IDGenInput" value="{edit>firstName}" editable="{viewState>/isEdit}" />
+
+									<m:Label id="_IDGenLabel2" text="Last Name"/>
+									<m:Input id="_IDGenInput1" value="{edit>lastName}" editable="{viewState>/isEdit}" />
+
+									<m:Label id="_IDGenLabel3" text="Email"/>
+									<m:Input id="_IDGenInput2" value="{edit>email}" editable="{viewState>/isEdit}" />
+
+									<!-- Right Column -->
+									<m:Label id="_IDGenLabel4" text="Group Names"/>
+									<m:VBox id="_IDGenVBox2">
+										<m:Input id="_IDGenInput3" value="{edit>groupNames}" visible="{= !${viewState>/isEdit} }" editable="false" />
+										<m:Select
+											id="groupSelect"
+											selectedKey="{edit>groupIds}"
+											editable="{viewState>/isEdit}"
+											visible="{= ${viewState>/isEdit} }"
+											change=".onGroupChange"
+											items="{
+												path: 'editGroups>/groupList'
+											}">
+											<core:Item id="_IDGenItem"
+												key="{editGroups>id}"
+												text="{= ${editGroups>profile/name} || ${editGroups>name} }"
+										/>
+										</m:Select>
+									</m:VBox>
+
+
+									<m:Label id="_IDGenLabel5" text="Group IDs"/>
+									<m:Input id="_IDGenInput4" value="{edit>groupIds}" enabled="false" />
+								</form:content>
+							</form:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+
+			<ObjectPageSection id="_IDGenObjectPageSection1" title="Manufacturer Details">
+				<subSections>
+					<ObjectPageSubSection id="_IDGenObjectPageSubSection1">
+						<blocks>
+							<form:SimpleForm id="_IDGenSimpleForm1"
+								maxContainerCols="2"
+								editable="false"
+								layout="ResponsiveGridLayout"
+								labelSpanL="12"
+								labelSpanM="12"
+								emptySpanL="0"
+								emptySpanM="0"
+								columnsL="1"
+								columnsM="1">
+								<form:content>
+									<m:Label id="_IDGenLabel6" text="Manufacturer Name"/>
+									<m:Input id="_IDGenInput5" value="{edit>mfgName}" editable="{viewState>/isEdit}" />
+
+									<m:Label id="_IDGenLabel7" text="Manufacturer Number"/>
+									<m:Input id="_IDGenInput6" value="{edit>manufacturerNumber}" editable="{viewState>/isEdit}" />
+
+									<m:Label id="_IDGenLabel8" text="Sales Org"/>
+									<m:Input id="_IDGenInput7" value="{edit>salesOrg}" editable="{viewState>/isEdit}" />
+
+									<m:Label id="_IDGenLabel9" text="Sales Office"/>
+									<m:Input id="_IDGenInput8" value="{edit>salesOffice}" editable="{viewState>/isEdit}" />
+
+									<m:Label id="_IDGenLabel10" text="Profit Center"/>
+									<m:Input id="_IDGenInput9" value="{edit>profitCentre}" editable="{viewState>/isEdit}" />
+								</form:content>
+							</form:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+
+		<footer>
+			<m:OverflowToolbar id="_IDGenOverflowToolbar2">
+				<m:ToolbarSpacer id="_IDGenToolbarSpacer2"/>
+				<m:Button id="_IDGenButton5" type="Accept" text="Save" press=".onSave" />
+				<m:Button id="_IDGenButton7" type="Reject" text="Delete User" press=".onDeleteUser" />
+				<m:Button id="_IDGenButton6" type="Ghost" text="Cancel" press=".onCancel"/>
+			</m:OverflowToolbar>
+		</footer>
+	</ObjectPageLayout>
+</mvc:View>
