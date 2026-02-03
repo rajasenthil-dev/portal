@@ -48,3 +48,5 @@ using from './salesserialnumber/annotations';
 using from './accessmanager1/annotations';
 
 using from './invmb51/annotations';
+
+using from './mfglogoupld/annotations';

@@ -1,0 +1,157 @@
+<mvc:View controllerName="mfglogoupld.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:layout="sap.ui.layout">
+    <Page id="uploadAdminPage" title="{i18n>uploadPageTitle}" showHeader="true">
+        <content>
+        <HBox id="_IDGenHBox1" class="centeredTableBox" justifyContent="Center" width="100%">
+            <VBox id="_IDGenVBox" width="100%" class="responsiveTableWrapper">
+            <Table id="idMediaFilesTable"
+                width="100%"
+                inset="false"
+                mode="MultiSelect"
+                items="{
+                    path: '/MediaFile'
+                }"
+                busyIndicatorDelay="0"
+                busy="{ui>/isUploading}"
+                growing="true"
+                growingThreshold="20"
+                growingScrollToLoad="true"
+                >
+                <headerToolbar>
+                    <OverflowToolbar id="tableHeaderToolbar">
+                        <content>
+                            <Title id="tableTitle" text="Manufacturer Logos" level="H2"/>
+                            <ToolbarSpacer id="toolbarSpacer" />
+                            <Button id="openAddDialogButton" text="Add New Logo" press=".onOpenDialog" type="Emphasized" icon="sap-icon://add"/>
+                            <Button id="editSelectedButton" text="Edit Selected" press=".onEditPress" type="Transparent" icon="sap-icon://edit"
+                                enabled="{= ${idMediaFilesTable>/selectedContexts}.length === 1 }"/>
+                            <Button id="deleteSelectedButton" text="Delete Selected" press=".onDeleteDraft" type="Reject" icon="sap-icon://delete"
+                                enabled="{= ${idMediaFilesTable>/selectedContexts}.length > 0 }"/>
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                
+
+                    <Column id="mfgNumberCol" width="15%"><Text id="mfgNumberColText" text="Man. Number" /></Column>
+                    <Column id="mfgNameCol" width="20%"><Text id="mfgNameColText" text="Man. Name" /></Column>
+                    <Column id="fileNameCol" minScreenWidth="Tablet" demandPopin="true" width="20%"><Text id="fileNameColText" text="File Name" /></Column>
+                    <!-- <Column id="isPlaceholderCol" hAlign="Center" width="10%"><Text id="isPlaceholderColText" text="Placeholder?" /></Column> -->
+                    <Column id="logoCol" hAlign="Center" width="15%"><Text id="logoColText" text="Logo" /></Column>
+                    <Column id="modifiedAtCol" minScreenWidth="Desktop" demandPopin="true" hAlign="End" width="20%"><Text id="modifiedAtColText" text="Last Modified" /></Column>
+                </columns>
+                <items>
+                    <ColumnListItem id="tableItemTemplate" vAlign="Middle" type="Navigation" press=".onListItemPress">
+                        <cells>
+                            
+                            <Text id="itemMfgNumber" text="{manufacturerNumber}" />
+                            <Text id="itemMfgName" text="{MFGName}" />
+                            <Text id="itemFileName" text="{fileName}" />
+                            <!-- <CheckBox id="itemIsPlaceholder" selected="{isPlaceholder}" editable="false" class="sapUiTinyMarginBeginEnd sapUiSmallMarginTopBottom" /> -->
+                             <Image 
+                                core:require="{
+                                    Formatter: 'mfglogoupld/model/formatter'
+                                }" 
+                                id="logoImage" 
+                                src="{
+                                    parts: [
+                                        { path: 'ID' },
+                                        { path: 'IsActiveEntity' }
+                                    ],
+                                    formatter: 'Formatter.formatUrl.bind($controller)'
+                                }" 
+                                alt="{fileName}" 
+                                width="100px" 
+                                densityAware="false"
+                                decorative="false"
+                                class="sapUiTinyMargin"
+                            />
+                            <!-- <Image id="_IDGenImage"
+                                src="{url}" 
+                                alt="{fileName}"
+                                width="70px"  height="70px"
+                                densityAware="false"
+                                decorative="false"
+                                class="sapUiTinyMargin"
+                                error=".onImageLoadError" />  -->
+                            <Text id="itemModifiedAt" 
+                                core:require="{
+                                    Formatter: 'mfglogoupld/model/formatter'
+                                }"
+                                text="{
+                                parts: [
+                                    {path: 'modifiedAt', targetType: 'any'}, 
+                                    {path: 'createdAt', targetType: 'any'}
+                                ], 
+                                formatter: 'Formatter.formatModifiedAt.bind($controller)'
+                            }" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+            </VBox>
+            </HBox>
+            <Dialog id="addManufacturerDialog" title="{= ${ui>/isEditMode} ? 'Edit Manufacturer Logo' : 'Add New Manufacturer Logo' }"
+                stretch="{= !${device>/system/desktop} }"
+                busyIndicatorDelay="0"
+                busy="{ui>/isUploading}"
+                class="sapUiResponsiveContentPadding">
+                <content>
+                    <form:SimpleForm id="addManufacturerForm" editable="true" layout="ResponsiveGridLayout"
+                        labelSpanXL="4" labelSpanL="3" labelSpanM="12" labelSpanS="12"
+                        adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0"
+                        columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false">
+                        
+                        <form:content>
+                            <core:Title id="detailsTitle" text="Details" />
+                            <Label id="mfgNumberLabel" text="Manufacturer Number" required="true"/>
+                            <Input id="mfgNumberInput" value="{ui>/manufacturerNumber}" liveChange=".onManufacturerNumberLiveChange" placeholder="Enter unique manufacturer number"/>
+
+                            <Label id="mfgNameLabel" text="Manufacturer Name" required="true"/>
+                            <Input id="mfgNameInput" value="{ui>/mfgName}" liveChange=".onManufacturerNameLiveChange" placeholder="Enter manufacturer name"/>
+
+                            <!-- <Label id="isPlaceholderLabel" text="Set as Global Placeholder?"/>
+                            <CheckBox id="isPlaceholderCheckbox" selected="{ui>/isPlaceholder}" 
+                                tooltip="If checked, this logo will be the default for manufacturers without a specific logo, and for other general uses."/> -->
+
+                            <core:Title id="fileUploadTitle" text="File Upload" />
+                            <Label id="logoFileLabel" text="Logo File" required="true"/>
+                            
+                            <u:FileUploader
+                                id="fileUploader"
+                                name="logoFile"
+                                fileType="png,jpg,jpeg,gif,svg"
+                                buttonText="Browse..."
+                                change="onChange"
+                                typeMissmatch="onFileTypeMismatch"
+                                style="Emphasized"
+                                icon="sap-icon://upload"
+                                tooltip="Select a logo file (PNG, JPG, SVG, JPEG, PDF)"/>
+                            
+                            <Label id="selectedFileLabel" text="Selected File" visible="{= !!${ui>/fileData/fileName}}"/>
+                            <layout:HorizontalLayout id="_IDGenHorizontalLayout" visible="{= !!${ui>/fileData/fileName}}">
+                                <ObjectStatus id="selectedFileText" title="{ui>/fileData/fileName}" text="{ui>/fileData/fileSize}" state="Information"/>
+                            </layout:HorizontalLayout>
+
+                        </form:content>
+                    </form:SimpleForm>
+                </content>
+                <beginButton>
+                    <Button id="uploadButton" text="{= ${ui>/isEditMode} ? 'Save Changes' : 'Upload &amp; Activate' }" press=".onUploadPress" type="Emphasized" enabled="{= !${ui>/isUploading} &amp;&amp; !!${ui>/fileData} }">
+                        <layoutData><OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow"/></layoutData>
+                    </Button>
+                </beginButton>
+                <endButton>
+                    <Button id="cancelButton" text="Cancel" press=".onCloseDialog" enabled="{= !${ui>/isUploading} }">
+                        <layoutData><OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData2" priority="NeverOverflow"/></layoutData>
+                    </Button>
+                </endButton>
+            </Dialog>
+        </content>
+    </Page>
+</mvc:View>

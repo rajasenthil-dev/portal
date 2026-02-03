@@ -71,7 +71,8 @@
     "watch-mckaccesshubuser": "cds watch --open mckaccesshubuser/index.html?sap-ui-xx-viewCache=false --livereload false",
     "watch-salesserialnumber": "cds watch --open salesserialnumber/index.html?sap-ui-xx-viewCache=false --livereload false",
     "watch-accessmanager1": "cds watch --open accessmanager1/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "watch-invmb51": "cds watch --open invmb51/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "watch-invmb51": "cds watch --open invmb51/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-mfglogoupld": "cds watch --open mfglogoupld/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "cds": {
     "service": {

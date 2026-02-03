@@ -1,0 +1,1 @@
+using PROCESSING as service from '../../srv/service';

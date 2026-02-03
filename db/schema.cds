@@ -1817,6 +1817,7 @@ entity MediaFile : cuid, managed { // 'cuid' provides 'ID: UUID' as the key. 'ma
     @Core.ContentDisposition.Filename : fileName
     content            : LargeBinary;
     fileName           : String;
+    @Core.IsMediaType: true
     mediaType          : String;
     url                : String;
     manufacturerNumber : String(50);

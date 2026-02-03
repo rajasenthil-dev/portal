@@ -1,0 +1,23 @@
+{
+  "generationParameters": {
+    "generationDate": "Mon Feb 02 2026 22:59:10 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "SAP Business Application Studio",
+    "serviceType": "Local CAP",
+    "metadataFilename": "",
+    "serviceUrl": "http://localhost:4004/odata/v4/media/",
+    "appName": "mfglogoupld",
+    "appTitle": "Manufacturer Profile Manager",
+    "appDescription": "Manufacturer Profile Manager",
+    "appNamespace": "",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.144.0",
+    "enableEslint": false,
+    "enableTypeScript": false,
+    "showMockDataInfo": false,
+    "generatorVersion": "1.20.1",
+    "template": "Basic V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [],
+    "launchText": "To launch the generated app, start your CAP project:  and navigate to the following location in your browser:\n\nhttp://localhost:4004/mfglogoupld/index.html"
+  }
+}

@@ -1,3 +1,8 @@
+<!--********* Modification Log *****************************************************************
+Version: CHG#:       INCIDENT#:     DATE:       DEVELOPER:
+  1.0     CHG#       INC3619116     Feb-02-26   Raja Senthil N
+DESCRIPTION: ITEM Master Listing App: Add new column field: UNITS_PER_PALLET
+*********************************************************************************************-->
 <mvc:View 
     xmlns:mvc="sap.ui.core.mvc" 
     xmlns="sap.m" 
@@ -254,9 +259,20 @@
                                     <Text id="_IDGenText42" text="{UNITS_PER_CASE}" />
                                 </t:template>
                             </t:Column>
+                            <!-- Begin of INC3619116 - New Column "UNITS_PER_PALLET" -->
+                            <t:Column id="_IDGenColumn625" width="7.5rem" hAlign="End" sortProperty="UNITS_PER_PALLET">
+                                <t:customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "UNITS_PER_PALLET", "leadingProperty": "UNITS_PER_PALLET", "columnIndex": 18}'/>
+                                </t:customData>
+                                <Text id="_IDGenText2331" text="{i18n>ITEMMASTER.UNITS_PER_PALLET}"></Text>
+                                <t:template>
+                                    <Text id="_IDGenText421" text="{UNITS_PER_PALLET}" />
+                                </t:template>
+                            </t:Column>                            
+                            <!-- End of INC3619116 - New Column "UNITS_PER_PALLET" -->
                             <t:Column id="_IDGenColumn62" width="7rem" hAlign="End" sortProperty="SALESORG">
                                 <t:customData>
-                                    <core:CustomData key="p13nData" value='\{"columnKey": "SALESORG", "leadingProperty": "SALESORG", "columnIndex": 18}'/>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "SALESORG", "leadingProperty": "SALESORG", "columnIndex": 19}'/>
                                 </t:customData>
                                 <Text id="_IDGenText23" text="{i18n>ITEMMASTER.SALESORG}"></Text>
                                 <t:template>
@@ -265,7 +281,7 @@
                             </t:Column>
                             <t:Column id="_IDGenColumn621" width="7rem" hAlign="End" sortProperty="MANUFACTURERNUMBER" visible="false">
                                 <t:customData>
-                                    <core:CustomData key="p13nData" value='\{"columnKey": "MANUFACTURERNUMBER", "leadingProperty": "MANUFACTURERNUMBER", "columnIndex": 19}'/>
+                                    <core:CustomData key="p13nData" value='\{"columnKey": "MANUFACTURERNUMBER", "leadingProperty": "MANUFACTURERNUMBER", "columnIndex": 20}'/>
                                 </t:customData>
                                 <Text id="_IDGenText231" text="{i18n>ITEMMASTER.MANUFACTURERNUMBER}"></Text>
                                 <t:template>
