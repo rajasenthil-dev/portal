@@ -14,7 +14,7 @@ sap.ui.define([], () => {
             }
             console.log("✅ Dynamic Base Path:", sAppPath);
 
-            var fullUrl = sAppPath + '/odata/v2/media/MediaFile';
+            var fullUrl = sAppPath + '/odata/v4/media/MediaFile';
 
             return `${fullUrl}(ID='${sUrl}',IsActiveEntity=${isActive})/content`;
         },
