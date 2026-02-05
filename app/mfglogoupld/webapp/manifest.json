@@ -32,6 +32,7 @@
           "action": "maintain",
           "title": "{{mfglogoupld-maintain.flpTitle}}",
           "subTitle": "{{mfglogoupld-maintain.flpSubtitle}}",
+          "icon": "{{mfglogoupld-maintain.flpIcon}}",
           "signature": {
             "parameters": {},
             "additionalParameters": "allowed"
