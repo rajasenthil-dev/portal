@@ -31,11 +31,11 @@ sap.ui.define([
 
         _fetchExistingManufacturers: function () {
             var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
-            if (sAppPath === ".") {
+            if (sAppPath === "." || sAppPath === "..") {
                 sAppPath = "";
             }
-            // return fetch(sAppPath + "/odata/v4/media/MediaFile")
-            return fetch("/odata/v4/media/MediaFile")
+            return fetch(sAppPath + "/odata/v4/media/MediaFile")
+            // return fetch("/odata/v4/media/MediaFile")
                 .then(response => response.json())
                 .then(data => {
                     var existingManufacturers = data.value.map(item => item.manufacturerNumber);
@@ -197,11 +197,11 @@ sap.ui.define([
 
         _fetchCSRFToken: function () {
             var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
-            if (sAppPath === ".") {
+            if (sAppPath === "." || sAppPath === "..") {
                 sAppPath = "";
             }
-            // return fetch(sAppPath + "/odata/v4/media/", {
-            return fetch("/odata/v4/media/", {
+            return fetch(sAppPath + "/odata/v4/media/", {
+            // return fetch("/odata/v4/media/", {
                 method: "GET",
                 headers: { "X-CSRF-Token": "Fetch" },
                 credentials: "include"
@@ -233,11 +233,11 @@ sap.ui.define([
 
         _createDraft: function (manufacturerNumber, mfgName, fileName, fileType, csrfToken) {
             var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
-            if (sAppPath === ".") {
+            if (sAppPath === "." || sAppPath === "..") {
                 sAppPath = "";
             }
-            // return fetch(sAppPath + "/odata/v4/media/MediaFile", {
-            return fetch("/odata/v4/media/MediaFile", {
+            return fetch(sAppPath + "/odata/v4/media/MediaFile", {
+            // return fetch("/odata/v4/media/MediaFile", {
                 method: "POST",
                 headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
                 credentials: "include",
@@ -294,8 +294,8 @@ sap.ui.define([
             if (sAppPath === "." || sAppPath === "..") {
                 sAppPath = "";
             }
-            // return fetch(sAppPath + "/odata/v4/media/MediaFile", {
-            return fetch("/odata/v4/media" + sPath, {
+            return fetch(sAppPath + "/odata/v4/media" + sPath, {
+            // return fetch("/odata/v4/media" + sPath, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
                 // headers: { "Content-Type": "application/octet-stream", "X-CSRF-Token": csrfToken },
@@ -405,11 +405,11 @@ sap.ui.define([
         _activateDraft: function (sPath, csrfToken) {
             debugger
             var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
-            if (sAppPath === ".") {
+            if (sAppPath === "." || sAppPath === "..") {
                 sAppPath = "";
             }
-            // return fetch(`${sAppPath}/odata/v4/media${sPath}/Media.draftActivate`, {
-            return fetch(`/odata/v4/media${sPath}/Media.draftActivate`, {
+            return fetch(`${sAppPath}/odata/v4/media${sPath}/Media.draftActivate`, {
+            // return fetch(`/odata/v4/media${sPath}/Media.draftActivate`, {
                 method: "POST",
                 headers: {
                     "X-CSRF-Token": csrfToken,
@@ -424,8 +424,12 @@ sap.ui.define([
         // Edit Draft
         _editDraft: function (sPath, csrfToken) {
             debugger
-            // return fetch(`${sAppPath}/odata/v4/media${sPath}/Media.draftActivate`, {
-            return fetch(`/odata/v4/media${sPath}/Media.draftEdit`, {
+            var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
+            if (sAppPath === "." || sAppPath === "..") {
+                sAppPath = "";
+            }            
+            return fetch(`${sAppPath}/odata/v4/media${sPath}/Media.draftEdit`, {
+            // return fetch(`/odata/v4/media${sPath}/Media.draftEdit`, {
                 method: "POST",
                 headers: {
                     "X-CSRF-Token": csrfToken,
@@ -439,11 +443,12 @@ sap.ui.define([
         _readMediaDraft: function (sPath, csrfToken) {
             debugger
             var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
-            if (sAppPath === ".") {
+            if (sAppPath === "." || sAppPath === "..") {
                 sAppPath = "";
             }
             // Read entity with Active/Draft flags
-            return fetch(`/odata/v4/media${sPath}?$select=IsActiveEntity,HasActiveEntity,HasDraftEntity`, {
+               return fetch(`${sAppPath}/odata/v4/media${sPath}?$select=IsActiveEntity,HasActiveEntity,HasDraftEntity`, {
+            // return fetch(`/odata/v4/media${sPath}?$select=IsActiveEntity,HasActiveEntity,HasDraftEntity`, {
                 method: "GET",
                 headers: {
                     "X-CSRF-Token": csrfToken,
