@@ -1,3 +1,8 @@
+/* ********* Modification Log ************************************************************
+Version CHG#:       INCIDENT#:     DATE:       DEVELOPER:
+1.0     CHG0248940  INC3623791     Feb-18-26  Raja Senthil N
+DESCRIPTION: OKTA Group Creation Fix 
+*******************************************************************************************/
 // const axios = require('axios');
 // const okta = require('../utils/okta-helper');
 // const { activateUser, deactivateUser } = require('../utils/okta-helper');
@@ -463,7 +468,10 @@ module.exports = async function (srv) {
       // Reuse listGroups API to validate uniqueness (optional enhancement)
       const okta = require('../utils/okta-helper');
       const api = require('axios').create({
-        baseURL: `${process.env.OKTA_BASE_URL}/api/v1`,
+        /* Begin of INC3623791 - Create OKTA Group Fix 
+        baseURL: `${process.env.OKTA_BASE_URL}/api/v1`, */
+        baseURL: `${process.env.OKTA_API_URL}/api/v1`,
+        /* End of INC3623791 - Create OKTA Group Fix */
         headers: {
           Authorization: `SSWS ${process.env.OKTA_API_TOKEN}`,
           'Content-Type': 'application/json'
