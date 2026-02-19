@@ -1,3 +1,8 @@
+/* ********* Modification Log ************************************************************
+Version CHG#:       INCIDENT#:     DATE:       DEVELOPER:
+1.0     CHG0248940  INC3709873     Feb-18-26  Raja Senthil N
+DESCRIPTION: OKTA Group Creation Fix 
+*******************************************************************************************/
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
@@ -18,7 +23,7 @@ sap.ui.define([
                 showFooter: false
             });
             this.getView().setModel(oViewModel, "viewState");
-          
+
             const oGroupModel = new sap.ui.model.json.JSONModel({
                 groupList: []
             });
@@ -52,11 +57,11 @@ sap.ui.define([
                 // Optional: set default if no group selected
                 const oCtx = oView.getBindingContext("edit");
                 if (oCtx && !oCtx.getProperty("groupIds") && aGroups.length > 0) {
-                const sFirstGroupId = aGroups[0].id;
-                const sFirstGroupName = aGroups[0].profile?.name || aGroups[0].name;
+                    const sFirstGroupId = aGroups[0].id;
+                    const sFirstGroupName = aGroups[0].profile?.name || aGroups[0].name;
 
-                oCtx.setProperty("groupIds", sFirstGroupId);
-                oCtx.setProperty("groupNames", sFirstGroupName);
+                    oCtx.setProperty("groupIds", sFirstGroupId);
+                    oCtx.setProperty("groupNames", sFirstGroupName);
                 }
             }).catch((err) => {
                 console.error("❌ Failed to load groups:", err);
@@ -82,23 +87,23 @@ sap.ui.define([
                 path: sObjectPath,
                 model: "edit"
             });
-        
+
         },
 
         onEditToggleButtonPress: function() {
             var oObjectPage = this.getView().byId("ObjectPageLayout"),
-            bCurrentShowFooterState = oObjectPage.getShowFooter();
+                bCurrentShowFooterState = oObjectPage.getShowFooter();
 
             oObjectPage.setShowFooter(!bCurrentShowFooterState);
             const oViewModel = this.getView().getModel("viewState");
             const bEditable = !oViewModel.getProperty("/isEdit");
             oViewModel.setProperty("/isEdit", bEditable);
             if (bEditable) {
-            this._loadOktaGroups();
+                this._loadOktaGroups();
             }
             sap.m.MessageToast.show(bEditable ? "Edit mode enabled" : "Edit mode disabled");
         },
-          
+
         onCancel: function () {
             const oView = this.getView();
             const oObjectPage = oView.byId("ObjectPageLayout");
@@ -112,7 +117,7 @@ sap.ui.define([
 
             // ✅ Optional: show a toast
             sap.m.MessageToast.show("Edit cancelled");
-            
+
             this.oRouter.navTo("master", {
                 layout: fioriLibrary.LayoutType.OneColumn
             });
@@ -120,7 +125,7 @@ sap.ui.define([
         onSave: function () {
             const oView = this.getView();
             const oODataModel = this.getOwnerComponent().getModel();
-        
+
             const oCtx = oView.getBindingContext("edit");
             if (!oCtx) {
                 return sap.m.MessageBox.error("Cannot save: No binding context.");
@@ -175,13 +180,13 @@ sap.ui.define([
 
                 // ✅ Re-fetch latest user data to update UI
                 oModel.read(sPath, {
-                success: (oData) => {
-                    oModel.setProperty(sPath, oData); // optional: force update
-                    MessageToast.show(`✅ User ${userId} activated`);
-                },
-                error: () => {
-                    MessageToast.show("Activated but failed to refresh user data");
-                }
+                    success: (oData) => {
+                        oModel.setProperty(sPath, oData); // optional: force update 
+                        MessageToast.show(`✅ User ${userId} activated`);
+                    },
+                    error: () => {
+                        MessageToast.show("Activated but failed to refresh user data");
+                    }
                 });
             } catch (err) {
                 console.error("Activation failed:", err);
@@ -205,13 +210,13 @@ sap.ui.define([
                 await this._callOktaAction("deactivateUser", { userId });
 
                 oModel.read(sPath, {
-                success: (oData) => {
-                    oModel.setProperty(sPath, oData);
-                    MessageToast.show(`✅ User ${userId} deactivated`);
-                },
-                error: () => {
-                    MessageToast.show("Deactivated but failed to refresh user data");
-                }
+                    success: (oData) => {
+                        oModel.setProperty(sPath, oData);
+                        MessageToast.show(`✅ User ${userId} deactivated`);
+                    },
+                    error: () => {
+                        MessageToast.show("Deactivated but failed to refresh user data");
+                    }
                 });
             } catch (err) {
                 console.error("Deactivation failed:", err);
@@ -227,16 +232,23 @@ sap.ui.define([
             }
 
             const userId = oCtx.getProperty("id");
-
+            /* Begin of INC3709873 - Fix to handle error log*/
+            const oODataModel = this.getOwnerComponent().getModel();
+            var name = oCtx.getProperty('lastName') +' '+ oCtx.getProperty('firstName');
+            /* End of INC3709873 - handle error log*/
             try {
                 await this._callOktaAction("sendActivationEmail", { userId });
-                MessageToast.show(`✅ Activation email sent to ${userId}`);
+                // MessageToast.show(`✅ Activation email sent to ${userId}`); INC3709873 - Fix
+                MessageToast.show(`✅ Activation email sent to ${name}`); //INC3709873 - Fix
 
                 // 🔄 Refresh the binding context to update status
                 await new Promise((resolve, reject) => {
-                    oCtx.getModel().read(oCtx.getPath(), {
+                    /* Begin of INC3709873 - Fix to handle error log                   
+                    oCtx.getModel().read(oCtx.getPath(), { */
+                    oODataModel.read("/OKTAUsers", {
+                        /* End of INC3709873 - handle error log*/
                         success: (oData) => {
-                            oCtx.getModel().setProperty(oCtx.getPath(), oData);
+                            // oCtx.getModel().setProperty(oCtx.getPath(), oData); INC3709873 - Fix                             
                             resolve();
                         },
                         error: reject
@@ -259,10 +271,10 @@ sap.ui.define([
 
             const confirm = await new Promise((resolve) => {
                 MessageBox.confirm(`Are you sure you want to delete user ${userId}?`, {
-                title: "Confirm Deletion",
-                actions: [MessageBox.Action.YES, MessageBox.Action.NO],
-                emphasizedAction: MessageBox.Action.NO,
-                onClose: resolve
+                    title: "Confirm Deletion",
+                    actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                    emphasizedAction: MessageBox.Action.NO,
+                    onClose: resolve
                 });
             });
 
@@ -271,7 +283,7 @@ sap.ui.define([
             try {
                 await this._callOktaAction("deleteUser", { userId });
                 MessageToast.show(`🗑️ User ${userId} deleted`);
-                
+
                 // Refresh list or navigate back depending on your UI
                 this.getOwnerComponent().getModel().refresh(true);
             } catch (err) {
@@ -284,14 +296,14 @@ sap.ui.define([
 
             return new Promise((resolve, reject) => {
                 oModel.callFunction(`/${actionName}`, {
-                method: "POST",
-                urlParameters: payload,
-                success: resolve,
-                error: reject
+                    method: "POST",
+                    urlParameters: payload,
+                    success: resolve,
+                    error: reject
                 });
                 oModel.refresh(true);
             });
-            
+
         },
 
         onExit: function () {
@@ -304,7 +316,7 @@ sap.ui.define([
             } else {
                 window.top.location.href = "https://discovery-sunrise.launchpad.cfapps.us20.hana.ondemand.com/site?siteId=0cf6c23e-def9-4ed5-a7fb-0b378ac9e3ed#Shell-home";
             }
-                    
+
         }
     });
 });
