@@ -160,6 +160,8 @@ sap.ui.define([
               <ul>
                 <li>Prefer existing groups to keep things clean and consistent.</li>
                 <li>If creating a new group, choose a clear, descriptive name.</li>
+                <li>On creation of New Group, raise Service Incident to Assignment Group: SSO-MFA-Operations
+                    to assign Application: Canada 3PL Manufacturer Portal(SAP BTP Sunrise)</li>
                 <li>Groups are managed centrally and tied to application roles.</li>
               </ul>
               <p class="tipText"><strong>Tip:</strong> Reach out to your admin team before creating a new group — there may already be one that fits your need!</p>`
