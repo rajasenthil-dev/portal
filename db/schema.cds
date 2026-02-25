@@ -1822,6 +1822,11 @@ entity MediaFile : cuid, managed { // 'cuid' provides 'ID: UUID' as the key. 'ma
     url                : String;
     manufacturerNumber : String(50);
     MFGName            : String(255);
+/* Begin of System Message Notification */
+    message            : String(500);
+    expirydt           : Date;
+    activechb          : Boolean;
+/* End of System Message Notification */
 }
 
 
