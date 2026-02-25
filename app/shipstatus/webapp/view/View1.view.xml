@@ -1,3 +1,8 @@
+<!--********* Modification Log *****************************************************************
+Version: CHG#:       INCIDENT#:     DATE:       DEVELOPER:
+  1.0    CHG0250621  INC3740211     Feb-25-26   Raja Senthil N
+DESCRIPTION: Enhancement to hide "Estimated Delivery Date"
+*********************************************************************************************-->
 <mvc:View controllerName="shipstatus.controller.View1"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
@@ -81,12 +86,14 @@
                                 conditionType="{
                                     module: 'sap.ui.comp.config.condition.DateRangeType'
                                 }" />
+                            <!-- Begin of INC3740211 CHG0250621 Hide Estimated Delivery Date
                             <sf:ControlConfiguration id="_IDGenControlConfiguration2"
                                 key="REQUESTED_DELIVERY_DATE_VDATU"
                                 visibleInAdvancedArea="true"
                                 conditionType="{
                                     module: 'sap.ui.comp.config.condition.DateRangeType'
                                 }" />
+                                End of INC3740211 CHG0250621 Hide Estimated Delivery Date -->
                                 <sf:ControlConfiguration id="_IDGenControlConfiguration3"
                                 key="OBD_TIMESTAMP_LAST_STATUS_TIME_PLANT_BASED"
                                 visibleInAdvancedArea="true"
@@ -141,9 +148,12 @@
                                     <Text id="_IDGenText1" text="{OBD_NO_DOCNO_C}" />
                                 </t:template>
                             </t:Column>
-
+                            
                             <!-- Requested Delivery Date -->
-                            <t:Column id="_IDGenColumn2" width="10rem" hAlign="End" sortProperty="REQUESTED_DELIVERY_DATE_VDATU">
+                            <!-- Begin of INC3740211 CHG0250621 Hide Estimated Delivery Date
+                            <t:Column id="_IDGenColumn2" width="10rem" hAlign="End" sortProperty="REQUESTED_DELIVERY_DATE_VDATU" > -->
+                            <t:Column id="_IDGenColumn2" width="10rem" hAlign="End" sortProperty="REQUESTED_DELIVERY_DATE_VDATU" visible="false">
+                            <!-- End of INC3740211 CHG0250621 Hide Estimated Delivery Date-->
                                 <t:customData>
                                     <core:CustomData key="p13nData" value='{"columnKey":"REQUESTED_DELIVERY_DATE_VDATU","leadingProperty":"REQUESTED_DELIVERY_DATE_VDATU","columnIndex":2}'/>
                                 </t:customData>
