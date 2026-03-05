@@ -22,7 +22,13 @@ sap.ui.define([
             this._binding = null;
             this.getView().getModel("ui").setProperty("/isEditMode", true);
             this._fetchExistingManufacturers();
-
+            // Begin of Message Notification
+            this.getView().setModel(new JSONModel({
+                message: "",
+                expirydt: null,
+                activechb: false
+            }), "msgnotif")
+            // End of Message Notification
         },
 
         onBeforeRendering: function () {
@@ -35,7 +41,7 @@ sap.ui.define([
                 sAppPath = "";
             }
             return fetch(sAppPath + "/odata/v4/media/MediaFile")
-            // return fetch("/odata/v4/media/MediaFile")
+                // return fetch("/odata/v4/media/MediaFile")
                 .then(response => response.json())
                 .then(data => {
                     var existingManufacturers = data.value.map(item => item.manufacturerNumber);
@@ -201,7 +207,7 @@ sap.ui.define([
                 sAppPath = "";
             }
             return fetch(sAppPath + "/odata/v4/media/", {
-            // return fetch("/odata/v4/media/", {
+                // return fetch("/odata/v4/media/", {
                 method: "GET",
                 headers: { "X-CSRF-Token": "Fetch" },
                 credentials: "include"
@@ -237,7 +243,7 @@ sap.ui.define([
                 sAppPath = "";
             }
             return fetch(sAppPath + "/odata/v4/media/MediaFile", {
-            // return fetch("/odata/v4/media/MediaFile", {
+                // return fetch("/odata/v4/media/MediaFile", {
                 method: "POST",
                 headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
                 credentials: "include",
@@ -295,7 +301,7 @@ sap.ui.define([
                 sAppPath = "";
             }
             return fetch(sAppPath + "/odata/v4/media" + sPath, {
-            // return fetch("/odata/v4/media" + sPath, {
+                // return fetch("/odata/v4/media" + sPath, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
                 // headers: { "Content-Type": "application/octet-stream", "X-CSRF-Token": csrfToken },
@@ -409,7 +415,7 @@ sap.ui.define([
                 sAppPath = "";
             }
             return fetch(`${sAppPath}/odata/v4/media${sPath}/Media.draftActivate`, {
-            // return fetch(`/odata/v4/media${sPath}/Media.draftActivate`, {
+                // return fetch(`/odata/v4/media${sPath}/Media.draftActivate`, {
                 method: "POST",
                 headers: {
                     "X-CSRF-Token": csrfToken,
@@ -427,9 +433,9 @@ sap.ui.define([
             var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
             if (sAppPath === "." || sAppPath === "..") {
                 sAppPath = "";
-            }            
+            }
             return fetch(`${sAppPath}/odata/v4/media${sPath}/Media.draftEdit`, {
-            // return fetch(`/odata/v4/media${sPath}/Media.draftEdit`, {
+                // return fetch(`/odata/v4/media${sPath}/Media.draftEdit`, {
                 method: "POST",
                 headers: {
                     "X-CSRF-Token": csrfToken,
@@ -437,28 +443,30 @@ sap.ui.define([
                 },
                 credentials: "include"
             })
-                .then(async (response) => { if (!response.ok) throw new Error("Failed to Edit draft"); })
+                // .then(async (response) => { if (!response.ok) throw new Error("Failed to Edit draft"); })
+                .then(async (response) => { if (!response.ok && response.status != 409) throw new Error("Failed to Edit draft"); })
                 .catch(error => { throw new Error("Error Editing draft: " + error.message); });
         },
-        _readMediaDraft: function (sPath, csrfToken) {
+        _readMediaDraft: function (sPath) {
             debugger
             var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
             if (sAppPath === "." || sAppPath === "..") {
                 sAppPath = "";
             }
             // Read entity with Active/Draft flags
-               return fetch(`${sAppPath}/odata/v4/media${sPath}?$select=IsActiveEntity,HasActiveEntity,HasDraftEntity`, {
-            // return fetch(`/odata/v4/media${sPath}?$select=IsActiveEntity,HasActiveEntity,HasDraftEntity`, {
+            return fetch(`${sAppPath}/odata/v4/media/MediaFile`, {
+                // return fetch(`${sAppPath}/odata/v4/media${sPath}?$select=IsActiveEntity,HasActiveEntity,HasDraftEntity`, {
                 method: "GET",
-                headers: {
-                    "X-CSRF-Token": csrfToken,
-                    "Content-Type": "application/json"
-                },
-                credentials: "include"
+                // headers: {
+                //     // "X-CSRF-Token": csrfToken,
+                //     "Content-Type": "application/json"
+                // },
+                // credentials: "include"
             })
                 .then(async (response) => {
                     if (!response.ok) throw new Error("Failed to read Media Entity");
                     const data = await response.json();
+                    return data;
                 })
                 .catch(error => { throw new Error("Error Reading Media Entity: " + error.message); });
         },
@@ -539,6 +547,120 @@ sap.ui.define([
                 .catch((oError) => {
                     MessageBox.error("Error deleting items: " + oError.message);
                 });
-        }
+        },
+        /* Begin of Message Notification */
+        // Open the dialog
+        onOpenMsgDialog: async function () {
+            //Read all Data from 'MediaFile'
+            var oMsgData = {
+                message: "",
+                expirydt: null,
+                activechb: false
+            };
+            const oDataMedia = await this._readMediaDraft();
+
+            // Read first row with valid message
+            for (const msgitem of oDataMedia.value) {
+                oMsgData = {
+                    message: msgitem?.message,
+                    expirydt: msgitem?.expirydt,
+                    activechb: msgitem?.activechb
+                };
+                // const message = msgitem?.message;
+                if ((oMsgData.message !== null && oMsgData.message !== undefined && String(oMsgData.message).trim() !== "") ||
+                    (oMsgData.expirydt !== null && oMsgData.expirydt !== undefined && oMsgData.expirydt !== "") ||
+                    (oMsgData.activechb == true)) {
+                    break; // stop at the first valid message
+                }
+
+            }
+            // JSON Model Instantiation
+            const oMsgView = this.getView();
+            let oMsgModel = oMsgView.getModel("msgnotif");
+            oMsgModel.setData(oMsgData, "msgnotif");
+            this.getView().byId("idMsgNotif").open();
+        },
+        _MsgcloseDialog: function () {
+            this.getView().byId("idMsgNotif").close();
+        },
+        _MessageUpdate: async function () {
+            const oUiModel = this.getView().getModel("ui");
+            const sToken = oUiModel.getProperty("/csrfToken");
+            try {
+
+                //Read Data from Dialog
+                let oMsgModel = this.getView().getModel("msgnotif");
+                let message = oMsgModel.getProperty("/message");
+                let expirydt = oMsgModel.getProperty("/expirydt");
+                let activechb = oMsgModel.getProperty("/activechb");
+                // Validate Message for null
+                if (activechb == true && (message == null || message == "")) {
+                    throw new Error(`Message Can't be blank when Active is enabled !!!`);
+                }
+                //Read MediaFile data from Table                
+                // const oMediaTableModel = this.getView().getModel();
+                const oMediaTable = this.byId("idMediaFilesTable");
+
+                // Get contexts from items aggregation binding
+                const oBinding = oMediaTable.getBinding("items"); // ListBinding
+                // Ensure data is loaded
+                let aContexts = await oBinding.requestContexts(0, Infinity);
+                for (const ctx of aContexts) {
+                    const obj = await ctx.requestObject();
+                    // Enable Edit Draft
+                    await this._editDraft(ctx.getPath(), sToken);
+                    // Update Draft
+                    let editsPath = ctx.getPath().replace("IsActiveEntity=true", "IsActiveEntity=false");
+                    const editresponse = await this._updateMsgDraft(editsPath, message, expirydt, activechb, sToken);
+                    if (editresponse?.context) {
+                        this._binding = this.getView().getModel().bindContext(editsPath, null, {
+                            $$updateGroupId: "UploadGroup"
+                        });
+                    }
+                    await this._activateDraft(this._binding.getPath(), sToken);
+                }
+                this._editBindingContext = null;
+                this._resetForm();
+                sap.m.MessageToast.show("Message Notification Updated to All Manufacturers!!!");
+            } catch (error) {
+                MessageBox.error("Error Updating Message Notification: " + error.message);
+            }
+            this.getView().byId("idMsgNotif").close();
+        },
+        // Update Message
+        _updateMsgDraft: function (sPath, message, expirydt, activechb, csrfToken) {
+            var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
+            if (sAppPath === "." || sAppPath === "..") {
+                sAppPath = "";
+            }
+            return fetch(sAppPath + "/odata/v4/media" + sPath, {
+                // return fetch("/odata/v4/media" + sPath, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
+                // headers: { "Content-Type": "application/octet-stream", "X-CSRF-Token": csrfToken },
+                credentials: "include",
+                body: JSON.stringify({ message, expirydt, activechb })
+            })
+
+                .then(async (res) => {
+                    // 1) Fail fast on HTTP errors
+                    if (!res.ok) {
+                        const text = await res.text().catch(() => "");
+                        throw new Error(`Create draft failed (${res.status}) ${text}`);
+                    } else {
+                        return res;
+                    }
+                })
+                .then(({ res, data, location }) => {
+                    // return res;
+                    return { context: { getPath: () => sPath } };
+
+                })
+                .catch((error) => {
+                    throw new Error("Failed to create draft: " + error.message);
+                });
+
+        },
+        /* End of Message Notification */
     });
 });
