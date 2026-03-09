@@ -1654,7 +1654,8 @@ entity SHIPPINGSTATUS
     key VKORG                                       : String(4)         @title: 'Sales Org';
         QUANTITY_ORDERED_QTY                        : Decimal(31,0)     @title: 'Quantity Ordered';
         PRODUCT_DESCRIPTION_MAKTX                   : String(40)        @title: 'Product Description';
-    key REQUESTED_DELIVERY_DATE_VDATU               : String(8)         @title: 'Estimated Delivery Date';
+ // key REQUESTED_DELIVERY_DATE_VDATU               : String(8)         @title: 'Estimated Delivery Date'; //CHG0250621 INC3740211   
+    key REQUESTED_DELIVERY_DATE_VDATU               : String(8)         @title: 'Estimated Delivery Date' @UI.Hidden: true; //CHG0250621 INC3740211(Hide)
     key SHIP_TO_PARTYNO                             : String(10)        @title: 'Ship To #';
         SHIP_TO_NAME_PARTNER                        : String(10)        @title: 'Ship To Name';
     key AUDAT                                       : String(8)         @title: 'Order Date';

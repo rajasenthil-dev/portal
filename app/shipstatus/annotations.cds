@@ -1,3 +1,8 @@
+// <!--********* Modification Log *****************************************************************
+// Version: CHG#:       INCIDENT#:     DATE:       DEVELOPER:
+//   1.0    CHG0250621  INC3740211     Feb-25-26   Raja Senthil N
+// DESCRIPTION: Enhancement to remove "Estimated Delivery Date"
+// *********************************************************************************************-->
 using PROCESSING as service from '../../srv/service';
 
 annotate PROCESSING.SHIPPINGSTATUS with @(
@@ -40,10 +45,12 @@ annotate PROCESSING.SHIPPINGSTATUS with @(
                 $Type : 'UI.DataField',
                 Value : QUANTITY_ORDERED_QTY
             },
-            {
-                $Type : 'UI.DataField',
-                Value : REQUESTED_DELIVERY_DATE_VDATU
-            },
+// <!-- Begin of INC3740211 CHG0250621 remove Estimated Delivery Date            
+            // {
+            //     $Type : 'UI.DataField',
+            //     Value : REQUESTED_DELIVERY_DATE_VDATU
+            // },
+// <!-- End of INC3740211 CHG0250621 remove Estimated Delivery Date
             {
                 $Type : 'UI.DataField',
                 Value : SHIP_TO_NAME_PARTNER

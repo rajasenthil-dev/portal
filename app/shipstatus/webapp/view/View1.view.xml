@@ -151,9 +151,7 @@ DESCRIPTION: Enhancement to hide "Estimated Delivery Date"
                             
                             <!-- Requested Delivery Date -->
                             <!-- Begin of INC3740211 CHG0250621 Hide Estimated Delivery Date
-                            <t:Column id="_IDGenColumn2" width="10rem" hAlign="End" sortProperty="REQUESTED_DELIVERY_DATE_VDATU" > -->
-                            <t:Column id="_IDGenColumn2" width="10rem" hAlign="End" sortProperty="REQUESTED_DELIVERY_DATE_VDATU" visible="false">
-                            <!-- End of INC3740211 CHG0250621 Hide Estimated Delivery Date-->
+                            <t:Column id="_IDGenColumn2" width="10rem" hAlign="End" sortProperty="REQUESTED_DELIVERY_DATE_VDATU" >
                                 <t:customData>
                                     <core:CustomData key="p13nData" value='{"columnKey":"REQUESTED_DELIVERY_DATE_VDATU","leadingProperty":"REQUESTED_DELIVERY_DATE_VDATU","columnIndex":2}'/>
                                 </t:customData>
@@ -164,7 +162,7 @@ DESCRIPTION: Enhancement to hide "Estimated Delivery Date"
                                         path: 'REQUESTED_DELIVERY_DATE_VDATU',type: 'sap.ui.model.odata.type.Date'}"/>
                                 </t:template>
                             </t:Column>
-
+ End of INC3740211 CHG0250621 Hide Estimated Delivery Date-->
                             <!-- Document Date -->
                             <t:Column id="_IDGenColumn3" width="10rem" hAlign="End" sortProperty="AUDAT">
                                 <t:customData>
