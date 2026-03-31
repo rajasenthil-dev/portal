@@ -6,8 +6,9 @@ Entity: INVSTATUSPRODUCTCODE, INVSTATUSVKBUR in order to filter Value help for E
 based on assigned Manufacturer
   2.0   CHG#        INC#           Jan-26-26  Raja Senthil 
 DESCRIPTION: New App: Inventory MB51 Report
-  3.0   CHG#        INC3857327     Mar-27-27  Raja Senthil N
-DESCRIPTION: Sort Based on Manufacturer no. for MediaFile
+  3.0   CHG0259103  INC3857327     Mar-27-26 Raja Senthil N
+DESCRIPTION: Sort Based on Manufacturer no. for MediaFile, so that the first manufacturer name, 
+sorted in ascending order, is displayed on the Internal home page of Admin Users
 ***********************************************************************************************/
 // Processing Service
 using RETURNS as ENTRETURNS from '../db/schema';
@@ -1776,10 +1777,10 @@ service Media {
         { grant: 'READ', to: 'Internal' },
         { grant: ['READ', 'WRITE'], to: 'Admin' }
     ]
-    // Begin of INC3857327 - Sort based on Manufacturer no
+    // Begin of CHG0259103/INC3857327 - Sort based on Manufacturer no
 // entity MediaFile as projection on ENTMediaFile;
     entity MediaFile as projection on ENTMediaFile order by manufacturerNumber asc;
-    // End of INC3857327 - Sort based on Manufacturer no }
+    // End of CHG0259103/INC3857327 - Sort based on Manufacturer no }
 }
 annotate Media.MediaFile with @odata.draft.enabled: true;
 
