@@ -1,3 +1,9 @@
+/* ********* Modification Log ************************************************************
+Version CHG#:       INCIDENT#:     DATE:       DEVELOPER:
+1.0     CHG0261280  INC3915281     Apr-07-26  Raja Senthil N
+DESCRIPTION: For Internal User assignment to AD Group, process updated to raise SailPoint
+             Request replacing ServiceNow Request 
+*******************************************************************************************/
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
@@ -120,25 +126,46 @@ sap.ui.define([
           const oExternalUserInfo = this.byId("externalUserInfo");
           const oMfgUserInfo = this.byId("mfgUserInfo");
           const oGroupUserInfo = this.byId("groupUserInfo");
+          // Begin of CHG0261280/INC3915281 {
+          // oInstructions.setHtmlText(`
+          //   <p>This request ensures your user gets the right access securely and on time.</p>
+  
+          //   <ul>
+          //     <li><strong>New Hire or Transfer?</strong> Pick carefully for correct approvals.</li>
+          //     <li><strong>Domain:</strong> NAMCK (North America) or CA (Canada).</li>
+          //     <li><strong>AD Group:</strong> BTP_INTERNAL_USERS (NA) or MFG_INTERNAL_USERS_CA (CA).</li>
+          //     <li><strong>Business Justification:</strong> Keep it clear to avoid delays.</li>
+          //   </ul>
+    
+          // `);
           oInstructions.setHtmlText(`
             <p>This request ensures your user gets the right access securely and on time.</p>
   
             <ul>
-              <li><strong>New Hire or Transfer?</strong> Pick carefully for correct approvals.</li>
+              <li><strong>Choose Right AD Group based on Domain</li>
               <li><strong>Domain:</strong> NAMCK (North America) or CA (Canada).</li>
               <li><strong>AD Group:</strong> BTP_INTERNAL_USERS (NA) or MFG_INTERNAL_USERS_CA (CA).</li>
-              <li><strong>Business Justification:</strong> Keep it clear to avoid delays.</li>
+              <li>More than one User can be selected for AD assignment</li>
             </ul>
     
           `);
+            // oInstructions1.setHtmlText(`
+            //   <ol>
+            //     <li>Manager reviews</li>
+            //     <li>Application Owner approves</li>
+            //     <li>AD Group Admin adds the user</li>
+            //   </ol>
+            //   <p class="tipText"><strong>Tip: </strong>More Info = <em>Faster Approvals</em></p>
+            // `);
             oInstructions1.setHtmlText(`
               <ol>
                 <li>Manager reviews</li>
                 <li>Application Owner approves</li>
-                <li>AD Group Admin adds the user</li>
+                <li>SailPoint Requests are tracked, approved, and fulfilled automatically</li>
               </ol>
-              <p class="tipText"><strong>Tip: </strong>More Info = <em>Faster Approvals</em></p>
+              <p class="tipText"><strong>Tip: </strong>You can monitor request status directly in SailPoint</p>
             `);
+          // End of CHG0261280/INC3915281 }
             oExternalUserInfo.setHtmlText(`
               <p>Please enter accurate details for the external user. These will be <strong>provisioned to Okta</strong> and may affect downstream systems.</p>
               <ul>

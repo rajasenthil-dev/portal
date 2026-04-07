@@ -1,3 +1,9 @@
+<!--********* Modification Log ************************************************************
+Version CHG#:       INCIDENT#:     DATE:       DEVELOPER:
+1.0     CHG0261280  INC3915281     Apr-07-26  Raja Senthil N
+DESCRIPTION: For Internal User assignment to AD Group, process updated to raise SailPoint
+             Request replacing ServiceNow Request 
+******************************************************************************************-->
 <mvc:View controllerName="mckaccesshubuser.controller.View1"
     displayBlock="true"
     xmlns="sap.m"
@@ -63,22 +69,37 @@
                     </VBox>
                   </HBox>
               </WizardStep>
-              
+<!-- Begin of CHG0261280/INC3915281 - Replace ServiceNow Request with SailPoint Request
             <WizardStep 
               id="stepInternalFinal" 
               title="ServiceNow Request"
               activate="checkStepInternalInfo"
               icon="sap-icon://request">
+              <HBox id="_IDGenHBox" width="100%">  -->
+              <WizardStep 
+              id="stepInternalFinal" 
+              title="SailPoint Request"
+              activate="checkStepInternalInfo"
+              icon="sap-icon://request">
               <HBox id="_IDGenHBox" width="100%">
+<!-- End of CHG0261280/INC3915281  -->
                 <!-- info column -->
                 <VBox id="_IDGenVBox4" width="50%" class="formCard cardSpacing">
                   <Title id="_IDGenTitle3" text="Ok great! Let's get your internal user set up." level="H4"/>
+                  <!-- Begin of CHG0261280/INC3915281 
                   <Text id="_IDGenText14" class="sapUiSmallMarginBottom" text="For this step we need to create a ServiceNow request for your user to be added to an AD (Azure Directory) group."/>
                   <Link id="_IDGenLink" class="" text="Open ServiceNow" target="_blank" href="https://mckesson1.service-now.com/sp?id=sc_cat_item&amp;.table=sc_cat_item&amp;.sys_id=4a0573011b87c19040a643fccd4bcbfa"/>
                   <Text id="_IDGenText17" class="sapUiSmallMarginBottom emphasize" text="Please copy this link and open in your Edge browser."/>
                   <Text id="_IDGenText18" class="sapUiTinyMarginBottom" text="Fill out the required fields for your Contact Number, Hours of Availability, and Location"/>
                   <Text id="_IDGenText19" class="sapUiSmallMarginBottom " text="Use the template below to add the Short Description and Long Description."/>
-                  <Text id="_IDGenText10" text="Short Description:" class="sapUiSmallMarginTop bold" />
+                  <Text id="_IDGenText10" text="Short Description:" class="sapUiSmallMarginTop bold" /> -->
+                  <Text id="_IDGenText14" class="sapUiSmallMarginBottom" text="For this step we need to create a SailPoint request for your user to be added to an AD (Azure Directory) group."/>
+                  <Link id="_IDGenLink" class="" text="Open SailPoint" target="_blank" href="https://idm.mckesson.com/ui/d/request-center/request-access"/>
+                  <Text id="_IDGenText17" class="sapUiSmallMarginBottom emphasize" text="Please copy this link and open in your browser."/>
+                  <Text id="_IDGenText18" class="sapUiTinyMarginBottom" text="Choose: Who Are You Requesting For?"/>
+                  <Text id="_IDGenText19" class="sapUiSmallMarginBottom " text="Use the Guided Navigation below to raise SailPoint Request."/>
+                  <Text id="_IDGenText10" text="Short Description:" class="sapUiSmallMarginTop bold" /> 
+                  <!-- End of CHG0261280/INC3915281  --> 
                   <TextArea id="_IDGenTextArea1"
                       rows="1"
                       editable="false"
@@ -88,13 +109,22 @@
                   />
 
                   <Text id="_IDGenText16" text="Long Description:" class="sapUiSmallMarginTop bold" />
+                  <!-- Begin of CHG0261280/INC3915281  
                   <TextArea id="_IDGenTextArea2"
                       rows="15"
                       editable="false"
                       width="100%"
                       value="Please process the following request for Internal User access to Active Directory group(s).&#10;&#10;Requested For: [Enter full name of employee]&#10;New Hire or Transfer: [Yes or No]&#10;Request Category: AD Group Membership&#10;Request Type: Add User to AD Group(s)&#10;- Is this a bulk request? No&#10;&#10;Domain Selection:&#10;[select domain: CA and add AD Group: MFG_INTERNAL_USERS_CA or select domain: NAMCK and add AD Group: BTP_INTERNAL_USERS]&#10;&#10;Additional Details:&#10;[Provide detailed reason for access – e.g., 'New internal user joining team. Requires access to internal MFG Portal.']&#10;&#10;Attachments:&#10;- For bulk: use the provided attachment and upload CSV of names/emails&#10;- Otherwise: select – None –"
                       class="sapUiMediumMarginBottom"
+                  /> --> 
+                  <TextArea id="_IDGenTextArea2"
+                      rows="15"
+                      editable="false"
+                      width="100%"
+                      value="Please process the following request for Internal User access to Active Directory group(s).&#10;&#10;> If Requested For Others, More than a User can be selected by searching&#10;> Select 'Access Items' in left navigation pane and Search AD Group based on below Domain&#10;> Choose Review Request on Top right corner&#10;> Verify details and Submit Request&#10;&#10;Domain/AD Group Selection:&#10;[for domain: CA, select AD Group: MFG_INTERNAL_USERS_CA or for domain: NAMCK, select AD Group: BTP_INTERNAL_USERS]&#10;"
+                      class="sapUiMediumMarginBottom"
                   />
+                  <!-- End of CHG0261280/INC3915281  --> 
                 </VBox>
                 <!-- instructions column -->
                 <VBox id="_IDGenVBox5" width="50%" class="instructionsCard">
@@ -129,7 +159,7 @@
                 </VBox>
               </HBox>
             </WizardStep>
-  
+ 
             <WizardStep 
               id="stepExternalDetails" 
               title="External User Details"
