@@ -418,11 +418,17 @@ DESCRIPTION: For Internal User assignment to AD Group, process updated to raise 
               
               <!-- Left Card: Summary -->
               <VBox id="_IDGenVBox14" width="50%" class="formCard margin-right">
-                <Title id="_IDGenTitle14" text="🎯 Here's what we captured" level="H4" class="sapUiMediumMarginBottom"/>
+                <!-- Begin of CHG0261280/INC3915281 
+                <Title id="_IDGenTitle14" text="🎯 Here's what we captured" level="H4" class="sapUiMediumMarginBottom"/> -->
+                <Title id="_IDGenTitle14" text="🎯 Here's your Review Checklist" level="H4" class="sapUiMediumMarginBottom"/>
+                <!-- End of CHG0261280/INC3915281 -->
                 <VBox id="_IDGenVBox16" class="reviewCard">
+                <!-- Begin of CHG0261280/INC3915281 
                   <Title id="_IDGenTitle20" level="H4" text="ServiceNow Checklist" />
-                  <Text id="_IDGenText28" text="Make sure you've completed the following in ServiceNow:" class="sapUiSmallMarginBottom" />
-
+                  <Text id="_IDGenText28" text="Make sure you've completed the following in ServiceNow:" class="sapUiSmallMarginBottom" />-->
+                  <Title id="_IDGenTitle20" level="H4" text="SailPoint Checklist" />
+                  <Text id="_IDGenText28" text="Make sure you've chosen right AD Group based on User's Domain" class="sapUiSmallMarginBottom" />
+                <!-- End of CHG0261280/INC3915281 -->
                   <List id="_IDGenList1" items="{
                     path: '/internalChecklist'
                   }">
@@ -436,7 +442,10 @@ DESCRIPTION: For Internal User assignment to AD Group, process updated to raise 
               <!-- Right Card: Next Steps -->
               <VBox id="_IDGenVBox15" width="50%" class="instructionsCard margin-left">
                 <Title id="_IDGenTitle15" text="🚀 What Happens Next?" level="H4" class="sapUiMediumMarginBottom"/>
-                <Text id="_IDGenText27" text="Your request will be routed for approval through:" />
+                <!-- Begin of CHG0261280/INC3915281 
+                <Text id="_IDGenText27" text="Your request will be routed for approval through:" /> -->
+                <Text id="_IDGenText27" text="Your request will be routed for approval and fulfillment:" />
+                <!-- End of CHG0261280/INC3915281 -->
                 <List id="_IDGenList" items="{
                   path: '/approvalSteps'
                 }">
