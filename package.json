@@ -33,7 +33,7 @@
     "ui5-middleware-approuter": "^3.8.0"
   },
   "scripts": {
-    "start": "node ${NODE_ARGS} ./node_modules/.bin/cds-serve",
+    "start": "cds-serve",
     "test": "jest",
     "clean": "rimraf .portal_mta_build_tmp resources mta_archives Makefile_*.mta gen || true",
     "build": "rm -rf resources mta_archives && mbt build --mtar archive",
