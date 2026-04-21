@@ -2,7 +2,7 @@ const cds = require('@sap/cds');
 const path = require('path');
 const cors = require('cors');
 const cuid = require('cuid'); // Generates unique IDs
-const fesr = require("@sap/fesr-to-otel-js");
+// const fesr = require("@sap/fesr-to-otel-js"); CloudALM Pre-reqs
 
 
 // ✅ Reusable function to update MediaFile after modifying content
@@ -83,7 +83,7 @@ async function authMiddleware(req, res, next) {
 
     next();
 }
-cds.on("bootstrap", (app) => fesr.registerFesrEndpoint(app));
+// cds.on("bootstrap", (app) => fesr.registerFesrEndpoint(app)); CloudALM Pre-reqs
 // ✅ Bootstrap Event
 cds.on('bootstrap', async (app) => {
     console.log('CAP is Starting.....');
