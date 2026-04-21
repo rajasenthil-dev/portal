@@ -6,6 +6,8 @@ DESCRIPTION: App: Inventory Status:- Update Char Length of "MANUFACTURER_MFRNR"
 DESCRIPTION: New App: Inventory MB51 Report
   3.0     CHG#       INC3619116     Feb-02-26   Raja Senthil N
 DESCRIPTION: ITEM Master Listing App: Add new column field: UNITS_PER_PALLET
+  4.0     CHG#       RAID1597       Apr-27-26   Raja Senthil N
+DESCRIPTION: Portal Message Notification 
 ***********************************************************************************************/
 @cds.search: { PRODUCTSTANDARDID, PRODUCT, CATEGORY, MANUFACTURERNUMBER, SALESORG, CREATIONDATE, PRODUCTDESCRIPTION_EN, SIZEUOM }
 @cds.persistence.exists
@@ -1823,6 +1825,13 @@ entity MediaFile : cuid, managed { // 'cuid' provides 'ID: UUID' as the key. 'ma
     url                : String;
     manufacturerNumber : String(50);
     MFGName            : String(255);
+/* Begin of RAID1597 - Portal System Message Notification */
+    message            : String(200);
+    fontcolor          : String(15);
+    bckimgpath         : String(50);
+    expirydt           : Date;
+    activemsg          : Boolean;
+/* End of RAID1597 - Portal System Message Notification */
 }
 
 
