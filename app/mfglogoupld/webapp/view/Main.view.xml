@@ -1,3 +1,8 @@
+<!-- ********* Modification Log ********************************************************
+Version: CHG#:       INCIDENT#:     DATE:       DEVELOPER:
+  1.0     CHG#       RAID1597       Apr-27-26   Raja Senthil N
+DESCRIPTION: Portal Message Notification 
+***********************************************************************************  -->
 <mvc:View controllerName="mfglogoupld.controller.Main"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
@@ -27,6 +32,9 @@
                         <content>
                             <Title id="tableTitle" text="Manufacturer Logos" level="H2"/>
                             <ToolbarSpacer id="toolbarSpacer" />
+                            <!-- Begin of RAID1597 - Message Notificaion -->
+                            <Button id="msgAddDialogButton" text="Mass Message Notification" press=".onOpenMsgDialog" type="Critical" icon="sap-icon://add"/>
+                            <!-- End of RAID1597 - Message Notificaion -->
                             <Button id="openAddDialogButton" text="Add New Logo" press=".onOpenDialog" type="Emphasized" icon="sap-icon://add"/>
                             <Button id="editSelectedButton" text="Edit Selected" press=".onEditPress" type="Transparent" icon="sap-icon://edit"
                                 enabled="{= ${idMediaFilesTable>/selectedContexts}.length === 1 }"/>
@@ -44,6 +52,9 @@
                     <!-- <Column id="isPlaceholderCol" hAlign="Center" width="10%"><Text id="isPlaceholderColText" text="Placeholder?" /></Column> -->
                     <Column id="logoCol" hAlign="Center" width="15%"><Text id="logoColText" text="Logo" /></Column>
                     <Column id="modifiedAtCol" minScreenWidth="Desktop" demandPopin="true" hAlign="End" width="20%"><Text id="modifiedAtColText" text="Last Modified" /></Column>
+                    <Column id="messageAtCol" minScreenWidth="Desktop" demandPopin="true" hAlign="End" width="20%"><Text id="messageAtColText" text="Message Notif." /></Column>
+                    <Column id="expirydtAtCol" minScreenWidth="Desktop" demandPopin="true" hAlign="End" width="20%"><Text id="expirydtAtColText" text="Message Expiry Dt" /></Column>
+                    <Column id="activeAtCol" minScreenWidth="Desktop" demandPopin="true" hAlign="End" width="20%"><Text id="activeAtColText" text="Active" /></Column>
                 </columns>
                 <items>
                     <ColumnListItem id="tableItemTemplate" vAlign="Middle" type="Navigation" press=".onListItemPress">
@@ -90,6 +101,13 @@
                                 ], 
                                 formatter: 'Formatter.formatModifiedAt.bind($controller)'
                             }" />
+                            <!-- Begin of RAID1597 - Message Notification -->
+                            <Text id="itemMessage" text="{message}" />                            
+                            <Text id="itemExpdt" text="{expirydt}" />
+                            <Text id="itemActive" text="{activemsg}" />
+                            <Text id="itemColor" text="{fontcolor}" />
+                            <Text id="itembgpath" text="{bckimgpath}" />
+                            <!-- End of RAID1597 - Message Notification -->
                         </cells>
                     </ColumnListItem>
                 </items>
@@ -152,6 +170,69 @@
                     </Button>
                 </endButton>
             </Dialog>
+            <!-- Begin of RAID1597 - Message Notification  -->
+            <Dialog id="idMsgNotif" title="Message Notification" contentWidth="80%">
+                <content>
+                    <VBox class="sapUiSmallMargin" id="idMsgNotiformContainer">
+                        <form:SimpleForm id="idMsgNotifSmpForm"
+                            editable="true"
+                            layout="ColumnLayout"
+                            labelSpanXL="5"
+                            labelSpanL="5"
+                            labelSpanM="5"
+                            labelSpanS="5"
+                            adjustLabelSpan="false"
+                            emptySpanXL="0"
+                            emptySpanL="0"
+                            emptySpanM="0"
+                            emptySpanS="0"
+                            columnsXL="1"
+                            columnsL="1"
+                            columnsM="1"
+                            singleContainerFullSize="false">
+                            <form:content>
+                                <Label id="idMFGName" text="Manufacturer" />
+                                <Input id="idipMFGName" value="{msgnotif>/MFGName}" width="14rem" enabled="false"/>
+                                <Label id="idLabelMsgName" text="Message(160 Chars)" />
+                                <TextArea id="idInputMsgName" value="{ path: 'msgnotif>/message', type: 'sap.ui.model.type.String'}"                                
+                                 maxLength="160" rows="3" width="100%" valueLiveUpdate="true" showExceededText="false" required="true" valueStateText="160 characters max" tooltip="160 characters max"/>
+                                <Button id="_IDGenButton" text="Pre-text" icon="sap-icon://value-help" press=".onPreTextMsg" width="6rem"/> 
+                                <Label id="idLabelFontColor" text="Message Text Color" />
+                                <!-- <u:ColorPicker id="idMsgColorPicker" colorString="{msgnotif>/fontcolor}" mode="HSV" displayMode="Default" width="100%"/> -->                                
+                                <Input id="idMsgColorInput" value="{msgnotif>/fontcolor}" showValueHelp="true" valueHelpRequest="onColorPickerOpen" width="14rem"/>
+                                <Button id="idMsgColorPreview" enabled="false" width="2rem" />
+                                <Label id="_IDGenLabel1" text="Background Image" />
+                                <Select id="idBgImageSelect" selectedKey="{msgnotif>/bckimgpath}" items="{path: 'bgimage>/backgroundImages'}" width="12rem">
+                                <core:Item id="_IDGenItem" key="{bgimage>name}" text="{bgimage>name}" />
+                                </Select>
+
+                                <Label id="idLabelMsgExpDt" text="Message Expiry Date"/>
+                                <DatePicker id="idDtMsgExpDt" placeholder="Select a date"
+                                 valueFormat="yyyy-MM-dd" width="10rem" value="{path: 'msgnotif>/expirydt'}"/>
+                                 <!-- <DatePicker id="idDtMsgExpDt" placeholder="Select a date" width="10rem"      
+                                 value="{path: 'msgnotif>expirydt',type: 'sap.ui.model.type.Date',
+                                 formatOptions: {source: { pattern: 'yyyy-MM-dd' },pattern: 'MMM dd, yyyy'}}"/> -->
+                                <Label id="idLabelMsgActive" text="Active (Enable to display Message Notification in HOME Screen of portal)"
+                                    labelFor="switchActive" />
+                                <Switch id="idMsgswitchActive" state="{path: 'msgnotif>/activemsg'}"
+                                    ariaLabelledBy="idLabelMsgActive"/>
+                            </form:content>
+                        </form:SimpleForm>
+                    </VBox>
+                </content>
+                <footer>
+                    <Toolbar id="idMsgToolBar">
+                        <content>
+                        <ToolbarSpacer id="idMsgToolSpacer"/>
+                            <Button id="idMsgAcptButton" type="Accept" text="Update" press="._MessageUpdate"/>
+                            <Button id="idMsgRemvButton" type="Attention" text="Remove" press="._MessageUpdate"/>
+                            <Button id="idMsgResetButton" type="Emphasized" text="Reset" press="._MessageReset"/>
+                            <Button id="Reject" text="Cancel" type="Reject" press="._MsgcloseDialog" />
+                        </content>
+                    </Toolbar>
+                </footer>
+            </Dialog>
+            <!-- End of RAID1597 - Message Notification  -->
         </content>
     </Page>
 </mvc:View>

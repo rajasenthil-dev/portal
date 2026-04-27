@@ -1,0 +1,34 @@
+{
+  "backgroundImages": [
+    {
+      "key": "img0",
+      "name": ""
+    },
+    {
+      "key": "img1",
+      "name": "MCKCAN1.jpg"
+    },
+    {
+      "key": "img2",
+      "name": "unsplash.jpg"
+    },
+    {
+      "key": "img3",
+      "name": "gradient.jpg"
+    }
+  ],
+  "pretextmsg": [
+    {
+      "id": "T01",
+      "text": "System is down due to maintenance, hence expect a week to resume Portal usage. Thanks for your Understanding!!!System is down due to maintenance, hence expect a"
+    },
+    {
+      "id": "T02",
+      "text": "Happy Christmas!!!"
+    },
+    {
+      "id": "T03",
+      "text": "Happy Easter!!!"
+    }
+  ]
+}

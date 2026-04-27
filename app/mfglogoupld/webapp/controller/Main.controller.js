@@ -22,7 +22,20 @@ sap.ui.define([
             this._binding = null;
             this.getView().getModel("ui").setProperty("/isEditMode", true);
             this._fetchExistingManufacturers();
-
+            // Begin of RAID1597 - Message Notification
+            // Message Notification
+            this.getView().setModel(new JSONModel({
+                message: "",
+                fontcolor: "",
+                bckimgpath: "",
+                expirydt: null,
+                activemsg: false
+            }), "msgnotif")
+            // Background Image - Model
+            const oBgModel = new JSONModel();
+            oBgModel.loadData("model/data.json");
+            this.getView().setModel(oBgModel, "bgimage");
+            // End of Message Notification
         },
 
         onBeforeRendering: function () {
@@ -35,7 +48,7 @@ sap.ui.define([
                 sAppPath = "";
             }
             return fetch(sAppPath + "/odata/v4/media/MediaFile")
-            // return fetch("/odata/v4/media/MediaFile")
+                // return fetch("/odata/v4/media/MediaFile")
                 .then(response => response.json())
                 .then(data => {
                     var existingManufacturers = data.value.map(item => item.manufacturerNumber);
@@ -201,7 +214,7 @@ sap.ui.define([
                 sAppPath = "";
             }
             return fetch(sAppPath + "/odata/v4/media/", {
-            // return fetch("/odata/v4/media/", {
+                // return fetch("/odata/v4/media/", {
                 method: "GET",
                 headers: { "X-CSRF-Token": "Fetch" },
                 credentials: "include"
@@ -237,7 +250,7 @@ sap.ui.define([
                 sAppPath = "";
             }
             return fetch(sAppPath + "/odata/v4/media/MediaFile", {
-            // return fetch("/odata/v4/media/MediaFile", {
+                // return fetch("/odata/v4/media/MediaFile", {
                 method: "POST",
                 headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
                 credentials: "include",
@@ -295,7 +308,7 @@ sap.ui.define([
                 sAppPath = "";
             }
             return fetch(sAppPath + "/odata/v4/media" + sPath, {
-            // return fetch("/odata/v4/media" + sPath, {
+                // return fetch("/odata/v4/media" + sPath, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
                 // headers: { "Content-Type": "application/octet-stream", "X-CSRF-Token": csrfToken },
@@ -409,7 +422,7 @@ sap.ui.define([
                 sAppPath = "";
             }
             return fetch(`${sAppPath}/odata/v4/media${sPath}/Media.draftActivate`, {
-            // return fetch(`/odata/v4/media${sPath}/Media.draftActivate`, {
+                // return fetch(`/odata/v4/media${sPath}/Media.draftActivate`, {
                 method: "POST",
                 headers: {
                     "X-CSRF-Token": csrfToken,
@@ -427,9 +440,9 @@ sap.ui.define([
             var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
             if (sAppPath === "." || sAppPath === "..") {
                 sAppPath = "";
-            }            
+            }
             return fetch(`${sAppPath}/odata/v4/media${sPath}/Media.draftEdit`, {
-            // return fetch(`/odata/v4/media${sPath}/Media.draftEdit`, {
+                // return fetch(`/odata/v4/media${sPath}/Media.draftEdit`, {
                 method: "POST",
                 headers: {
                     "X-CSRF-Token": csrfToken,
@@ -437,28 +450,30 @@ sap.ui.define([
                 },
                 credentials: "include"
             })
-                .then(async (response) => { if (!response.ok) throw new Error("Failed to Edit draft"); })
+                // .then(async (response) => { if (!response.ok) throw new Error("Failed to Edit draft"); })
+                .then(async (response) => { if (!response.ok && response.status != 409) throw new Error("Failed to Edit draft"); })
                 .catch(error => { throw new Error("Error Editing draft: " + error.message); });
         },
-        _readMediaDraft: function (sPath, csrfToken) {
+        _readMediaDraft: function (sPath) {
             debugger
             var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
             if (sAppPath === "." || sAppPath === "..") {
                 sAppPath = "";
             }
             // Read entity with Active/Draft flags
-               return fetch(`${sAppPath}/odata/v4/media${sPath}?$select=IsActiveEntity,HasActiveEntity,HasDraftEntity`, {
-            // return fetch(`/odata/v4/media${sPath}?$select=IsActiveEntity,HasActiveEntity,HasDraftEntity`, {
+            return fetch(`${sAppPath}/odata/v4/media/MediaFile`, {
+                // return fetch(`${sAppPath}/odata/v4/media${sPath}?$select=IsActiveEntity,HasActiveEntity,HasDraftEntity`, {
                 method: "GET",
-                headers: {
-                    "X-CSRF-Token": csrfToken,
-                    "Content-Type": "application/json"
-                },
-                credentials: "include"
+                // headers: {
+                //     // "X-CSRF-Token": csrfToken,
+                //     "Content-Type": "application/json"
+                // },
+                // credentials: "include"
             })
                 .then(async (response) => {
                     if (!response.ok) throw new Error("Failed to read Media Entity");
                     const data = await response.json();
+                    return data;
                 })
                 .catch(error => { throw new Error("Error Reading Media Entity: " + error.message); });
         },
@@ -539,6 +554,296 @@ sap.ui.define([
                 .catch((oError) => {
                     MessageBox.error("Error deleting items: " + oError.message);
                 });
+        },
+        /* Begin of Message Notification */
+
+        // Open the dialog
+        onOpenMsgDialog: async function () {
+            // Check atleast one Line selected
+            const oMTable = this.byId("idMediaFilesTable");
+            const aMTSelectedItems = oMTable.getSelectedItems();
+            var activebool;
+            if (aMTSelectedItems.length === 0) {
+                MessageBox.warning("Please select atleast one Manufacturer to update Message Notification.");
+                return;
+            }
+            //Read all Data from 'MediaFile'
+            var oMsgData = {
+                MFGName: "All Selected",
+                message: "",
+                fontcolor: "",
+                bckimgpath: "",
+                expirydt: null,
+                activemsg: false
+            };
+            // const oDataMedia = await this._readMediaDraft();
+            //If one Manufacturer selected, then read & update in dialog
+            if (aMTSelectedItems.length === 1) {
+                activebool = aMTSelectedItems[0].getAggregation("cells")[7].getProperty("text") === "Yes";
+
+                oMsgData = {
+                    MFGName: aMTSelectedItems[0].getAggregation('cells')[1].getProperty("text"),
+                    message: aMTSelectedItems[0].getAggregation('cells')[5].getProperty("text"),
+                    fontcolor: aMTSelectedItems[0].getAggregation('cells')[8].getProperty("text"),
+                    bckimgpath: aMTSelectedItems[0].getAggregation('cells')[9].getProperty("text"),
+                    expirydt: aMTSelectedItems[0].getAggregation('cells')[6].getProperty("text"),
+                    activemsg: activebool
+                };
+            }
+            // // Read first row with valid message
+            // for (const msgitem of oDataMedia.value) {
+            //     oMsgData = {
+            //         message: msgitem?.message,
+            //         fontcolor: msgitem?.fontcolor,
+            //         bckimgpath: msgitem?.bckimgpath,
+            //         expirydt: msgitem?.expirydt,                    
+            //         activemsg: msgitem?.activemsg
+            //     };
+            //     // const message = msgitem?.message;
+            //     if ((oMsgData.message !== null && oMsgData.message !== undefined && String(oMsgData.message).trim() !== "") ||
+            //         (oMsgData.expirydt !== null && oMsgData.expirydt !== undefined && oMsgData.expirydt !== "") ||
+            //         (oMsgData.activemsg == true)) {
+            //         break; // stop at the first valid message
+            //     }
+
+            // }
+
+            // JSON Model Instantiation
+            const oMsgView = this.getView();
+            let oMsgModel = oMsgView.getModel("msgnotif");
+            oMsgModel.setData(oMsgData, "msgnotif");
+            //Text Color representation (Button)
+            this.byId("idMsgNotif").attachAfterOpen(() => {
+                const $btn = this.byId("idMsgColorPreview").$();
+                $btn.find(".sapMBtnInner").css("background-color", oMsgData.fontcolor);
+            });
+            this.getView().byId("idMsgNotif").open();
+        },
+        //Confirmation Prompt
+        _confirm: function (sMessage, sTitle = "Confirm") {
+            return new Promise((resolve) => {
+                MessageBox.confirm(sMessage, {
+                    title: sTitle,
+                    actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                    emphasizedAction: MessageBox.Action.YES,
+                    onClose: resolve
+                });
+            });
+        },
+        _MessageReset: function () {
+            var oMsgData = {
+                message: "",
+                fontcolor: "",
+                bckimgpath: "",
+                expirydt: null,
+                activemsg: false
+            };
+            const $btn = this.byId("idMsgColorPreview").$();
+            $btn.find(".sapMBtnInner").css("background-color", "");
+            const oMsgView = this.getView();
+            let oMsgModel = oMsgView.getModel("msgnotif");
+            oMsgModel.setData(oMsgData, "msgnotif");
+        },
+        _MsgcloseDialog: function () {
+            this.getView().byId("idMsgNotif").close();
+        },
+        _MessageUpdate: async function (oEvent) {
+            const oUiModel = this.getView().getModel("ui");
+            const sToken = oUiModel.getProperty("/csrfToken");
+            var userChoice, message = "", fontcolor = "", bckimgpath = "", expirydt = null, activemsg = false;
+            const maction = oEvent.getSource().getProperty("text");
+            // Ask for confirmation
+            if (maction == 'Update') {
+                userChoice = await this._confirm(
+                    "Are you sure to update the Message Notification for the selected manufacturers?",
+                    "Confirm Update"
+                );
+            } else if (maction == 'Remove') {
+                userChoice = await this._confirm(
+                    "Are you sure to remove the Message Notification for the selected manufacturers?",
+                    "Confirm Remove"
+                );
+            }
+
+            if (userChoice !== MessageBox.Action.YES) {
+                // User clicked NO → STOP
+                return;
+            }
+            try {
+                if (maction == 'Update') {
+                    //Read Data from Dialog
+                    let oMsgModel = this.getView().getModel("msgnotif");
+                    message = oMsgModel.getProperty("/message");
+                    fontcolor = oMsgModel.getProperty("/fontcolor");
+                    bckimgpath = oMsgModel.getProperty("/bckimgpath");
+                    const sNormalizedDate = oMsgModel.getProperty("/expirydt");
+                    //Date conversion
+                    try {
+                        expirydt = this._normalizeDateForOData(sNormalizedDate);                        
+                    } catch (e) {
+                        sap.m.MessageBox.error(e.message);
+                        return;
+                    }
+
+                    activemsg = oMsgModel.getProperty("/activemsg");
+                    // Validate Message for null
+                    if (activemsg == true && (message == null || message == "")) {
+                        throw new Error(`Message Can't be blank when Active is enabled !!!`);
+                    }
+                }
+                //Read MediaFile data from Table                
+                // const oMediaTableModel = this.getView().getModel();
+                const oMediaTable = this.byId("idMediaFilesTable");
+
+                // Get contexts from items aggregation binding
+                const oBinding = oMediaTable.getBinding("items"); // ListBinding
+                // Ensure data is loaded
+                // let aContexts = await oBinding.requestContexts(0, Infinity); --Update all Line items
+                const aContexts = oMediaTable.getSelectedContexts();
+                for (const ctx of aContexts) {
+                    const obj = await ctx.requestObject();
+                    // Enable Edit Draft
+                    await this._editDraft(ctx.getPath(), sToken);
+                    // Update Draft
+                    let editsPath = ctx.getPath().replace("IsActiveEntity=true", "IsActiveEntity=false");
+                    const editresponse = await this._updateMsgDraft(editsPath, message, fontcolor, bckimgpath, expirydt, activemsg, sToken);
+                    if (editresponse?.context) {
+                        this._binding = this.getView().getModel().bindContext(editsPath, null, {
+                            $$updateGroupId: "UploadGroup"
+                        });
+                    }
+                    await this._activateDraft(this._binding.getPath(), sToken);
+                }
+                this._editBindingContext = null;
+                this._resetForm();
+                if (maction == 'Update') {
+                    sap.m.MessageToast.show("Message Notification updated to All selected Manufacturers!!!");
+                } else if (maction == 'Remove') {
+                    MessageToast.show("Message Notification removed from All selected Manufacturers!!!");
+                }
+            } catch (error) {
+                MessageBox.error("Error Updating Message Notification: " + error.message);
+            }
+            this.getView().byId("idMsgNotif").close();
+        },
+        // Update Message
+        _updateMsgDraft: function (sPath, message, fontcolor, bckimgpath, expirydt, activemsg, csrfToken) {
+            var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
+            if (sAppPath === "." || sAppPath === "..") {
+                sAppPath = "";
+            }
+            return fetch(sAppPath + "/odata/v4/media" + sPath, {
+                // return fetch("/odata/v4/media" + sPath, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
+                // headers: { "Content-Type": "application/octet-stream", "X-CSRF-Token": csrfToken },
+                credentials: "include",
+                body: JSON.stringify({ message, fontcolor, bckimgpath, expirydt, activemsg })
+            })
+
+                .then(async (res) => {
+                    // 1) Fail fast on HTTP errors
+                    if (!res.ok) {
+                        const text = await res.text().catch(() => "");
+                        throw new Error(`Create draft failed (${res.status}) ${text}`);
+                    } else {
+                        return res;
+                    }
+                })
+                .then(({ res, data, location }) => {
+                    // return res;
+                    return { context: { getPath: () => sPath } };
+
+                })
+                .catch((error) => {
+                    throw new Error("Failed to create draft: " + error.message);
+                });
+
+        },
+        onColorPickerOpen: function (oEvent) {
+            if (!this._oColorPopover) {
+                this._oColorPopover = new sap.m.ColorPalettePopover({
+                    colorSelect: (e) => {
+                        const color = e.getParameter("value");
+                        this.byId("idMsgColorInput").setValue(color);
+                        const $btn = this.byId("idMsgColorPreview").$();
+                        // Color the outer button
+                        // $btn.css("background-color", color);
+                        // Color the inner button container
+                        $btn.find(".sapMBtnInner").css("background-color", color);
+                        // Remove default borders
+                        // $btn.find(".sapMBtnInner").css("border", "none");
+                        // $btn.css("border", "none");
+                    }
+                });
+            }
+            this._oColorPopover.openBy(oEvent.getSource());
+        },
+        //Value Help for Pre-text Message
+        onPreTextMsg: function () {
+            if (!this._oSelectDialog) {
+                this._oSelectDialog = new sap.m.SelectDialog({
+                    title: "Select Template",
+                    items: {
+                        path: "bgimage>/pretextmsg",
+                        template: new sap.m.StandardListItem({
+                            title: "{bgimage>text}"
+                        })
+                    },
+                    confirm: this._onPretextSelected.bind(this),
+                    search: function (oEvent) {
+                        var sValue = oEvent.getParameter("value");
+                        var oFilter = new sap.ui.model.Filter(
+                            "text",
+                            sap.ui.model.FilterOperator.Contains,
+                            sValue
+                        );
+                        oEvent.getSource().getBinding("items").filter([oFilter]);
+                    }
+                });
+
+                this.getView().addDependent(this._oSelectDialog);
+            }
+
+            this._oSelectDialog.open();
+        },
+        // Insert Selected Pre-text Message into TextArea
+        _onPretextSelected: function (oEvent) {
+            var oItem = oEvent.getParameter("selectedItem");
+            if (!oItem) {
+                return;
+            }
+            var sPretext = oItem.getTitle();
+            var oTextArea = this.byId("idInputMsgName");
+
+            oTextArea.setValue(sPretext);
+        },
+        //Date Conversion
+        _normalizeDateForOData: function (vDate) {
+            if (!vDate) {
+                return null;
+            }
+
+            // Case 1: Already in yyyy-MM-dd → OK
+            if (typeof vDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(vDate)) {
+                return vDate;
+            }
+
+            // Case 2: JS Date object
+            if (vDate instanceof Date) {
+                return vDate.toISOString().split("T")[0];
+            }
+
+            // Case 3: Formatted string (Apr 24, 2026)
+            if (typeof vDate === "string") {
+                const oDate = new Date(vDate);
+                if (!isNaN(oDate.getTime())) {
+                    return oDate.toISOString().split("T")[0];
+                }
+            }
+
+            throw new Error("Invalid expiry date value: " + vDate);
         }
+        /* End of Message Notification */
     });
 });
