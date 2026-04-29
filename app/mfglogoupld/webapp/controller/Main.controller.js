@@ -1,3 +1,8 @@
+// ********* Modification Log ********************************************************
+// Version: CHG#:       INCIDENT#:     DATE:       DEVELOPER:
+//   1.0     CHG#       RAID1597       Apr-27-26   Raja Senthil N
+// DESCRIPTION: Portal Message Notification 
+// *********************************************************************************** 
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
@@ -35,7 +40,9 @@ sap.ui.define([
             const oBgModel = new JSONModel();
             oBgModel.loadData("model/data.json");
             this.getView().setModel(oBgModel, "bgimage");
-            // End of Message Notification
+            //In Datepicker disable all dates before today
+            this.byId("idDtMsgExpDt").setMinDate(new Date());
+            // End of RAID1597 - Message Notification
         },
 
         onBeforeRendering: function () {
@@ -555,7 +562,7 @@ sap.ui.define([
                     MessageBox.error("Error deleting items: " + oError.message);
                 });
         },
-        /* Begin of Message Notification */
+        /* Begin of RAID1597 - Message Notification */
 
         // Open the dialog
         onOpenMsgDialog: async function () {
@@ -650,10 +657,18 @@ sap.ui.define([
         _MessageUpdate: async function (oEvent) {
             const oUiModel = this.getView().getModel("ui");
             const sToken = oUiModel.getProperty("/csrfToken");
+            let oMsgModel = this.getView().getModel("msgnotif");
             var userChoice, message = "", fontcolor = "", bckimgpath = "", expirydt = null, activemsg = false;
             const maction = oEvent.getSource().getProperty("text");
             // Ask for confirmation
             if (maction == 'Update') {
+                //Either Message or Background Image is mandatory
+                if (oMsgModel.getProperty("/activemsg") == true && 
+                    oMsgModel.getProperty("/message") == "" && oMsgModel.getProperty("/bckimgpath") == ""){
+                    MessageBox.warning("Either Message or Background Image is mandate,  when Active is switched ON !!!");
+                    return;
+                }
+
                 userChoice = await this._confirm(
                     "Are you sure to update the Message Notification for the selected manufacturers?",
                     "Confirm Update"
@@ -671,8 +686,7 @@ sap.ui.define([
             }
             try {
                 if (maction == 'Update') {
-                    //Read Data from Dialog
-                    let oMsgModel = this.getView().getModel("msgnotif");
+                    //Read Data from Dialog                    
                     message = oMsgModel.getProperty("/message");
                     fontcolor = oMsgModel.getProperty("/fontcolor");
                     bckimgpath = oMsgModel.getProperty("/bckimgpath");
@@ -684,12 +698,7 @@ sap.ui.define([
                         sap.m.MessageBox.error(e.message);
                         return;
                     }
-
-                    activemsg = oMsgModel.getProperty("/activemsg");
-                    // Validate Message for null
-                    if (activemsg == true && (message == null || message == "")) {
-                        throw new Error(`Message Can't be blank when Active is enabled !!!`);
-                    }
+                    activemsg = oMsgModel.getProperty("/activemsg");                 
                 }
                 //Read MediaFile data from Table                
                 // const oMediaTableModel = this.getView().getModel();
@@ -844,6 +853,6 @@ sap.ui.define([
 
             throw new Error("Invalid expiry date value: " + vDate);
         }
-        /* End of Message Notification */
+        /* End of RAID1597 - Message Notification */
     });
 });
