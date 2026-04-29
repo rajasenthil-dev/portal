@@ -569,6 +569,7 @@ sap.ui.define([
             // Check atleast one Line selected
             const oMTable = this.byId("idMediaFilesTable");
             const aMTSelectedItems = oMTable.getSelectedItems();
+            this.byId("idDtMsgExpDt").setValueState("None");
             var activebool;
             if (aMTSelectedItems.length === 0) {
                 MessageBox.warning("Please select atleast one Manufacturer to update Message Notification.");
@@ -657,17 +658,27 @@ sap.ui.define([
         _MessageUpdate: async function (oEvent) {
             const oUiModel = this.getView().getModel("ui");
             const sToken = oUiModel.getProperty("/csrfToken");
+            const oDatePicker = this.byId("idDtMsgExpDt");
             let oMsgModel = this.getView().getModel("msgnotif");
             var userChoice, message = "", fontcolor = "", bckimgpath = "", expirydt = null, activemsg = false;
             const maction = oEvent.getSource().getProperty("text");
+            oDatePicker.setValueState("None");
             // Ask for confirmation
             if (maction == 'Update') {
                 //Either Message or Background Image is mandatory
-                if (oMsgModel.getProperty("/activemsg") == true && 
+                if (oMsgModel.getProperty("/activemsg") == true &&
                     oMsgModel.getProperty("/message") == "" && oMsgModel.getProperty("/bckimgpath") == ""){
                     MessageBox.warning("Either Message or Background Image is mandate,  when Active is switched ON !!!");
                     return;
                 }
+                //Expiry Date Mandate check
+                if (oMsgModel.getProperty("/activemsg") == true &&
+                    oMsgModel.getProperty("/expirydt") == "" || oMsgModel.getProperty("/expirydt") == null) {
+                    oDatePicker.setValueState("Error");
+                    oDatePicker.setValueStateText("Expiry Date is required");
+                    return;
+                }
+
 
                 userChoice = await this._confirm(
                     "Are you sure to update the Message Notification for the selected manufacturers?",
@@ -693,12 +704,12 @@ sap.ui.define([
                     const sNormalizedDate = oMsgModel.getProperty("/expirydt");
                     //Date conversion
                     try {
-                        expirydt = this._normalizeDateForOData(sNormalizedDate);                        
+                        expirydt = this._normalizeDateForOData(sNormalizedDate);
                     } catch (e) {
                         sap.m.MessageBox.error(e.message);
                         return;
                     }
-                    activemsg = oMsgModel.getProperty("/activemsg");                 
+                    activemsg = oMsgModel.getProperty("/activemsg");
                 }
                 //Read MediaFile data from Table                
                 // const oMediaTableModel = this.getView().getModel();
