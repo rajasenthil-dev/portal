@@ -575,7 +575,7 @@ sap.ui.define([
             }
             //Read all Data from 'MediaFile'
             var oMsgData = {
-                MFGName: "All Selected",
+                MFGName: aMTSelectedItems.length + " Selected",
                 message: "",
                 fontcolor: "",
                 bckimgpath: "",
