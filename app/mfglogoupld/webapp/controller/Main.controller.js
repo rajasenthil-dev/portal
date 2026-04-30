@@ -37,15 +37,7 @@ sap.ui.define([
                 activemsg: false
             }), "msgnotif")
             // Background Image - Model
-            // const oBgModel = new JSONModel();
-            const oBgModel = this.getOwnerComponent().getModel("localJsonModel");            
-            console.log("data.json");
-            console.log(sap.ui.require.toUrl("mfglogoupld"));
-            // if (sjdPath == "../model/data.json") {
-            //     sjdPath = "model/data.json"
-            // }
-            // oBgModel.loadData(sjdPath);
-            // oBgModel.loadData("model/data.json");
+            const oBgModel = this.getOwnerComponent().getModel("localJsonModel");
             this.getView().setModel(oBgModel, "bgimage");
             //In Datepicker disable all dates before today
             this.byId("idDtMsgExpDt").setMinDate(new Date());
@@ -570,7 +562,6 @@ sap.ui.define([
                 });
         },
         /* Begin of RAID1597 - Message Notification */
-
         // Open the dialog
         onOpenMsgDialog: async function () {
             // Check atleast one Line selected
@@ -674,18 +665,17 @@ sap.ui.define([
             if (maction == 'Update') {
                 //Either Message or Background Image is mandatory
                 if (oMsgModel.getProperty("/activemsg") == true &&
-                    oMsgModel.getProperty("/message") == "" && oMsgModel.getProperty("/bckimgpath") == ""){
+                    oMsgModel.getProperty("/message") == "" && oMsgModel.getProperty("/bckimgpath") == "") {
                     MessageBox.warning("Either Message or Background Image is mandate,  when Active is switched ON !!!");
                     return;
                 }
                 //Expiry Date Mandate check
                 if (oMsgModel.getProperty("/activemsg") == true &&
-                    oMsgModel.getProperty("/expirydt") == "" || oMsgModel.getProperty("/expirydt") == null) {
+                    (oMsgModel.getProperty("/expirydt") == "" || oMsgModel.getProperty("/expirydt") == null)) {
                     oDatePicker.setValueState("Error");
                     oDatePicker.setValueStateText("Expiry Date is required");
                     return;
                 }
-
 
                 userChoice = await this._confirm(
                     "Are you sure to update the Message Notification for the selected manufacturers?",
@@ -718,89 +708,119 @@ sap.ui.define([
                     }
                     activemsg = oMsgModel.getProperty("/activemsg");
                 }
-                //Read MediaFile data from Table                
-                // const oMediaTableModel = this.getView().getModel();
-                const oMediaTable = this.byId("idMediaFilesTable");
+                //below logic with draft eidt & activate, which does update row by row
+                // //Read MediaFile data from Table                
+                // // const oMediaTableModel = this.getView().getModel();
+                // const oMediaTable = this.byId("idMediaFilesTable");
 
-                // Get contexts from items aggregation binding
-                const oBinding = oMediaTable.getBinding("items"); // ListBinding
-                // Ensure data is loaded
-                // let aContexts = await oBinding.requestContexts(0, Infinity); --Update all Line items
-                const aContexts = oMediaTable.getSelectedContexts();
-                for (const ctx of aContexts) {
-                    const obj = await ctx.requestObject();
-                    // Enable Edit Draft
-                    await this._editDraft(ctx.getPath(), sToken);
-                    // Update Draft
-                    let editsPath = ctx.getPath().replace("IsActiveEntity=true", "IsActiveEntity=false");
-                    const editresponse = await this._updateMsgDraft(editsPath, message, fontcolor, bckimgpath, expirydt, activemsg, sToken);
-                    if (editresponse?.context) {
-                        this._binding = this.getView().getModel().bindContext(editsPath, null, {
-                            $$updateGroupId: "UploadGroup"
-                        });
+                // // Get contexts from items aggregation binding
+                // const oBinding = oMediaTable.getBinding("items"); // ListBinding
+                // // Ensure data is loaded
+                // // let aContexts = await oBinding.requestContexts(0, Infinity); --Update all Line items
+                // const aContexts = oMediaTable.getSelectedContexts();
+                // for (const ctx of aContexts) {
+                //     const obj = await ctx.requestObject();
+                //     // Enable Edit Draft
+                //     await this._editDraft(ctx.getPath(), sToken);
+                //     // Update Draft
+                //     let editsPath = ctx.getPath().replace("IsActiveEntity=true", "IsActiveEntity=false");
+                //     const editresponse = await this._updateMsgDraft(editsPath, message, fontcolor, bckimgpath, expirydt, activemsg, sToken);
+                //     if (editresponse?.context) {
+                //         this._binding = this.getView().getModel().bindContext(editsPath, null, {
+                //             $$updateGroupId: "UploadGroup"
+                //         });
+                //     }
+                //     await this._activateDraft(this._binding.getPath(), sToken);
+                // }               
+                const oModel = this.getView().getModel();
+                const oTable = this.byId("idMediaFilesTable");
+
+                const aContexts = oTable.getSelectedContexts();
+
+                // ✅ Extract IDs
+                const aIDs = aContexts.map(ctx => ctx.getProperty("ID"));
+
+                // ✅ Busy indicator
+                sap.ui.core.BusyIndicator.show(0);
+
+                try {
+                    // Call action: "massUpdateMessage" in service.js
+                    await oModel.bindContext("/massUpdateMessage(...)")
+                        .setParameter("IDs", aIDs)
+                        .setParameter("message", message)
+                        .setParameter("fontcolor", fontcolor)
+                        .setParameter("bckimgpath", bckimgpath)
+                        .setParameter("expirydt", expirydt)
+                        .setParameter("activemsg", activemsg)
+                        .execute();
+                    this._editBindingContext = null;
+                    this._resetForm();
+                    //Refresh updated data to Table                    
+                    this.byId("idMediaFilesTable").getBinding("items").refresh();
+                    if (maction == 'Update') {
+                        MessageBox.show("Message Notification updated to All selected Manufacturers!!!");
+                    } else if (maction == 'Remove') {
+                        MessageBox.show("Message Notification removed from All selected Manufacturers!!!");
                     }
-                    await this._activateDraft(this._binding.getPath(), sToken);
+
+                } catch (err) {
+                    sap.m.MessageBox.error(err.message);
+                } finally {
+                    sap.ui.core.BusyIndicator.hide();
                 }
-                this._editBindingContext = null;
-                this._resetForm();
-                if (maction == 'Update') {
-                    sap.m.MessageToast.show("Message Notification updated to All selected Manufacturers!!!");
-                } else if (maction == 'Remove') {
-                    MessageToast.show("Message Notification removed from All selected Manufacturers!!!");
-                }
+
             } catch (error) {
                 MessageBox.error("Error Updating Message Notification: " + error.message);
             }
             this.getView().byId("idMsgNotif").close();
         },
         // Update Message
-        _updateMsgDraft: function (sPath, message, fontcolor, bckimgpath, expirydt, activemsg, csrfToken) {
-            var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
-            if (sAppPath === "." || sAppPath === "..") {
-                sAppPath = "";
-            }
-            return fetch(sAppPath + "/odata/v4/media" + sPath, {
-                // return fetch("/odata/v4/media" + sPath, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
-                // headers: { "Content-Type": "application/octet-stream", "X-CSRF-Token": csrfToken },
-                credentials: "include",
-                body: JSON.stringify({ message, fontcolor, bckimgpath, expirydt, activemsg })
-            })
+        // _updateMsgDraft: function (sPath, message, fontcolor, bckimgpath, expirydt, activemsg, csrfToken) {
+        //     var sAppPath = sap.ui.require.toUrl("mfglogoupld").split("/resources")[0];
+        //     if (sAppPath === "." || sAppPath === "..") {
+        //         sAppPath = "";
+        //     }
+        //     return fetch(sAppPath + "/odata/v4/media" + sPath, {
+        //         // return fetch("/odata/v4/media" + sPath, {
+        //         method: "PATCH",
+        //         headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
+        //         // headers: { "Content-Type": "application/octet-stream", "X-CSRF-Token": csrfToken },
+        //         credentials: "include",
+        //         body: JSON.stringify({ message, fontcolor, bckimgpath, expirydt, activemsg })
+        //     })
 
-                .then(async (res) => {
-                    // 1) Fail fast on HTTP errors
-                    if (!res.ok) {
-                        const text = await res.text().catch(() => "");
-                        throw new Error(`Create draft failed (${res.status}) ${text}`);
-                    } else {
-                        return res;
-                    }
-                })
-                .then(({ res, data, location }) => {
-                    // return res;
-                    return { context: { getPath: () => sPath } };
+        //         .then(async (res) => {
+        //             // 1) Fail fast on HTTP errors
+        //             if (!res.ok) {
+        //                 const text = await res.text().catch(() => "");
+        //                 throw new Error(`Create draft failed (${res.status}) ${text}`);
+        //             } else {
+        //                 return res;
+        //             }
+        //         })
+        //         .then(({ res, data, location }) => {
+        //             // return res;
+        //             return { context: { getPath: () => sPath } };
 
-                })
-                .catch((error) => {
-                    throw new Error("Failed to create draft: " + error.message);
-                });
+        //         })
+        //         .catch((error) => {
+        //             throw new Error("Failed to create draft: " + error.message);
+        //         });
 
-        },
+        // },
         onColorPickerOpen: function (oEvent) {
             if (!this._oColorPopover) {
                 this._oColorPopover = new sap.m.ColorPalettePopover({
+                    colors: [
+                        "#000000", "#FFFFFF", "#000080",
+                        "#006400", "#FFA500", "#FF0000"
+                    ],
                     colorSelect: (e) => {
                         const color = e.getParameter("value");
                         this.byId("idMsgColorInput").setValue(color);
                         const $btn = this.byId("idMsgColorPreview").$();
-                        // Color the outer button
-                        // $btn.css("background-color", color);
                         // Color the inner button container
                         $btn.find(".sapMBtnInner").css("background-color", color);
-                        // Remove default borders
-                        // $btn.find(".sapMBtnInner").css("border", "none");
-                        // $btn.css("border", "none");
                     }
                 });
             }

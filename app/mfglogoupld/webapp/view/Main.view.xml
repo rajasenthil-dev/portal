@@ -109,6 +109,7 @@ DESCRIPTION: Portal Message Notification
                             <Text id="itemActive" text="{activemsg}" />
                             <Text id="itemColor" text="{fontcolor}" />
                             <Text id="itembgpath" text="{bckimgpath}" />
+                            <Text id="itemID" text="{ID}" />
                             <!-- End of RAID1597 - Message Notification -->
                         </cells>
                     </ColumnListItem>
@@ -184,10 +185,10 @@ DESCRIPTION: Portal Message Notification
                             labelSpanM="5"
                             labelSpanS="5"
                             adjustLabelSpan="false"
-                            emptySpanXL="0"
-                            emptySpanL="0"
-                            emptySpanM="0"
-                            emptySpanS="0"
+                            emptySpanXL="3"
+                            emptySpanL="3"
+                            emptySpanM="3"
+                            emptySpanS="3"
                             columnsXL="1"
                             columnsL="1"
                             columnsM="1"
@@ -198,10 +199,10 @@ DESCRIPTION: Portal Message Notification
                                 <Label id="idLabelMsgName" text="Message(160 Chars)" />
                                 <TextArea id="idInputMsgName" value="{ path: 'msgnotif>/message', type: 'sap.ui.model.type.String'}"                                
                                  maxLength="160" rows="3" width="100%" valueLiveUpdate="true" showExceededText="false" required="true" valueStateText="160 characters max" tooltip="160 characters max"/>
-                                <Button id="_IDGenButton" text="Pre-text" icon="sap-icon://value-help" press=".onPreTextMsg" width="6rem"/> 
+                                <!-- <Button id="_IDGenButton" text="Pre-text" icon="sap-icon://value-help" press=".onPreTextMsg" width="6rem"/>  -->
                                 <Label id="idLabelFontColor" text="Message Text Color" />
                                 <!-- <u:ColorPicker id="idMsgColorPicker" colorString="{msgnotif>/fontcolor}" mode="HSV" displayMode="Default" width="100%"/> -->                                
-                                <Input id="idMsgColorInput" value="{msgnotif>/fontcolor}" showValueHelp="true" valueHelpRequest="onColorPickerOpen" width="14rem"/>
+                                <Input id="idMsgColorInput" value="{msgnotif>/fontcolor}" showValueHelp="true" valueHelpRequest="onColorPickerOpen" width="9rem"/>
                                 <Button id="idMsgColorPreview" enabled="false" width="2rem" />
                                 <Label id="_IDGenLabel1" text="Background Image" />
                                 <Select id="idBgImageSelect" selectedKey="{msgnotif>/bckimgpath}" items="{path: 'bgimage>/backgroundImages'}" width="12rem" required="true">

@@ -1781,6 +1781,17 @@ service Media {
 // entity MediaFile as projection on ENTMediaFile;
     entity MediaFile as projection on ENTMediaFile order by manufacturerNumber asc;
     // End of CHG0259103/INC3857327 - Sort based on Manufacturer no }
+    //Begin of RAID1597 - Message notification {
+    //Action to update Message Notification
+    action massUpdateMessage(
+    IDs         : array of UUID,
+    message     : String,
+    fontcolor   : String,
+    bckimgpath  : String,
+    expirydt    : Date,
+    activemsg   : Boolean
+    ) returns String;
+    //End of RAID1597 - Message notification}
 }
 annotate Media.MediaFile with @odata.draft.enabled: true;
 

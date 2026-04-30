@@ -997,6 +997,42 @@ module.exports = cds.service.impl(async function () {
         };
     });
   
+    //Begin of RAID1597 - Message Notification{
+    //Action to update Message Notification
+  this.on("massUpdateMessage", async (req) => {
+
+    const {
+      IDs,
+      message,
+      fontcolor,
+      bckimgpath,
+      expirydt,
+      activemsg
+    } = req.data;
+
+    const tx = cds.tx(req);
+    try {
+      // ✅ MASS UPDATE (single DB hit)
+      const result = await tx.run(
+        UPDATE("MediaFile")   
+          .set({
+            message,
+            fontcolor,
+            bckimgpath,
+            expirydt,
+            activemsg
+          })
+          .where({ ID: { in: IDs } })
+      );
+
+      return `${IDs.length} manufacturers updated successfully`;
+
+    } catch (error) {
+      return req.error(500, "Mass update failed: " + error.message);
+    }
+
+  });    
+    //End of RAID1597 - Message Notification}
   //   const { InventoryAuditSummary } = this.entities;
 
   //   this.on("READ", "InventoryAuditSummary", async (req, next) => {
