@@ -23,6 +23,10 @@
           "annotations": [],
           "odataVersion": "4.0"
         }
+      },
+      "localJson":{
+        "uri": "model/data.json",
+        "type": "JSON"
       }
     },
     "crossNavigation": {
@@ -76,6 +80,11 @@
         "settings": {
           "bundleName": "mfglogoupld.i18n.i18n"
         }
+      },
+      "localJsonModel":{
+        "dataSource": "localJson",
+        "preload": true,
+        "type": "sap.ui.model.json.JSONModel"
       },
       "": {
         "dataSource": "mainService",

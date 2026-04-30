@@ -37,14 +37,14 @@ sap.ui.define([
                 activemsg: false
             }), "msgnotif")
             // Background Image - Model
-            const oBgModel = new JSONModel();
-            var sjdPath = sap.ui.require.toUrl("mfglogoupld/model/data.json");
+            // const oBgModel = new JSONModel();
+            const oBgModel = this.getOwnerComponent().getModel("localJsonModel");            
             console.log("data.json");
-            console.log(sap.ui.require.toUrl("mfglogoupld/model/data.json"));
-            if (sjdPath == "../model/data.json") {
-                sjdPath = "model/data.json"
-            }
-            oBgModel.loadData(sjdPath);
+            console.log(sap.ui.require.toUrl("mfglogoupld"));
+            // if (sjdPath == "../model/data.json") {
+            //     sjdPath = "model/data.json"
+            // }
+            // oBgModel.loadData(sjdPath);
             // oBgModel.loadData("model/data.json");
             this.getView().setModel(oBgModel, "bgimage");
             //In Datepicker disable all dates before today
